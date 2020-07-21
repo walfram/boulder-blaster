@@ -7,5 +7,5 @@ build
 .classpath
 .project
 .settings/
-gradle/
+# gradle/
 bin/
