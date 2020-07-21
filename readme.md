@@ -17,3 +17,5 @@ use `T` to target boulder under cursor or under crosshair
 tested with java 1.8
 
 this is work in progress :)
+
+resolution is currently fixed as 1600x800 windowed mode, this will be changed in future
