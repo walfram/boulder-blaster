@@ -11,7 +11,7 @@ plugins {
     id 'java'
 
     // Apply the application plugin to add support for building a CLI application.
-    // id 'application'
+    id 'application'
 }
 
 repositories {
@@ -64,10 +64,10 @@ dependencies {
     //implementation 'com.github.Jeddic:particlemonkey:1.0.2'
 }
 
-//application {
+application {
     // Define the main class for the application.
-    // mainClassName = 'sandbox3.App'
-//}
+    mainClassName = 'sandbox3.bblaster.BoulderBlasterApp'
+}
 
 test {
     // Use TestNG for unit tests
