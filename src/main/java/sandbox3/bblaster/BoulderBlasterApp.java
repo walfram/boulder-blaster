@@ -4,7 +4,6 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 
@@ -51,15 +50,19 @@ public class BoulderBlasterApp extends SimpleApplication {
 		cam.setFrustumFar(32768f);
 		cam.update();
 
-		cam.setLocation(new Vector3f(1.0309658f, 21.743809f, -46.47502f));
-		cam.setRotation(new Quaternion(0.14882252f, -0.02220475f, 0.003342259f, 0.98860896f));
+//		cam.setLocation(new Vector3f(1.0309658f, 21.743809f, -46.47502f));
+//		cam.setRotation(new Quaternion(0.14882252f, -0.02220475f, 0.003342259f, 0.98860896f));
 
 		stateManager.attach(new StCollision());
 		stateManager.attach(new StExplosion(rootNode));
+		
 		stateManager.attach(new StBoulders(rootNode));
+		
 		stateManager.attach(new StMissiles(rootNode));
 		stateManager.attach(new StGuns(rootNode));
+		
 		stateManager.attach(new StPlayer(rootNode));
+		
 		stateManager.attach(new StTargetting());
 		stateManager.attach(new StControls());
 		stateManager.attach(new StHud(guiNode));

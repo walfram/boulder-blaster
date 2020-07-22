@@ -3,9 +3,6 @@ package sandbox3.bblaster;
 import com.jme3.app.Application;
 import com.jme3.app.FlyCamAppState;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.bounding.BoundingSphere;
-import com.jme3.material.Material;
-import com.jme3.material.RenderState.FaceCullMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
@@ -13,21 +10,23 @@ import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
 import common.misc.Cooldown;
 import common.mtl.MtlUnshaded;
-import jme3utilities.mesh.Icosphere;
 
 final class StPlayer extends BaseAppState {
 
 	private final Node player = new Node("player");
-	private Geometry hull;
+
 	private Geometry wpnLeft;
 	private Geometry wpnRight;
 
 	private final Cooldown cooldownGuns = new Cooldown(60f / 600f);
 	private float thrust = 0f;
+
+	private final Vector3f cameraOffset = new Vector3f(0, 15, -50);
 
 	public StPlayer(Node rootNode) {
 		rootNode.attachChild(player);
@@ -37,17 +36,9 @@ final class StPlayer extends BaseAppState {
 	protected void initialize(Application app) {
 		getState(FlyCamAppState.class).setEnabled(!isEnabled());
 
-		Icosphere mesh = new Icosphere(0, 5f);
-		mesh.setBound(new BoundingSphere(5f, new Vector3f()));
-		hull = new Geometry("player", mesh);
-		hull.rotate(FastMath.DEG_TO_RAD * 60f, 0, 0);
+		Spatial hull = app.getAssetManager().loadModel("models/spacekit/spaceCraft1.obj");
+		hull.rotate(0, FastMath.PI, 0);
 
-		Material mtlHull = new MtlUnshaded(app.getAssetManager(), ColorRGBA.LightGray);
-		mtlHull.getAdditionalRenderState().setLineWidth(5f);
-		mtlHull.getAdditionalRenderState().setWireframe(true);
-		mtlHull.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
-
-		hull.setMaterial(mtlHull);
 		player.attachChild(hull);
 
 		wpnLeft = new Geometry("weapon-left", new Box(0.5f, 0.5f, 0.5f));
@@ -60,17 +51,8 @@ final class StPlayer extends BaseAppState {
 		wpnRight.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Green));
 		player.attachChild(wpnRight);
 
-		// player.addControl(new SimpleControl() {
-		// @Override
-		// protected void controlUpdate(float updateInterval) {
-		// super.controlUpdate(updateInterval);
-		//
-		// Vector3f velocity = spatial.getLocalRotation().mult(Vector3f.UNIT_Z).mult(updateInterval).mult(thrust).mult(new Const().playerMaxSpeed());
-		// Vector3f moved = spatial.getLocalTranslation().add(velocity);
-		//
-		// spatial.setLocalTranslation(moved);
-		// }
-		// });
+		app.getCamera().setLocation(player.getLocalTranslation().add(cameraOffset));
+		app.getCamera().setRotation(new Quaternion());
 	}
 
 	@Override
@@ -89,18 +71,23 @@ final class StPlayer extends BaseAppState {
 	public void update(float tpf) {
 		super.update(tpf);
 
-		// player.setLocalTranslation(getApplication().getCamera().getLocation());
-		// player.setLocalRotation(getApplication().getCamera().getRotation());
-
 		cooldownGuns.update(tpf);
 
 		Vector3f velocity = player.getLocalRotation().mult(Vector3f.UNIT_Z).mult(tpf).mult(thrust).mult(new Const().playerMaxSpeed());
 		Vector3f moved = player.getLocalTranslation().add(velocity);
-
 		player.setLocalTranslation(moved);
 
-		getApplication().getCamera().setLocation(player.getLocalTranslation().clone());
-		getApplication().getCamera().setRotation(player.getLocalRotation().clone());
+		Vector3f origin = player.getLocalTranslation().clone();
+		Quaternion rot = player.getLocalRotation().clone();
+		Vector3f offsetRotated = rot.mult(cameraOffset);
+
+		Vector3f interpolated = getApplication().getCamera().getLocation().clone().interpolateLocal(origin.add(offsetRotated), 5f * tpf);
+		getApplication().getCamera().setLocation(interpolated);
+
+		Quaternion slerped = getApplication().getCamera().getRotation().clone();
+		slerped.slerp(rot, 5.0f * tpf);
+
+		getApplication().getCamera().setRotation(slerped);
 	}
 
 	void fireMissile() {
