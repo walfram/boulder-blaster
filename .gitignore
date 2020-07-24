@@ -9,3 +9,5 @@ build
 .settings/
 # gradle/
 bin/
+
+src/main/java/test/
