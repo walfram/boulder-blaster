@@ -77,15 +77,15 @@ final class StPlayer extends BaseAppState {
 		Vector3f moved = player.getLocalTranslation().add(velocity);
 		player.setLocalTranslation(moved);
 
-		Vector3f origin = player.getLocalTranslation().clone();
-		Quaternion rot = player.getLocalRotation().clone();
-		Vector3f offsetRotated = rot.mult(cameraOffset);
+		Vector3f playerLocation = player.getLocalTranslation().clone();
+		Quaternion playerRotation = player.getLocalRotation().clone();
+		Vector3f offsetRotated = playerRotation.mult(cameraOffset);
 
-		Vector3f interpolated = getApplication().getCamera().getLocation().clone().interpolateLocal(origin.add(offsetRotated), 5f * tpf);
+		Vector3f interpolated = getApplication().getCamera().getLocation().clone().interpolateLocal(playerLocation.add(offsetRotated), 5f * tpf);
 		getApplication().getCamera().setLocation(interpolated);
 
 		Quaternion slerped = getApplication().getCamera().getRotation().clone();
-		slerped.slerp(rot, 5.0f * tpf);
+		slerped.slerp(playerRotation, 5.0f * tpf);
 
 		getApplication().getCamera().setRotation(slerped);
 	}
