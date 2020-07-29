@@ -39,21 +39,13 @@ final class StControls extends BaseAppState {
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
 
 		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_SPACE);
-		inputMapper.addStateListener((func, state, tpf) -> {
-			if (state == InputState.Off)
-				getState(StPlayer.class).fireMissile();
-		}, F_FIRE_MISSILE);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireMissile(), F_FIRE_MISSILE);
 
 		inputMapper.map(F_AQUIRE_TARGET, KeyInput.KEY_T);
-		inputMapper.addStateListener((func, state, tpf) -> {
-			if (state == InputState.Off)
-				getState(StTargetting.class).aquireTarget();
-		}, F_AQUIRE_TARGET);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StTargetting.class).aquireTarget(), F_AQUIRE_TARGET);
 
 		inputMapper.map(F_FIRE_GUNS, Button.MOUSE_BUTTON2);
-		inputMapper.addAnalogListener((func, value, tpf) -> {
-			getState(StPlayer.class).fireGuns();
-		}, F_FIRE_GUNS);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireGuns(), F_FIRE_GUNS);
 
 		inputMapper.map(F_MOUSE_LOOK, Button.MOUSE_BUTTON1);
 		inputMapper.addAnalogListener((func, value, tpf) -> {
@@ -69,24 +61,16 @@ final class StControls extends BaseAppState {
 		}, F_MOUSE_LOOK);
 
 		inputMapper.map(F_ROLL_CCW, KeyInput.KEY_A);
-		inputMapper.addAnalogListener((func, value, tpf) -> {
-			getState(StPlayer.class).roll(-value, tpf);
-		}, F_ROLL_CCW);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).roll(-value, tpf), F_ROLL_CCW);
 
 		inputMapper.map(F_ROLL_CW, KeyInput.KEY_D);
-		inputMapper.addAnalogListener((func, value, tpf) -> {
-			getState(StPlayer.class).roll(value, tpf);
-		}, F_ROLL_CW);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).roll(value, tpf), F_ROLL_CW);
 
 		inputMapper.map(F_THRUST_UP, KeyInput.KEY_W);
-		inputMapper.addAnalogListener((func, value, tpf) -> {
-			getState(StPlayer.class).updateThrust(tpf);
-		}, F_THRUST_UP);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).updateThrust(tpf), F_THRUST_UP);
 
 		inputMapper.map(F_THRUST_DOWN, KeyInput.KEY_S);
-		inputMapper.addAnalogListener((func, value, tpf) -> {
-			getState(StPlayer.class).updateThrust(-tpf);
-		}, F_THRUST_DOWN);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).updateThrust(-tpf), F_THRUST_DOWN);
 	}
 
 	@Override
