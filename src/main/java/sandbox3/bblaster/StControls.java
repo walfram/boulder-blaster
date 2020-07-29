@@ -28,11 +28,14 @@ final class StControls extends BaseAppState {
 
 	private boolean mouseLook = false;
 
-	private float hw = 800f;
-	private float hh = 400f;
+	private float hw;
+	private float hh;
 
 	@Override
 	protected void initialize(Application app) {
+		hw = app.getContext().getSettings().getWidth() * 0.5f;
+		hh = app.getContext().getSettings().getHeight() * 0.5f;
+		
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
 
 		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_SPACE);
