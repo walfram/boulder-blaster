@@ -55,8 +55,8 @@ final class StControls extends BaseAppState {
 			float dx = (cp.x - hw) / hw;
 			float dy = (cp.y - hh) / hh;
 
-			getState(StPlayer.class).yaw(dx, tpf);
-			getState(StPlayer.class).pitch(dy, tpf);
+			getState(StPlayer.class).yaw(-dx, tpf);
+			getState(StPlayer.class).pitch(-dy, tpf);
 		}, F_MOUSE_LOOK);
 
 		inputMapper.map(F_ROLL_CCW, KeyInput.KEY_A);
@@ -66,10 +66,10 @@ final class StControls extends BaseAppState {
 		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).roll(value, tpf), F_ROLL_CW);
 
 		inputMapper.map(F_THRUST_UP, KeyInput.KEY_W);
-		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).updateThrust(tpf), F_THRUST_UP);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).updateThrust(1d, tpf), F_THRUST_UP);
 
 		inputMapper.map(F_THRUST_DOWN, KeyInput.KEY_S);
-		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).updateThrust(-tpf), F_THRUST_DOWN);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).updateThrust(-1d, tpf), F_THRUST_DOWN);
 	}
 
 	@Override
