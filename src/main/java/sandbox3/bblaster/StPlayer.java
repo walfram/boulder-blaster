@@ -24,6 +24,8 @@ final class StPlayer extends BaseAppState {
 	private Geometry wpnRight;
 
 	private final Cooldown cooldownGuns = new Cooldown(60f / 600f);
+	private final Cooldown cooldownMissiles = new Cooldown(0.33f);
+
 	private float thrust = 0f;
 
 	private final Vector3f cameraOffset = new Vector3f(0, 15, -50);
@@ -72,6 +74,7 @@ final class StPlayer extends BaseAppState {
 		super.update(tpf);
 
 		cooldownGuns.update(tpf);
+		cooldownMissiles.update(tpf);
 
 		Vector3f velocity = player.getLocalRotation().mult(Vector3f.UNIT_Z).mult(tpf).mult(thrust).mult(new Const().playerMaxSpeed());
 		Vector3f moved = player.getLocalTranslation().add(velocity);
@@ -91,6 +94,11 @@ final class StPlayer extends BaseAppState {
 	}
 
 	void fireMissile() {
+		if (!cooldownMissiles.isReady())
+			return;
+
+		cooldownMissiles.reset();
+
 		Transform transform = wpnLeft.getWorldTransform();
 		getState(StMissiles.class).spawnMissile(transform);
 	}

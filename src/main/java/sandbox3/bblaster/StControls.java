@@ -8,7 +8,6 @@ import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.input.Button;
 import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
-import com.simsilica.lemur.input.InputState;
 
 final class StControls extends BaseAppState {
 
