@@ -60,9 +60,10 @@ final class StPlayer extends BaseAppState {
 		player.addControl(new CtRoll());
 		player.addControl(new CtThrust(new Const().playerMaxSpeed()));
 
-		player.addControl(new CtCameraFollow(app.getCamera(), cameraOffset, 5.0f, 3.0f));
 		app.getCamera().setLocation(player.getLocalTranslation().add(cameraOffset));
 		app.getCamera().lookAt(player.getLocalTranslation(), Vector3f.UNIT_Y);
+
+		player.addControl(new CtCameraFollow(app.getCamera(), cameraOffset, 5.0f, 5.0f));
 	}
 
 	@Override

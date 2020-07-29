@@ -11,7 +11,7 @@ final class Const {
 	}
 
 	public float projectileSpeed() {
-		return 900f;
+		return 900f * 3f;
 	}
 
 	public float projectileDamage() {

@@ -28,12 +28,9 @@ final class StExplosion extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-
 		mesh = new Octasphere(2, 1f);
-
 		material = new MtlUnshaded(app.getAssetManager());
 		material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-
 	}
 
 	@Override

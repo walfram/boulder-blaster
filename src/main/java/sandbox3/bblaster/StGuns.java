@@ -54,7 +54,7 @@ final class StGuns extends BaseAppState {
 		projectile.addControl(new CtDamage(new Const().projectileDamage()));
 		projectile.addControl(new CtMissileMove(new Const().projectileSpeed()));
 
-		projectile.addControl(new CtTimeout(15f, (spatial) -> {
+		projectile.addControl(new CtTimeout(5f, (spatial) -> {
 			projectile.removeFromParent();
 		}));
 

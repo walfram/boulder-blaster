@@ -10,6 +10,7 @@ import com.jme3.system.AppSettings;
 import common.debug.NdDebugGrid;
 import common.states.LemurState;
 import common.states.SkyState;
+import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 
 public class BoulderBlasterApp extends SimpleApplication {
@@ -47,8 +48,9 @@ public class BoulderBlasterApp extends SimpleApplication {
 
 		rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
 
-		cam.setFrustumFar(32768f);
-		cam.update();
+//		cam.setFrustumFar(32768f);
+//		cam.update();
+		MyCamera.setNearFar(cam, 0.1f, 32768f);
 
 		// cam.setLocation(new Vector3f(1.0309658f, 21.743809f, -46.47502f));
 		// cam.setRotation(new Quaternion(0.14882252f, -0.02220475f, 0.003342259f, 0.98860896f));
