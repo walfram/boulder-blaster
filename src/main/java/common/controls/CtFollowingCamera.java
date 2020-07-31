@@ -6,7 +6,7 @@ import com.jme3.renderer.Camera;
 
 import jme3utilities.SimpleControl;
 
-public final class CtCameraFollow extends SimpleControl {
+public final class CtFollowingCamera extends SimpleControl {
 
 	private final Camera camera;
 	private final Vector3f cameraOffset;
@@ -14,11 +14,11 @@ public final class CtCameraFollow extends SimpleControl {
 	private final float distanceDamping;
 	private final float rotataionDamping;
 	
-	public CtCameraFollow(Camera camera, Vector3f cameraOffset) {
+	public CtFollowingCamera(Camera camera, Vector3f cameraOffset) {
 		this(camera, cameraOffset, 2.0f, 3.0f);
 	}
 	
-	public CtCameraFollow(Camera camera, Vector3f cameraOffset, float distanceDamping, float rotataionDamping) {
+	public CtFollowingCamera(Camera camera, Vector3f cameraOffset, float distanceDamping, float rotataionDamping) {
 		this.camera = camera;
 		this.cameraOffset = cameraOffset;
 		this.distanceDamping = distanceDamping;
@@ -40,7 +40,6 @@ public final class CtCameraFollow extends SimpleControl {
 		slerped.slerp(rot, rotataionDamping * updateInterval);
 
 		camera.setRotation(slerped);
-
 	}
 
 }

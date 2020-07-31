@@ -12,7 +12,7 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
-import common.controls.CtCameraFollow;
+import common.controls.CtFollowingCamera;
 import common.controls.CtPitch;
 import common.controls.CtRoll;
 import common.controls.CtThrust;
@@ -63,7 +63,7 @@ final class StPlayer extends BaseAppState {
 		app.getCamera().setLocation(player.getLocalTranslation().add(cameraOffset));
 		app.getCamera().lookAt(player.getLocalTranslation(), Vector3f.UNIT_Y);
 
-		player.addControl(new CtCameraFollow(app.getCamera(), cameraOffset, 5.0f, 5.0f));
+		player.addControl(new CtFollowingCamera(app.getCamera(), cameraOffset, 5.0f, 5.0f));
 	}
 
 	@Override
