@@ -53,10 +53,14 @@ final class StPlayer extends BaseAppState {
 		player.addControl(new CtPitch());
 		player.addControl(new CtRoll());
 		player.addControl(new CtThrust(new Const().playerMaxSpeed()));
-		
+
+		player.addControl(getState(StCamera.class).flightCamera());
+		player.addControl(getState(StCamera.class).dockedCamera());
+
 		getState(StStation.class).dock(player);
-		
 		getState(StCamera.class).enableDockedCamera(player);
+		getState(StHud.class).showStationHud();
+		getState(StControls.class).setEnabled(false);
 	}
 
 	@Override
@@ -121,6 +125,13 @@ final class StPlayer extends BaseAppState {
 
 	Vector3f position() {
 		return player.getLocalTranslation();
+	}
+
+	void undock() {
+		getState(StStation.class).undock(player);
+		getState(StCamera.class).enableFlightCamera(player);
+		getState(StHud.class).showFlightHud();
+		getState(StControls.class).setEnabled(true);
 	}
 
 }

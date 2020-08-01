@@ -1,5 +1,8 @@
 package sandbox3.bblaster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.collision.CollisionResults;
@@ -10,6 +13,8 @@ import com.jme3.scene.Spatial;
 
 final class StTargetting extends BaseAppState {
 
+	private static final Logger logger = LoggerFactory.getLogger(StTargetting.class);
+	
 	private Spatial currentTarget;
 
 	@Override
@@ -60,6 +65,8 @@ final class StTargetting extends BaseAppState {
 				currentTarget = results.getClosestCollision().getGeometry();
 			}
 		}
+		
+		logger.debug("aquire target = {}", currentTarget);
 	}
 
 	Spatial currentTarget() {

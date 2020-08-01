@@ -8,6 +8,7 @@ import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.input.Button;
 import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
+import com.simsilica.lemur.input.InputState;
 
 final class StControls extends BaseAppState {
 
@@ -41,7 +42,10 @@ final class StControls extends BaseAppState {
 		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireMissile(), F_FIRE_MISSILE);
 
 		inputMapper.map(F_AQUIRE_TARGET, KeyInput.KEY_T);
-		inputMapper.addAnalogListener((func, value, tpf) -> getState(StTargetting.class).aquireTarget(), F_AQUIRE_TARGET);
+		inputMapper.addStateListener((func, state, tpf) -> {
+			if (state == InputState.Off)
+				getState(StTargetting.class).aquireTarget();
+		}, F_AQUIRE_TARGET);
 
 		inputMapper.map(F_FIRE_GUNS, Button.MOUSE_BUTTON2);
 		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireGuns(), F_FIRE_GUNS);
@@ -78,12 +82,12 @@ final class StControls extends BaseAppState {
 
 	@Override
 	protected void onEnable() {
-		// GuiGlobals.getInstance().getInputMapper().activateGroup(GROUP_FLIGHT);
+		GuiGlobals.getInstance().getInputMapper().activateGroup(GROUP_FLIGHT);
 	}
 
 	@Override
 	protected void onDisable() {
-		// GuiGlobals.getInstance().getInputMapper().deactivateGroup(GROUP_FLIGHT);
+		GuiGlobals.getInstance().getInputMapper().deactivateGroup(GROUP_FLIGHT);
 	}
 
 	public boolean isMouseLook() {

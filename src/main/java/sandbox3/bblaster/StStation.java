@@ -48,4 +48,8 @@ final class StStation extends BaseAppState {
 		docked.add(spatial);
 	}
 
+	public void undock(Spatial spatial) {
+		docked.remove(spatial);
+	}
+
 }

@@ -7,6 +7,7 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.control.Control;
 
 import common.controls.CtFollowingCamera;
 
@@ -55,9 +56,29 @@ final class StCamera extends BaseAppState {
 	}
 
 	public void enableDockedCamera(Spatial cameraTarget) {
-		cameraTarget.removeControl(chaseCamera);
-		cameraTarget.addControl(chaseCamera);
-		chaseCamera.setEnabled(true);
+		if (cameraTarget.getControl(ChaseCamera.class) == null) {
+			cameraTarget.addControl(chaseCamera);
+		}
+
+		cameraTarget.getControl(CtFollowingCamera.class).setEnabled(false);
+		cameraTarget.getControl(ChaseCamera.class).setEnabled(true);
+	}
+
+	public void enableFlightCamera(Spatial cameraTarget) {
+		if (cameraTarget.getControl(CtFollowingCamera.class) == null) {
+			cameraTarget.addControl(followingCamera);
+		}
+
+		cameraTarget.getControl(ChaseCamera.class).setEnabled(false);
+		cameraTarget.getControl(CtFollowingCamera.class).setEnabled(true);
+	}
+
+	Control flightCamera() {
+		return followingCamera;
+	}
+
+	Control dockedCamera() {
+		return chaseCamera;
 	}
 
 }
