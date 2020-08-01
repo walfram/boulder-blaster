@@ -44,38 +44,34 @@ final class StHud extends BaseAppState {
 		targetCursor.setWidth(72);
 		targetCursor.setHeight(72);
 
-		Container playerInfo = new Container();
-		playerInfo.addChild(new Label("player", new ElementId("window.title.label"))).setMaxWidth(320f);
+		Container playerContainer = new Container();
+		playerContainer.addChild(new Label("player", new ElementId("window.title.label"))).setMaxWidth(320f);
 
-		Container playerPanel = playerInfo.addChild(new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
+		Container playerPanel = playerContainer.addChild(new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
 
 		playerPanel.addChild(new Label("thrust")).setMaxWidth(72f);
 		ProgressBar thrust = playerPanel.addChild(new ProgressBar(), 1);
 
-		playerPanel.addControl(new SimpleControl() {
-			@Override
-			protected void controlUpdate(float updateInterval) {
-				super.controlUpdate(updateInterval);
-
-				thrust.setProgressPercent(getState(StPlayer.class).thrustValue());
-				thrust.setMessage(String.format("%.03f", getState(StPlayer.class).thrustValue()));
-			}
-		});
-
 		playerPanel.addChild(new Label("position"));
 		Label position = playerPanel.addChild(new Label("position.value"), 1);
 
+		playerPanel.addChild(new Label("status"));
+		playerPanel.addChild(new Label("status.value"), 1);
+		
 		playerPanel.addControl(new SimpleControl() {
 			@Override
 			protected void controlUpdate(float updateInterval) {
 				super.controlUpdate(updateInterval);
+				
+				thrust.setProgressPercent(getState(StPlayer.class).thrustValue());
+				thrust.setMessage(String.format("%.03f", getState(StPlayer.class).thrustValue()));
 
-				position.setText(new FormattedVector3f(getState(StPlayer.class).translation()).format());
+				position.setText(new FormattedVector3f(getState(StPlayer.class).position()).format());
 			}
 		});
 
-		hud.attachChild(playerInfo);
-		playerInfo.setLocalTranslation(10, 800 - 10, 0);
+		hud.attachChild(playerContainer);
+		playerContainer.setLocalTranslation(10, 800 - 10, 0);
 
 		Container target = new Container();
 		target.addChild(new Label("target", new ElementId("window.title.label"))).setMaxWidth(320f);;
@@ -96,7 +92,7 @@ final class StHud extends BaseAppState {
 		});
 		
 		hud.attachChild(target);
-		target.setLocalTranslation(10, 800 - playerInfo.getPreferredSize().y - 20f, 0);
+		target.setLocalTranslation(10, 800 - playerContainer.getPreferredSize().y - 20f, 0);
 	}
 
 	@Override

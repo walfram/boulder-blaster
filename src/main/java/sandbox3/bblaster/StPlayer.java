@@ -1,7 +1,6 @@
 package sandbox3.bblaster;
 
 import com.jme3.app.Application;
-import com.jme3.app.FlyCamAppState;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.FastMath;
@@ -12,7 +11,6 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
-import common.controls.CtFollowingCamera;
 import common.controls.CtPitch;
 import common.controls.CtRoll;
 import common.controls.CtThrust;
@@ -30,16 +28,12 @@ final class StPlayer extends BaseAppState {
 	private final Cooldown cooldownGuns = new Cooldown(60f / 600f);
 	private final Cooldown cooldownMissiles = new Cooldown(0.33f);
 
-	private final Vector3f cameraOffset = new Vector3f(0, 15, -50);
-
 	public StPlayer(Node rootNode) {
 		rootNode.attachChild(player);
 	}
 
 	@Override
 	protected void initialize(Application app) {
-		getState(FlyCamAppState.class).setEnabled(!isEnabled());
-
 		Spatial hull = app.getAssetManager().loadModel("models/spacekit/spaceCraft1.obj");
 		hull.rotate(0, FastMath.PI, 0);
 
@@ -59,11 +53,10 @@ final class StPlayer extends BaseAppState {
 		player.addControl(new CtPitch());
 		player.addControl(new CtRoll());
 		player.addControl(new CtThrust(new Const().playerMaxSpeed()));
-
-		app.getCamera().setLocation(player.getLocalTranslation().add(cameraOffset));
-		app.getCamera().lookAt(player.getLocalTranslation(), Vector3f.UNIT_Y);
-
-		player.addControl(new CtFollowingCamera(app.getCamera(), cameraOffset, 5.0f, 5.0f));
+		
+		getState(StStation.class).dock(player);
+		
+		getState(StCamera.class).enableDockedCamera(player);
 	}
 
 	@Override
@@ -126,7 +119,7 @@ final class StPlayer extends BaseAppState {
 		return player.getControl(CtThrust.class).value();
 	}
 
-	Vector3f translation() {
+	Vector3f position() {
 		return player.getLocalTranslation();
 	}
 

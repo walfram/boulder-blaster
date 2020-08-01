@@ -16,4 +16,9 @@ public final class MtlUnshaded extends Material {
 		setColor("Color", color);
 	}
 
+	public MtlUnshaded(AssetManager assetManager, ColorRGBA color, float lineWidth) {
+		this(assetManager, color);
+		getAdditionalRenderState().setLineWidth(lineWidth);
+	}
+
 }

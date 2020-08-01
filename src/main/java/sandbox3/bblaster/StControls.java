@@ -11,19 +11,19 @@ import com.simsilica.lemur.input.InputMapper;
 
 final class StControls extends BaseAppState {
 
-	private static final String GROUP_CONTROLS = "group-controls";
+	private static final String GROUP_FLIGHT = "group-flight";
 
-	private static final FunctionId F_FIRE_MISSILE = new FunctionId(GROUP_CONTROLS, "fire-missile");
-	private static final FunctionId F_AQUIRE_TARGET = new FunctionId(GROUP_CONTROLS, "aquire-target");
-	private static final FunctionId F_FIRE_GUNS = new FunctionId(GROUP_CONTROLS, "fire-guns");
+	private static final FunctionId F_FIRE_MISSILE = new FunctionId(GROUP_FLIGHT, "fire-missile");
+	private static final FunctionId F_AQUIRE_TARGET = new FunctionId(GROUP_FLIGHT, "aquire-target");
+	private static final FunctionId F_FIRE_GUNS = new FunctionId(GROUP_FLIGHT, "fire-guns");
 
-	private static final FunctionId F_MOUSE_LOOK = new FunctionId(GROUP_CONTROLS, "mouse-look");
+	private static final FunctionId F_MOUSE_LOOK = new FunctionId(GROUP_FLIGHT, "mouse-look");
 
-	private static final FunctionId F_ROLL_CCW = new FunctionId(GROUP_CONTROLS, "roll-ccw");
-	private static final FunctionId F_ROLL_CW = new FunctionId(GROUP_CONTROLS, "roll-cw");
+	private static final FunctionId F_ROLL_CCW = new FunctionId(GROUP_FLIGHT, "roll-ccw");
+	private static final FunctionId F_ROLL_CW = new FunctionId(GROUP_FLIGHT, "roll-cw");
 
-	private static final FunctionId F_THRUST_UP = new FunctionId(GROUP_CONTROLS, "thrust-up");
-	private static final FunctionId F_THRUST_DOWN = new FunctionId(GROUP_CONTROLS, "thrust-down");
+	private static final FunctionId F_THRUST_UP = new FunctionId(GROUP_FLIGHT, "thrust-up");
+	private static final FunctionId F_THRUST_DOWN = new FunctionId(GROUP_FLIGHT, "thrust-down");
 
 	private boolean mouseLook = false;
 
@@ -34,7 +34,7 @@ final class StControls extends BaseAppState {
 	protected void initialize(Application app) {
 		hw = app.getContext().getSettings().getWidth() * 0.5f;
 		hh = app.getContext().getSettings().getHeight() * 0.5f;
-		
+
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
 
 		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_SPACE);
@@ -78,12 +78,12 @@ final class StControls extends BaseAppState {
 
 	@Override
 	protected void onEnable() {
-		GuiGlobals.getInstance().getInputMapper().activateGroup(GROUP_CONTROLS);
+		// GuiGlobals.getInstance().getInputMapper().activateGroup(GROUP_FLIGHT);
 	}
 
 	@Override
 	protected void onDisable() {
-		GuiGlobals.getInstance().getInputMapper().deactivateGroup(GROUP_CONTROLS);
+		// GuiGlobals.getInstance().getInputMapper().deactivateGroup(GROUP_FLIGHT);
 	}
 
 	public boolean isMouseLook() {
