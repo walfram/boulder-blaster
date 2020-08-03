@@ -15,11 +15,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.debug.WireBox;
 import com.jme3.scene.shape.Box;
 
 import common.mtl.MtlLighting;
-import common.mtl.MtlUnshaded;
 
 final class StStation extends BaseAppState {
 	
@@ -35,11 +33,6 @@ final class StStation extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		
-//		Geometry hull = new Geometry("station-hull", new WireBox(50f, 50f, 50f));
-//		hull.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Gray, 5f));
-//		station.attachChild(hull);
-		
 		Material material = new MtlLighting(app.getAssetManager(), ColorRGBA.Gray);
 		Mesh mesh = new Box(25f, 1f, 100f);
 		
