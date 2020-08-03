@@ -65,7 +65,7 @@ final class StStation extends BaseAppState {
 		leftBottomPlate.move(-45, -20f, 0);
 		station.attachChild(leftBottomPlate);
 
-		Geometry rightBottomPlate = new Geometry("left-bottom-plate", mesh);
+		Geometry rightBottomPlate = new Geometry("right-bottom-plate", mesh);
 		rightBottomPlate.setMaterial(material);
 		rightBottomPlate.rotate(0, 0, 225f * FastMath.DEG_TO_RAD);
 		rightBottomPlate.move(45, -20, 0);
@@ -74,7 +74,6 @@ final class StStation extends BaseAppState {
 		station.addControl(new CtCollision((other) -> {
 			logger.debug("collision with {}", other);
 		}));
-		
 	}
 
 	@Override
