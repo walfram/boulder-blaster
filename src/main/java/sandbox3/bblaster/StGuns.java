@@ -7,9 +7,9 @@ import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
 
 import common.mtl.MtlShowNormals;
-import jme3utilities.mesh.Octasphere;
 
 final class StGuns extends BaseAppState {
 
@@ -41,10 +41,10 @@ final class StGuns extends BaseAppState {
 	}
 
 	void spawnProjectile(Transform transform) {
-		Geometry geometry = new Geometry("projectile-geometry", new Octasphere(1, 0.5f));
+		Geometry geometry = new Geometry("projectile-geometry", new Box(0.25f, 0.25f, 1f));
 		geometry.setMaterial(new MtlShowNormals(getApplication().getAssetManager()));
 
-		geometry.setModelBound(new BoundingSphere(0.5f, new Vector3f()));
+		geometry.setModelBound(new BoundingSphere(1f, new Vector3f()));
 
 		Node projectile = new Node("projectile");
 		projectile.attachChild(geometry);
