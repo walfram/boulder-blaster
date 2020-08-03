@@ -59,7 +59,7 @@ final class StStation extends BaseAppState {
 		bottomPlate.move(0, -40, 0);
 		station.attachChild(bottomPlate);
 
-		Geometry leftBottomPlate = new Geometry("left-top-plate", mesh);
+		Geometry leftBottomPlate = new Geometry("left-bottom-plate", mesh);
 		leftBottomPlate.setMaterial(material);
 		leftBottomPlate.rotate(0, 0, -225f * FastMath.DEG_TO_RAD);
 		leftBottomPlate.move(-45, -20f, 0);
