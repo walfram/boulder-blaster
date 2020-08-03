@@ -3,6 +3,9 @@ package sandbox3.bblaster;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.ColorRGBA;
@@ -15,20 +18,26 @@ import common.mtl.MtlUnshaded;
 
 final class StStation extends BaseAppState {
 	
-	private final Node stations = new Node("stations");
+	private static final Logger logger = LoggerFactory.getLogger(StStation.class);
+	
+	private final Node station = new Node("station");
 
 	private final List<Spatial> docked = new ArrayList<>();
 	
 	public StStation(Node rootNode) {
-		rootNode.attachChild(stations);
+		rootNode.attachChild(station);
 	}
 
 	@Override
 	protected void initialize(Application app) {
 		
-		Geometry station = new Geometry("station", new WireBox(50f, 50f, 50f));
-		station.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Gray, 5f));
-		stations.attachChild(station);
+		Geometry hull = new Geometry("station-hull", new WireBox(50f, 50f, 50f));
+		hull.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Gray, 5f));
+		station.attachChild(hull);
+		
+		station.addControl(new CtCollision((other) -> {
+			logger.debug("collision with {}", other);
+		}));
 		
 	}
 
@@ -50,6 +59,16 @@ final class StStation extends BaseAppState {
 
 	public void undock(Spatial spatial) {
 		docked.remove(spatial);
+	}
+
+	public void disableDocking() {
+		station.getControl(CtCollision.class).setEnabled(false);
+		getState(StCollision.class).unregister(station);
+	}
+	
+	public void enableDocking() {
+		station.getControl(CtCollision.class).setEnabled(true);
+		getState(StCollision.class).register(station);
 	}
 
 }

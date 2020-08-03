@@ -85,6 +85,8 @@ final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtBoulderMove(radius));
 		boulder.addControl(new CtBounds(new Const().boundarySize()));
 
+		boulder.addControl(new CtTargettable());
+		
 		boulder.addControl(new CtCollision(other -> {
 			CtDamage control = other.getControl(CtDamage.class);
 

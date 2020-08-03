@@ -92,8 +92,8 @@ final class StHud extends BaseAppState {
 		playerPanel.addChild(new Label("position"));
 		Label position = playerPanel.addChild(new Label("position.value"), 1);
 
-		playerPanel.addChild(new Label("status"));
-		playerPanel.addChild(new Label("status.value"), 1);
+//		playerPanel.addChild(new Label("status"));
+//		playerPanel.addChild(new Label("status.value"), 1);
 
 		playerPanel.addControl(new SimpleControl() {
 			@Override

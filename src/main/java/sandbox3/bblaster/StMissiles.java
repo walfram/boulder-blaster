@@ -81,9 +81,11 @@ final class StMissiles extends BaseAppState {
 		fx.attachChild(smokeTrail);
 
 		missile.addControl(new CtCollision(other -> {
-			missile.removeFromParent();
-			getState(StCollision.class).unregister(missile);
-			getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
+			if (other.getControl(CtTargettable.class) != null) {
+				missile.removeFromParent();
+				getState(StCollision.class).unregister(missile);
+				getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
+			}
 		}));
 		
 		getState(StCollision.class).register(missile);

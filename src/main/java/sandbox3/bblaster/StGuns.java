@@ -61,9 +61,11 @@ final class StGuns extends BaseAppState {
 		projectiles.attachChild(projectile);
 
 		projectile.addControl(new CtCollision(other -> {
-			projectile.removeFromParent();
-			getState(StCollision.class).unregister(projectile);
-			getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
+			if (other.getControl(CtTargettable.class) != null) {
+				projectile.removeFromParent();
+				getState(StCollision.class).unregister(projectile);
+				getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
+			}
 		}));
 
 		getState(StCollision.class).register(projectile);
