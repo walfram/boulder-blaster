@@ -45,12 +45,12 @@ dependencies {
     
     implementation 'com.github.stephengold:Heart:5.5.0'
     
-    implementation 'com.simsilica:sio2:1.4.0-SNAPSHOT'
+    implementation 'com.simsilica:sio2:1.5.0'
     
     implementation 'org.codehaus.groovy:groovy-all:3.0.3'
-    implementation 'com.simsilica:lemur:1.14.0-SNAPSHOT'
-    implementation 'com.simsilica:lemur-proto:1.11.1-SNAPSHOT'
-    implementation 'com.simsilica:lemur-props:1.1.1-SNAPSHOT'
+    implementation 'com.simsilica:lemur:1.14.0'
+    implementation 'com.simsilica:lemur-proto:1.11.0'
+    implementation 'com.simsilica:lemur-props:1.1.1'
     
     implementation 'org.jmonkeyengine:jme3-core:3.3.2-stable'
     implementation 'org.jmonkeyengine:jme3-desktop:3.3.2-stable'
