@@ -6,6 +6,8 @@ import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
+import com.simsilica.lemur.GuiGlobals;
+import com.simsilica.lemur.style.BaseStyles;
 
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
@@ -21,7 +23,7 @@ public class BoulderBlasterApp extends SimpleApplication {
 		settings.setResolution(1600, 800);
 
 		settings.setGammaCorrection(true);
-		
+
 		app.setSettings(settings);
 		app.setShowSettings(false);
 
@@ -30,8 +32,9 @@ public class BoulderBlasterApp extends SimpleApplication {
 
 	@Override
 	public void simpleInitApp() {
-		stateManager.attach(new LemurState());
-		stateManager.attach(new SkyState(rootNode));
+		GuiGlobals.initialize(this);
+		BaseStyles.loadGlassStyle();
+		GuiGlobals.getInstance().getStyles().setDefaultStyle(BaseStyles.GLASS);
 
 		flyCam.setDragToRotate(true);
 		flyCam.setMoveSpeed(150f);
@@ -51,8 +54,10 @@ public class BoulderBlasterApp extends SimpleApplication {
 
 		MyCamera.setNearFar(cam, 0.1f, 32768f);
 
+		stateManager.attach(new StSky(rootNode));
+
 		stateManager.attach(new StCollision());
-		
+
 		stateManager.attach(new StExplosion(rootNode));
 		stateManager.attach(new StBoulders(rootNode));
 
@@ -61,12 +66,12 @@ public class BoulderBlasterApp extends SimpleApplication {
 
 		stateManager.attach(new StStation(rootNode));
 		stateManager.attach(new StCamera());
-		
+
 		stateManager.attach(new StTargetting());
 		stateManager.attach(new StControls());
-		
+
 		stateManager.attach(new StHud(guiNode));
-		
+
 		stateManager.attach(new StPlayer(rootNode));
 	}
 

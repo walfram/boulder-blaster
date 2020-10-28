@@ -17,7 +17,7 @@ import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.input.InputState;
 
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.SkyState;
+import sandbox3.bblaster.StSky;
 import sandbox3.bblaster.debug.NdDebugGrid;
 
 public class EmitterTest extends SimpleApplication {
@@ -94,7 +94,7 @@ public class EmitterTest extends SimpleApplication {
 			}
 		}, F_FIRE);
 		
-		stateManager.attach(new SkyState(rootNode));
+		stateManager.attach(new StSky(rootNode));
 
 	}
 

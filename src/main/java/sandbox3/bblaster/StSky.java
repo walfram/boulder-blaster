@@ -8,11 +8,11 @@ import com.jme3.scene.Spatial;
 import com.jme3.texture.Texture;
 import com.jme3.util.SkyFactory;
 
-public final class SkyState extends BaseAppState {
+public final class StSky extends BaseAppState {
 
 	private final Node scene = new Node("sky-node");
 
-	public SkyState(Node rootNode) {
+	public StSky(Node rootNode) {
 		rootNode.attachChild(scene);
 	}
 

@@ -24,7 +24,7 @@ import com.simsilica.lemur.input.InputState;
 import com.simsilica.lemur.style.BaseStyles;
 
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.SkyState;
+import sandbox3.bblaster.StSky;
 import sandbox3.bblaster.debug.NdDebugGrid;
 
 public class SteeringTest extends SimpleApplication {
@@ -51,7 +51,7 @@ public class SteeringTest extends SimpleApplication {
 		
 		cam.setLocation(new Vector3f(0, 5, 10));
 
-		stateManager.attach(new SkyState(rootNode));
+		stateManager.attach(new StSky(rootNode));
 
 		Slider yawSlider = new Slider(com.simsilica.lemur.Axis.X);
 		yawSlider.setModel(new DefaultRangedValueModel(-10, 10, 0));
