@@ -17,9 +17,10 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
-import common.mtl.MtlLighting;
+import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.materials.MtlLighting;
 
-final class StStation extends BaseAppState {
+public final class StStation extends BaseAppState {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StStation.class);
 	

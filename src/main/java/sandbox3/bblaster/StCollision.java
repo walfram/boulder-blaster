@@ -10,7 +10,9 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.scene.Spatial;
 
-final class StCollision extends BaseAppState {
+import sandbox3.bblaster.controls.CtCollision;
+
+public final class StCollision extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StCollision.class);
 

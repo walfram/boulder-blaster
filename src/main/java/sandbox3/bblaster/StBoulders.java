@@ -19,12 +19,18 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.instancing.InstancedNode;
 
-import common.misc.FlatShadedMesh;
-import common.mtl.MtlLighting;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
+import sandbox3.bblaster.controls.CtBoulderMove;
+import sandbox3.bblaster.controls.CtBounds;
+import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.controls.CtDamage;
+import sandbox3.bblaster.controls.CtHealth;
+import sandbox3.bblaster.controls.CtTargettable;
+import sandbox3.bblaster.materials.MtlLighting;
+import sandbox3.bblaster.misc.FlatShadedMesh;
 
-final class StBoulders extends BaseAppState {
+public final class StBoulders extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StBoulders.class);
 
@@ -57,7 +63,7 @@ final class StBoulders extends BaseAppState {
 		while (idx.incrementAndGet() < 1024) {
 			Vector3f translation = random.nextVector3f().mult(4096f);
 			Quaternion rotation = random.nextQuaternion();
-			float radius = random.nextFloat(new Const().boulderMinRadius(), new Const().boulderMaxRadius());
+			float radius = random.nextFloat(new GameSettings().boulderMinRadius(), new GameSettings().boulderMaxRadius());
 
 			createBoulder(idx.get(), translation, rotation, radius);
 		}
@@ -83,7 +89,7 @@ final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtHealth(radius));
 
 		boulder.addControl(new CtBoulderMove(radius));
-		boulder.addControl(new CtBounds(new Const().boundarySize()));
+		boulder.addControl(new CtBounds(new GameSettings().boundarySize()));
 
 		boulder.addControl(new CtTargettable());
 		
@@ -114,7 +120,7 @@ final class StBoulders extends BaseAppState {
 	private void createFragments(float originalRadius, Vector3f originalTranslation) {
 		float radius = originalRadius * 0.5f;
 
-		if (radius < new Const().boulderMinRadius())
+		if (radius < new GameSettings().boulderMinRadius())
 			return;
 
 		// for (int i = 0; i < 2; i++) {

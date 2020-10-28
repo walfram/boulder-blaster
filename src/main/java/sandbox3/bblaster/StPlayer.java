@@ -14,14 +14,16 @@ import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.anim.Tween;
 import com.simsilica.lemur.anim.Tweens;
 
-import common.controls.CtPitch;
-import common.controls.CtRoll;
-import common.controls.CtThrust;
-import common.controls.CtYaw;
-import common.misc.Cooldown;
-import common.mtl.MtlUnshaded;
+import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.controls.CtPitch;
+import sandbox3.bblaster.controls.CtRoll;
+import sandbox3.bblaster.controls.CtThrust;
+import sandbox3.bblaster.controls.CtYaw;
+import sandbox3.bblaster.gui.StHud;
+import sandbox3.bblaster.materials.MtlUnshaded;
+import sandbox3.bblaster.misc.Cooldown;
 
-final class StPlayer extends BaseAppState {
+public final class StPlayer extends BaseAppState {
 
 	private final Node player = new Node("player");
 
@@ -55,7 +57,7 @@ final class StPlayer extends BaseAppState {
 		player.addControl(new CtYaw());
 		player.addControl(new CtPitch());
 		player.addControl(new CtRoll());
-		player.addControl(new CtThrust(new Const().playerMaxSpeed()));
+		player.addControl(new CtThrust(new GameSettings().playerMaxSpeed()));
 
 		player.addControl(getState(StCamera.class).flightCamera());
 		player.addControl(getState(StCamera.class).dockedCamera());
@@ -128,11 +130,11 @@ final class StPlayer extends BaseAppState {
 		player.getControl(CtThrust.class).thrust(value, tpf);
 	}
 	
-	double thrustValue() {
+	public double thrustValue() {
 		return player.getControl(CtThrust.class).value();
 	}
 
-	Vector3f position() {
+	public Vector3f position() {
 		return player.getLocalTranslation();
 	}
 

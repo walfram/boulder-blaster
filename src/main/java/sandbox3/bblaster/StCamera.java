@@ -9,9 +9,9 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.Control;
 
-import common.controls.CtFollowingCamera;
+import sandbox3.bblaster.controls.CtFollowingCamera;
 
-final class StCamera extends BaseAppState {
+public final class StCamera extends BaseAppState {
 
 	private final Vector3f cameraOffset = new Vector3f(0, 15, -50);
 

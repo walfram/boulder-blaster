@@ -11,11 +11,11 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 
-import common.mtl.MtlUnshaded;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
+import sandbox3.bblaster.materials.MtlUnshaded;
 
-final class StExplosion extends BaseAppState {
+public final class StExplosion extends BaseAppState {
 
 	private final Node explosions = new Node("explosions");
 

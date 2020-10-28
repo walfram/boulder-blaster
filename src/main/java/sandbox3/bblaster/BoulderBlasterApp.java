@@ -7,11 +7,10 @@ import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 
-import common.debug.NdDebugGrid;
-import common.states.LemurState;
-import common.states.SkyState;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
+import sandbox3.bblaster.debug.NdDebugGrid;
+import sandbox3.bblaster.gui.StHud;
 
 public class BoulderBlasterApp extends SimpleApplication {
 
@@ -21,6 +20,8 @@ public class BoulderBlasterApp extends SimpleApplication {
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
 
+		settings.setGammaCorrection(true);
+		
 		app.setSettings(settings);
 		app.setShowSettings(false);
 

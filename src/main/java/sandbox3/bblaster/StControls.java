@@ -10,7 +10,7 @@ import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.input.InputState;
 
-final class StControls extends BaseAppState {
+public final class StControls extends BaseAppState {
 
 	private static final String GROUP_FLIGHT = "group-flight";
 

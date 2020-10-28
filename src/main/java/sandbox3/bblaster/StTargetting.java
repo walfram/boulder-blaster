@@ -11,7 +11,9 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 
-final class StTargetting extends BaseAppState {
+import sandbox3.bblaster.controls.CtHealth;
+
+public final class StTargetting extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StTargetting.class);
 	
@@ -69,7 +71,7 @@ final class StTargetting extends BaseAppState {
 		logger.debug("aquire target = {}", currentTarget);
 	}
 
-	Spatial currentTarget() {
+	public Spatial currentTarget() {
 		return currentTarget;
 	}
 

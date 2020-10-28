@@ -9,9 +9,14 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 
-import common.mtl.MtlShowNormals;
+import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.controls.CtDamage;
+import sandbox3.bblaster.controls.CtMissileMove;
+import sandbox3.bblaster.controls.CtTargettable;
+import sandbox3.bblaster.controls.CtTimeout;
+import sandbox3.bblaster.materials.MtlShowNormals;
 
-final class StGuns extends BaseAppState {
+public final class StGuns extends BaseAppState {
 
 	private final Node projectiles = new Node("projectiles");
 
@@ -51,8 +56,8 @@ final class StGuns extends BaseAppState {
 
 		projectile.setLocalTransform(transform);
 
-		projectile.addControl(new CtDamage(new Const().projectileDamage()));
-		projectile.addControl(new CtMissileMove(new Const().projectileSpeed()));
+		projectile.addControl(new CtDamage(new GameSettings().projectileDamage()));
+		projectile.addControl(new CtMissileMove(new GameSettings().projectileSpeed()));
 
 		projectile.addControl(new CtTimeout(5f, (spatial) -> {
 			projectile.removeFromParent();

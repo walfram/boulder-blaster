@@ -12,10 +12,18 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
-import common.mtl.MtlShowNormals;
 import jme3utilities.mesh.Cone;
+import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.controls.CtDamage;
+import sandbox3.bblaster.controls.CtMissileMove;
+import sandbox3.bblaster.controls.CtMissileTarget;
+import sandbox3.bblaster.controls.CtSmokeTrail;
+import sandbox3.bblaster.controls.CtTargettable;
+import sandbox3.bblaster.controls.CtTimeout;
+import sandbox3.bblaster.effects.PeSmokeTrail;
+import sandbox3.bblaster.materials.MtlShowNormals;
 
-final class StMissiles extends BaseAppState {
+public final class StMissiles extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StMissiles.class);
 
@@ -59,8 +67,8 @@ final class StMissiles extends BaseAppState {
 		// missile.addControl(boundsVisualizer);
 		// boundsVisualizer.setEnabled(true);
 
-		missile.addControl(new CtDamage(new Const().missileDamage()));
-		missile.addControl(new CtMissileMove(new Const().missileSpeed()));
+		missile.addControl(new CtDamage(new GameSettings().missileDamage()));
+		missile.addControl(new CtMissileMove(new GameSettings().missileSpeed()));
 
 		missile.addControl(new CtMissileTarget(getState(StTargetting.class).currentTarget()));
 		
