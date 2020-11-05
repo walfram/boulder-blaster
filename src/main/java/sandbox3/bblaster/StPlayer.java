@@ -10,16 +10,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
-import com.simsilica.lemur.GuiGlobals;
-import com.simsilica.lemur.anim.Tween;
-import com.simsilica.lemur.anim.Tweens;
 
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPitch;
 import sandbox3.bblaster.controls.CtRoll;
 import sandbox3.bblaster.controls.CtThrust;
 import sandbox3.bblaster.controls.CtYaw;
-import sandbox3.bblaster.gui.StHud;
 import sandbox3.bblaster.materials.MtlUnshaded;
 import sandbox3.bblaster.misc.Cooldown;
 
@@ -59,19 +55,15 @@ public final class StPlayer extends BaseAppState {
 		player.addControl(new CtRoll());
 		player.addControl(new CtThrust(new GameSettings().playerMaxSpeed()));
 
-		player.addControl(getState(StCamera.class).flightCamera());
-		player.addControl(getState(StCamera.class).dockedCamera());
+		// player.addControl(getState(StCamera.class).flightCamera());
+		// player.addControl(getState(StCamera.class).dockedCamera());
 
 		player.addControl(new CtCollision(other -> {
-			
+
 		}));
 		getState(StCollision.class).register(player);
-		
-		getState(StStation.class).dock(player);
-		getState(StCamera.class).enableDockedCamera(player);
-		getState(StHud.class).showStationHud();
-		getState(StControls.class).setEnabled(false);
-		getState(StStation.class).disableDocking();
+
+		getState(StCamera.class).enableFlightCamera(player);
 	}
 
 	@Override
@@ -129,26 +121,13 @@ public final class StPlayer extends BaseAppState {
 	void updateThrust(double value, double tpf) {
 		player.getControl(CtThrust.class).thrust(value, tpf);
 	}
-	
+
 	public double thrustValue() {
 		return player.getControl(CtThrust.class).value();
 	}
 
 	public Vector3f position() {
 		return player.getLocalTranslation();
-	}
-
-	void undock() {
-		getState(StStation.class).undock(player);
-		getState(StCamera.class).enableFlightCamera(player);
-		getState(StHud.class).showFlightHud();
-		
-		Tween setThrust = Tweens.callMethod(player.getControl(CtThrust.class), "thrustTo", 0.25f);
-		Tween delay = Tweens.delay(1.5);
-		Tween enableControls = Tweens.callMethod(getState(StControls.class), "setEnabled", true);
-		Tween enableDocking = Tweens.callMethod(getState(StStation.class), "enableDocking");
-		
-		GuiGlobals.getInstance().getAnimationState().add(setThrust, delay, enableControls, enableDocking);
 	}
 
 }

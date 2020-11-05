@@ -37,8 +37,8 @@ public final class StControls extends BaseAppState {
 		hh = app.getContext().getSettings().getHeight() * 0.5f;
 
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
-
-		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_SPACE);
+		
+		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_F);
 		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireMissile(), F_FIRE_MISSILE);
 
 		inputMapper.map(F_AQUIRE_TARGET, KeyInput.KEY_T);

@@ -52,7 +52,7 @@ public class BoulderBlasterApp extends SimpleApplication {
 
 		rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
 
-		MyCamera.setNearFar(cam, 0.1f, 32768f);
+		MyCamera.setNearFar(cam, 1f, 32768f);
 
 		stateManager.attach(new StSky(rootNode));
 
@@ -64,7 +64,6 @@ public class BoulderBlasterApp extends SimpleApplication {
 		stateManager.attach(new StMissiles(rootNode));
 		stateManager.attach(new StGuns(rootNode));
 
-		stateManager.attach(new StStation(rootNode));
 		stateManager.attach(new StCamera());
 
 		stateManager.attach(new StTargetting());
