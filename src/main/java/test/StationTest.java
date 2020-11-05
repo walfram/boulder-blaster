@@ -10,10 +10,10 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.shape.Box;
 import com.jme3.system.AppSettings;
 
+import jme3.common.debug.NdDebugGrid;
+import jme3.common.material.MtlShowNormals;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.debug.NdDebugGrid;
-import sandbox3.bblaster.materials.MtlShowNormals;
 
 public class StationTest extends SimpleApplication {
 
@@ -39,7 +39,7 @@ public class StationTest extends SimpleApplication {
 
 		cam.setLocation(new Vector3f(0, 0, 200));
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 10, 500, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 10, 10, 500, ColorRGBA.Gray));
 
 		AxesVisualizer axesVisualizer = new AxesVisualizer(assetManager, 250, 1);
 		rootNode.addControl(axesVisualizer);

@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.SimpleApplication;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Quaternion;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -18,9 +17,9 @@ import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.input.InputState;
 
+import jme3.common.debug.NdDebugGrid;
+import jme3.common.material.MtlUnshaded;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.debug.NdDebugGrid;
-import sandbox3.bblaster.materials.MtlUnshaded;
 
 public class LaserTest extends SimpleApplication {
 
@@ -48,7 +47,7 @@ public class LaserTest extends SimpleApplication {
 		flyCam.setMoveSpeed(100f);
 		flyCam.setZoomSpeed(0);
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 100f, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 100f, ColorRGBA.Gray));
 		rootNode.addControl(new AxesVisualizer(assetManager, 128, 1));
 		rootNode.getControl(AxesVisualizer.class).setEnabled(true);
 

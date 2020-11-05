@@ -12,10 +12,10 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.shape.Cylinder;
 import com.jme3.system.AppSettings;
 
+import jme3.common.debug.NdDebugGrid;
+import jme3.common.material.MtlShowNormals;
 import jme3utilities.SimpleControl;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.debug.NdDebugGrid;
-import sandbox3.bblaster.materials.MtlShowNormals;
 
 public class ProjectileTest extends SimpleApplication {
 
@@ -41,7 +41,7 @@ public class ProjectileTest extends SimpleApplication {
 		flyCam.setMoveSpeed(100f);
 		flyCam.setZoomSpeed(0);
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 100f, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 100f, ColorRGBA.Gray));
 		rootNode.addControl(new AxesVisualizer(assetManager, 128, 1));
 		rootNode.getControl(AxesVisualizer.class).setEnabled(true);
 

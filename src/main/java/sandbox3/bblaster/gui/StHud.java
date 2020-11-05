@@ -15,10 +15,10 @@ import com.simsilica.lemur.ProgressBar;
 import com.simsilica.lemur.component.SpringGridLayout;
 import com.simsilica.lemur.style.ElementId;
 
+import jme3.common.vector.FormattedVector3f;
 import jme3utilities.SimpleControl;
 import sandbox3.bblaster.StPlayer;
 import sandbox3.bblaster.StTargetting;
-import sandbox3.bblaster.misc.FormattedVector3f;
 
 public final class StHud extends BaseAppState {
 

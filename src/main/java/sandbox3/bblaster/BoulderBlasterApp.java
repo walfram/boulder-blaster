@@ -2,16 +2,14 @@ package sandbox3.bblaster;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
-import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.style.BaseStyles;
 
+import jme3.common.debug.NdDebugGrid;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.debug.NdDebugGrid;
 import sandbox3.bblaster.gui.StHud;
 
 public class BoulderBlasterApp extends SimpleApplication {
@@ -46,7 +44,7 @@ public class BoulderBlasterApp extends SimpleApplication {
 		rootNode.addControl(axesVisualizer);
 		axesVisualizer.setEnabled(true);
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 500, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 500, ColorRGBA.Gray));
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		// rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));

@@ -6,7 +6,7 @@ import com.jme3.effect.ParticleMesh.Type;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 
-import sandbox3.bblaster.materials.MtlParticle;
+import jme3.common.material.MtlParticle;
 
 public final class PeSmokeTrail extends ParticleEmitter {
 

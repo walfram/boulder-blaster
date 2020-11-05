@@ -19,6 +19,8 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.instancing.InstancedNode;
 
+import jme3.common.material.MtlLighting;
+import jme3.common.mesh.FlatShaded;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.controls.CtBoulderMove;
@@ -27,8 +29,6 @@ import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
 import sandbox3.bblaster.controls.CtHealth;
 import sandbox3.bblaster.controls.CtTargettable;
-import sandbox3.bblaster.materials.MtlLighting;
-import sandbox3.bblaster.misc.FlatShadedMesh;
 
 public final class StBoulders extends BaseAppState {
 
@@ -54,7 +54,7 @@ public final class StBoulders extends BaseAppState {
 	@Override
 	protected void initialize(Application app) {
 
-		mesh = new FlatShadedMesh(new Octasphere(2, 1f)).create();
+		mesh = new FlatShaded(new Octasphere(2, 1f)).mesh();
 		mesh.setBound(new BoundingSphere(1f, new Vector3f()));
 
 		material = new MtlLighting(app.getAssetManager(), ColorRGBA.Gray);

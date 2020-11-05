@@ -6,7 +6,6 @@ import com.jme3.effect.ParticleMesh.Type;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState.FaceCullMode;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
@@ -16,9 +15,9 @@ import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.input.InputState;
 
+import jme3.common.debug.NdDebugGrid;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StSky;
-import sandbox3.bblaster.debug.NdDebugGrid;
 
 public class EmitterTest extends SimpleApplication {
 
@@ -32,7 +31,7 @@ public class EmitterTest extends SimpleApplication {
 		flyCam.setMoveSpeed(100f);
 		flyCam.setZoomSpeed(0);
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 100f, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 100f, ColorRGBA.Gray));
 		rootNode.addControl(new AxesVisualizer(assetManager, 128, 1));
 		rootNode.getControl(AxesVisualizer.class).setEnabled(true);
 
@@ -62,8 +61,8 @@ public class EmitterTest extends SimpleApplication {
 		spark.setImagesX(1);
 		spark.setImagesY(1);
 
-//		spark.setRotateSpeed(FastMath.DEG_TO_RAD * 10f);
-		
+		// spark.setRotateSpeed(FastMath.DEG_TO_RAD * 10f);
+
 		spark.setInWorldSpace(true);
 
 		Material mat = new Material(assetManager, "Common/MatDefs/Misc/Particle.j3md");
@@ -84,16 +83,15 @@ public class EmitterTest extends SimpleApplication {
 		inputMapper.map(F_FIRE, Button.MOUSE_BUTTON2);
 		inputMapper.addStateListener((func, state, tpf) -> {
 			if (state != InputState.Off) {
-//				spark.setEnabled(true);
+				// spark.setEnabled(true);
 				spark.setNumParticles(1);
 				spark.emitAllParticles();
-		}
-			else {
+			} else {
 				spark.setEnabled(false);
 				spark.killAllParticles();
 			}
 		}, F_FIRE);
-		
+
 		stateManager.attach(new StSky(rootNode));
 
 	}

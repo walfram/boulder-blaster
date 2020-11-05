@@ -9,12 +9,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 
+import jme3.common.material.MtlShowNormals;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
 import sandbox3.bblaster.controls.CtMissileMove;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
-import sandbox3.bblaster.materials.MtlShowNormals;
 
 public final class StGuns extends BaseAppState {
 

@@ -11,9 +11,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 
+import jme3.common.material.MtlUnshaded;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
-import sandbox3.bblaster.materials.MtlUnshaded;
 
 public final class StExplosion extends BaseAppState {
 
@@ -29,7 +29,7 @@ public final class StExplosion extends BaseAppState {
 	@Override
 	protected void initialize(Application app) {
 		mesh = new Octasphere(2, 1f);
-		material = new MtlUnshaded(app.getAssetManager());
+		material = new MtlUnshaded(app.getAssetManager(), new ColorRGBA(1, 1, 0, 0.5f));
 		material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 	}
 

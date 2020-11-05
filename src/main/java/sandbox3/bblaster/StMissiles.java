@@ -12,6 +12,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
+import jme3.common.material.MtlShowNormals;
 import jme3utilities.mesh.Cone;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
@@ -21,7 +22,6 @@ import sandbox3.bblaster.controls.CtSmokeTrail;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
 import sandbox3.bblaster.effects.PeSmokeTrail;
-import sandbox3.bblaster.materials.MtlShowNormals;
 
 public final class StMissiles extends BaseAppState {
 

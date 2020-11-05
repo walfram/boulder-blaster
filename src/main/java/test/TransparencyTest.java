@@ -9,9 +9,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.shape.Box;
 import com.jme3.system.AppSettings;
 
+import jme3.common.debug.NdDebugGrid;
+import jme3.common.material.MtlUnshaded;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.debug.NdDebugGrid;
-import sandbox3.bblaster.materials.MtlUnshaded;
 
 public class TransparencyTest extends SimpleApplication {
 
@@ -37,7 +37,7 @@ public class TransparencyTest extends SimpleApplication {
 		rootNode.addControl(axesVisualizer);
 		axesVisualizer.setEnabled(true);
 
-		NdDebugGrid ndDebugGrid = new NdDebugGrid(assetManager, 10, 100, ColorRGBA.DarkGray);
+		NdDebugGrid ndDebugGrid = new NdDebugGrid(assetManager, 10, 10, 100, ColorRGBA.DarkGray);
 		rootNode.attachChild(ndDebugGrid);
 
 		Geometry redBox = new Geometry("box", new Box(5, 5, 5));

@@ -11,12 +11,12 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
+import jme3.common.material.MtlUnshaded;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPitch;
 import sandbox3.bblaster.controls.CtRoll;
 import sandbox3.bblaster.controls.CtThrust;
 import sandbox3.bblaster.controls.CtYaw;
-import sandbox3.bblaster.materials.MtlUnshaded;
 import sandbox3.bblaster.misc.Cooldown;
 
 public final class StPlayer extends BaseAppState {

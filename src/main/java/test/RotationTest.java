@@ -1,7 +1,6 @@
 package test;
 
 import com.jme3.app.SimpleApplication;
-import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
@@ -10,9 +9,9 @@ import com.jme3.scene.Spatial;
 import com.jme3.system.AppSettings;
 import com.simsilica.lemur.GuiGlobals;
 
+import jme3.common.debug.NdDebugGrid;
 import jme3utilities.SimpleControl;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.debug.NdDebugGrid;
 
 public class RotationTest extends SimpleApplication {
 
@@ -36,7 +35,7 @@ public class RotationTest extends SimpleApplication {
 		flyCam.setMoveSpeed(100f);
 		flyCam.setZoomSpeed(0);
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 100f, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 100f, ColorRGBA.Gray));
 		rootNode.addControl(new AxesVisualizer(assetManager, 128, 1));
 		rootNode.getControl(AxesVisualizer.class).setEnabled(true);
 

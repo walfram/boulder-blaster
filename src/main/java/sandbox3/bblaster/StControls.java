@@ -5,7 +5,6 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.input.KeyInput;
 import com.jme3.math.Vector2f;
 import com.simsilica.lemur.GuiGlobals;
-import com.simsilica.lemur.focus.FocusNavigationFunctions;
 import com.simsilica.lemur.focus.FocusNavigationState;
 import com.simsilica.lemur.input.Button;
 import com.simsilica.lemur.input.FunctionId;

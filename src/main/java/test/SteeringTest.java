@@ -6,10 +6,8 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.FlyCamAppState;
 import com.jme3.app.SimpleApplication;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Matrix3f;
 import com.jme3.math.Quaternion;
-import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 import com.simsilica.lemur.DefaultRangedValueModel;
@@ -23,9 +21,9 @@ import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.input.InputState;
 import com.simsilica.lemur.style.BaseStyles;
 
+import jme3.common.debug.NdDebugGrid;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StSky;
-import sandbox3.bblaster.debug.NdDebugGrid;
 
 public class SteeringTest extends SimpleApplication {
 
@@ -42,7 +40,7 @@ public class SteeringTest extends SimpleApplication {
 		BaseStyles.loadGlassStyle();
 		GuiGlobals.getInstance().getStyles().setDefaultStyle(BaseStyles.GLASS);
 
-		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 100f, ColorRGBA.Gray));
+		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 100f, ColorRGBA.Gray));
 		rootNode.addControl(new AxesVisualizer(assetManager, 128, 1));
 		rootNode.getControl(AxesVisualizer.class).setEnabled(true);
 

@@ -36,17 +36,11 @@ java {
 dependencies {
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:28.2-jre'
-    
-    // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
-	compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+	implementation 'ch.qos.logback:logback-classic:1.2.3'
 
-    // Use TestNG framework, also requires calling test.useTestNG() below
-    testImplementation 'org.testng:testng:7.0.0'
-    
     implementation 'com.github.stephengold:Heart:5.5.0'
     
     implementation 'com.simsilica:sio2:1.5.0'
-    
     implementation 'org.codehaus.groovy:groovy-all:3.0.3'
     implementation 'com.simsilica:lemur:1.14.0'
     implementation 'com.simsilica:lemur-proto:1.11.0'
@@ -62,6 +56,12 @@ dependencies {
     implementation 'org.jmonkeyengine:jme3-testdata:3.3.2-stable'
     
     //implementation 'com.github.Jeddic:particlemonkey:1.0.2'
+    
+    // via jitpack.io
+    implementation 'com.github.walfram:jme3-addons:-SNAPSHOT'
+    
+    testImplementation(platform('org.junit:junit-bom:5.7.0'))
+	testImplementation('org.junit.jupiter:junit-jupiter')
 }
 
 application {
@@ -70,9 +70,8 @@ application {
 }
 
 test {
-    // Use TestNG for unit tests
-    useTestNG()
-    testLogging {
-     showStandardStreams = true
-    }
+    useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
 }
