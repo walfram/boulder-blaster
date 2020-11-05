@@ -55,12 +55,9 @@ public final class StPlayer extends BaseAppState {
 		player.addControl(new CtRoll());
 		player.addControl(new CtThrust(new GameSettings().playerMaxSpeed()));
 
-		// player.addControl(getState(StCamera.class).flightCamera());
-		// player.addControl(getState(StCamera.class).dockedCamera());
-
 		player.addControl(new CtCollision(other -> {
-
 		}));
+
 		getState(StCollision.class).register(player);
 
 		getState(StCamera.class).enableFlightCamera(player);

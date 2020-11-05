@@ -5,6 +5,8 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.input.KeyInput;
 import com.jme3.math.Vector2f;
 import com.simsilica.lemur.GuiGlobals;
+import com.simsilica.lemur.focus.FocusNavigationFunctions;
+import com.simsilica.lemur.focus.FocusNavigationState;
 import com.simsilica.lemur.input.Button;
 import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
@@ -36,9 +38,11 @@ public final class StControls extends BaseAppState {
 		hw = app.getContext().getSettings().getWidth() * 0.5f;
 		hh = app.getContext().getSettings().getHeight() * 0.5f;
 
+		getState(FocusNavigationState.class).setEnabled(false);
+
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
-		
-		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_F);
+
+		inputMapper.map(F_FIRE_MISSILE, KeyInput.KEY_SPACE);
 		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireMissile(), F_FIRE_MISSILE);
 
 		inputMapper.map(F_AQUIRE_TARGET, KeyInput.KEY_T);
