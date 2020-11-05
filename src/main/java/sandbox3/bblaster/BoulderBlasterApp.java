@@ -49,11 +49,11 @@ public class BoulderBlasterApp extends SimpleApplication {
 		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 500, ColorRGBA.Gray));
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
-
-		rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
+		// rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
 
 		MyCamera.setNearFar(cam, 1f, 32768f);
 
+		stateManager.attach(new StLights(rootNode));
 		stateManager.attach(new StSky(rootNode));
 
 		stateManager.attach(new StCollision());
