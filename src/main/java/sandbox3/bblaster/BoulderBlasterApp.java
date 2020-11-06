@@ -20,7 +20,7 @@ public class BoulderBlasterApp extends SimpleApplication {
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
 
-		settings.setGammaCorrection(true);
+		// settings.setGammaCorrection(true);
 
 		app.setSettings(settings);
 		app.setShowSettings(false);
