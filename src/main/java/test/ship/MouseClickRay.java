@@ -5,11 +5,11 @@ import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 
-final class MouseRay {
+final class MouseClickRay {
 
 	private final Application app;
 
-	public MouseRay(Application app) {
+	public MouseClickRay(Application app) {
 		this.app = app;
 	}
 
