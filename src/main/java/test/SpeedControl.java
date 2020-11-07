@@ -1,4 +1,4 @@
-package test.ctrl;
+package test;
 
 import com.jme3.math.FastMath;
 

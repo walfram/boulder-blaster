@@ -19,8 +19,6 @@ import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.input.InputState;
 import com.simsilica.lemur.style.BaseStyles;
 
-import test.ctrl.SpeedControl;
-
 public class SpeedBarTest extends SimpleApplication {
 
 	private static final Logger logger = LoggerFactory.getLogger(SpeedBarTest.class);
