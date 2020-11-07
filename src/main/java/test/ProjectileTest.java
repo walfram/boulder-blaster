@@ -79,8 +79,9 @@ public class ProjectileTest extends SimpleApplication {
 					Vector3f fwd = spatial.getLocalRotation().mult(Vector3f.UNIT_Z);
 //					fwd.multLocal(10f);
 					
-					Vector3f updated = spatial.getLocalTranslation().add(fwd);
-					spatial.setLocalTranslation(updated);
+//					Vector3f updated = spatial.getLocalTranslation().add(fwd);
+//					spatial.setLocalTranslation(updated);
+					spatial.move(fwd);
 				}
 			});
 			
