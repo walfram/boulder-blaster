@@ -35,11 +35,13 @@ final class NdMissile extends Node {
 		wingVertical.setMaterial(material);
 		attachChild(wingVertical);
 		wingVertical.move(0, 0, 1.25f);
+		wingVertical.rotate(0, 0, FastMath.QUARTER_PI);
 
 		Geometry wingHorizontal = new Geometry("wing-horizontal", new Box(0.5f, 0.0625f, 0.25f));
 		wingHorizontal.setMaterial(material);
 		attachChild(wingHorizontal);
 		wingHorizontal.move(0, 0, 1.25f);
+		wingHorizontal.rotate(0, 0, FastMath.QUARTER_PI);
 
 		Geometry tailVert = new Geometry("tail-vertical", new Prism(6, 0.5f, 0.125f, true));
 		tailVert.setMaterial(material);

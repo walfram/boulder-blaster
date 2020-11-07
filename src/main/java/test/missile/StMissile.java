@@ -23,6 +23,14 @@ final class StMissile extends BaseAppState {
 		scene.attachChild(missile);
 		logger.debug("missile bound = {}", missile.getWorldBound());
 		// missile.scale(2f);
+
+		// missile.addControl(new SimpleControl() {
+		// @Override
+		// protected void controlUpdate(float updateInterval) {
+		// super.controlUpdate(updateInterval);
+		// spatial.rotate(0, 0, FastMath.DEG_TO_RAD * 30f * updateInterval);
+		// }
+		// });
 	}
 
 	@Override
