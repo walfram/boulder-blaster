@@ -12,6 +12,7 @@ import com.jme3.scene.shape.Cylinder;
 import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
 import jme3utilities.mesh.Cone;
+import jme3utilities.mesh.Prism;
 
 final class NdMissile extends Node {
 
@@ -20,7 +21,7 @@ final class NdMissile extends Node {
 
 		Material material = new MtlLighting(assetManager, ColorRGBA.Gray);
 
-		Geometry body = new Geometry("body", new FlatShaded(new Cylinder(8, 8, 0.25f, 2.5f, true)).mesh());
+		Geometry body = new Geometry("body", new FlatShaded(new Cylinder(8, 8, 0.25f, 5f, true)).mesh());
 		body.setMaterial(material);
 		attachChild(body);
 
@@ -28,17 +29,31 @@ final class NdMissile extends Node {
 		head.setMaterial(material);
 		attachChild(head);
 		head.rotate(FastMath.HALF_PI, 0, 0);
-		head.move(0, 0, 1.5f);
+		head.move(0, 0, 2.75f);
 
-		Geometry tailVertical = new Geometry("tail-vertical", new Box(0.0625f, 0.5f, 0.25f));
-		tailVertical.setMaterial(material);
-		attachChild(tailVertical);
-		tailVertical.move(0, 0, -0.75f);
+		Geometry wingVertical = new Geometry("wing-vertical", new Box(0.0625f, 0.5f, 0.25f));
+		wingVertical.setMaterial(material);
+		attachChild(wingVertical);
+		wingVertical.move(0, 0, 1.25f);
 
-		Geometry tailHorizontal = new Geometry("tail-horizontal", new Box(0.5f, 0.0625f, 0.25f));
-		tailHorizontal.setMaterial(material);
-		attachChild(tailHorizontal);
-		tailHorizontal.move(0, 0, -0.75f);
+		Geometry wingHorizontal = new Geometry("wing-horizontal", new Box(0.5f, 0.0625f, 0.25f));
+		wingHorizontal.setMaterial(material);
+		attachChild(wingHorizontal);
+		wingHorizontal.move(0, 0, 1.25f);
+		
+	
+		Geometry tailVert = new Geometry("tail-vertical", new Prism(6, 0.5f, 0.125f, true));
+		tailVert.setMaterial(material);
+		attachChild(tailVert);
+		tailVert.scale(1.5f, 1, 1);
+		tailVert.rotate(0, 0, FastMath.HALF_PI);
+		tailVert.move(0, 0, -1.75f);
+		
+		Geometry tailHoriz = new Geometry("tail-horizontal", new Prism(6, 0.5f, 0.125f, true));
+		tailHoriz.setMaterial(material);
+		attachChild(tailHoriz);
+		tailHoriz.scale(1.5f, 1, 1);
+		tailHoriz.move(0, 0, -1.75f);
 	}
 
 }
