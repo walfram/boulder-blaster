@@ -1,11 +1,11 @@
-package test.ship;
+package test.cmn;
 
 import com.jme3.app.Application;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 
-final class MouseClickRay {
+public final class MouseClickRay {
 
 	private final Application app;
 

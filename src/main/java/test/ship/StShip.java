@@ -5,21 +5,17 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.collision.CollisionResult;
-import com.jme3.collision.CollisionResults;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Ray;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.input.Button;
 import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
-import com.simsilica.lemur.input.InputState;
 
-import jme3.common.material.MtlLighting;
+import jme3utilities.debug.BoundsVisualizer;
+import jme3utilities.debug.PointVisualizer;
+import test.cmn.ScenePick;
 
 final class StShip extends BaseAppState {
 
@@ -39,37 +35,30 @@ final class StShip extends BaseAppState {
 		hull.scale(10f);
 		scene.attachChild(hull);
 
-		Geometry wpnLeft = new Geometry("weapon-left", new Box(0.5f, 0.5f, 0.5f));
-		wpnLeft.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Red));
-		wpnLeft.setLocalTranslation(14f, 2f, -3.5f);
+		PointVisualizer wpnLeft = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Red, "saltire");
+		wpnLeft.setLocalTranslation(14f, 2f, -2f);
 		scene.attachChild(wpnLeft);
-		
-		Geometry wpnRight = new Geometry("weapon-right", new Box(0.5f, 0.5f, 0.5f));
-		wpnRight.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Green));
-		wpnRight.setLocalTranslation(-14f, 2f, -3.5f);
+
+		PointVisualizer wpnRight = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Green, "saltire");
+		wpnRight.setLocalTranslation(-14f, 2f, -2f);
 		scene.attachChild(wpnRight);
-		
+
+		BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
+		scene.addControl(boundsVisualizer);
+		boundsVisualizer.setSubject(hull);
+		boundsVisualizer.setEnabled(true);
+
+		PointVisualizer engineLeft = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Blue, null);
+		engineLeft.setLocalTranslation(4, 4, -10);
+		scene.attachChild(engineLeft);
+
+		PointVisualizer engineRight = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Blue, null);
+		engineRight.setLocalTranslation(-4, 4, -10);
+		scene.attachChild(engineRight);
+
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
 		inputMapper.map(F_CLICK, Button.MOUSE_BUTTON2);
-		inputMapper.addStateListener((func, state, tpf) -> click(state, tpf), F_CLICK);
-	}
-
-	private void click(InputState state, double tpf) {
-		if (state != InputState.Off)
-			return;
-
-		Ray ray = new MouseClickRay(getApplication()).ray();
-		CollisionResults results = new CollisionResults();
-		int collisions = scene.collideWith(ray, results);
-
-		if (collisions == 0) {
-			logger.debug("no collisions");
-			return;
-		}
-
-		CollisionResult collision = results.getClosestCollision();
-
-		logger.debug("collision with {} at {}", collision.getGeometry(), collision.getContactPoint());
+		inputMapper.addStateListener(new ScenePick(scene, app), F_CLICK);
 	}
 
 	@Override
