@@ -16,10 +16,10 @@ final class CtMissileEngine extends SimpleControl {
 	private final float speed;
 
 	public CtMissileEngine(ParticleEmitter engine, float speed) {
-		this.enabled = false;
 		this.engine = engine;
-		this.engine.setParticlesPerSec(0);
 		this.speed = speed;
+		
+		setEnabled(false);
 	}
 
 	@Override
@@ -39,8 +39,8 @@ final class CtMissileEngine extends SimpleControl {
 	}
 
 	@Override
-	public void toggleEnabled() {
-		super.toggleEnabled();
+	public void setEnabled(boolean enabled) {
+		super.setEnabled(enabled);
 		logger.debug("engine enabled = {}", isEnabled());
 		engine.setParticlesPerSec(isEnabled() ? 20 : 0);
 	}

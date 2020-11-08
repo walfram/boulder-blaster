@@ -7,6 +7,7 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 import com.simsilica.lemur.GuiGlobals;
+import com.simsilica.lemur.style.BaseStyles;
 
 import jme3.common.debug.NdDebugGrid;
 import jme3utilities.debug.AxesVisualizer;
@@ -16,7 +17,7 @@ public class ShipTest extends SimpleApplication {
 
 	public static void main(String[] args) {
 		ShipTest app = new ShipTest();
-		
+
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
 
@@ -25,11 +26,13 @@ public class ShipTest extends SimpleApplication {
 
 		app.start();
 	}
-	
+
 	@Override
 	public void simpleInitApp() {
 		GuiGlobals.initialize(this);
-		
+		BaseStyles.loadGlassStyle();
+		GuiGlobals.getInstance().getStyles().setDefaultStyle(BaseStyles.GLASS);
+
 		flyCam.setDragToRotate(true);
 		flyCam.setMoveSpeed(25);
 		flyCam.setZoomSpeed(0);
@@ -47,8 +50,10 @@ public class ShipTest extends SimpleApplication {
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		stateManager.attach(new StLights(rootNode));
-		
+
 		stateManager.attach(new StShip(rootNode));
+
+		stateManager.attach(new StGui(guiNode));
 	}
 
 }
