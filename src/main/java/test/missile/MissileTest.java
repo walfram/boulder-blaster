@@ -9,6 +9,7 @@ import com.jme3.system.AppSettings;
 import com.simsilica.lemur.GuiGlobals;
 
 import jme3.common.debug.NdDebugGrid;
+import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StLights;
 
@@ -48,6 +49,7 @@ public class MissileTest extends SimpleApplication {
 		cam.setRotation(new Quaternion(0.123331256f, -0.5202906f, 0.07624485f, 0.84159f));
 
 		viewPort.setBackgroundColor(ColorRGBA.DarkGray);
+		MyCamera.setNearFar(cam, 1f, 32768f);
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		stateManager.attach(new StLights(rootNode));

@@ -80,8 +80,8 @@ final class NdMissile extends Node {
 		engine.getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.negate().mult(20));
 		engine.getParticleInfluencer().setVelocityVariation(0.05f);
 		attachChild(engine);
-		
-		addControl(new CtMissileEngine(engine));
+
+		addControl(new CtMissileEngine(engine, 500f));
 	}
 
 }
