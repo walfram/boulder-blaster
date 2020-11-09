@@ -7,9 +7,9 @@ import com.jme3.math.ColorRGBA;
 
 import jme3.common.material.MtlParticle;
 
-final class PeMissileEngine extends ParticleEmitter {
+final class PeMissileEmission extends ParticleEmitter {
 
-	public PeMissileEngine(AssetManager assetManager) {
+	public PeMissileEmission(AssetManager assetManager) {
 		super("engine", Type.Triangle, 10);
 		setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flame.png"));
 		setImagesX(2);

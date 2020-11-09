@@ -53,8 +53,8 @@ final class StMissile extends BaseAppState {
 
 		Container container = new Container();
 		container.addChild(new Label("missile controls", new ElementId("window.title.label")));
-		container.addChild(new ActionButton(new CallMethodAction("toggle engine", missile.getControl(CtMissileEngine.class), "toggleEnabled")));
-		container.addChild(new ActionButton(new CallMethodAction("launch", missile.getControl(CtMissileEngine.class), "launch")));
+		container.addChild(new ActionButton(new CallMethodAction("toggle engine", missile.getControl(CtMissileEmission.class), "toggleEnabled")));
+		container.addChild(new ActionButton(new CallMethodAction("launch", missile.getControl(CtMissileEmission.class), "launch")));
 		
 		gui.attachChild(container);
 		container.setLocalTranslation(1600 - container.getPreferredSize().x - 10, 800 - 10, 0);

@@ -58,19 +58,19 @@ public final class NdMissile extends Node {
 		tailHoriz.scale(1.5f, 1, 1);
 		tailHoriz.move(0, 0, -1.75f);
 
-		PointVisualizer engineLoc = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
-		engineLoc.setLocalTranslation(0, 0, -4f);
-		attachChild(engineLoc);
+		PointVisualizer emissionLoc = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
+		emissionLoc.setLocalTranslation(0, 0, -4f);
+		attachChild(emissionLoc);
 
-		ParticleEmitter engine = new PeMissileEngine(assetManager);
-		engine.setLocalTranslation(0, 0, -4f);
-		attachChild(engine);
+		ParticleEmitter emission = new PeMissileEmission(assetManager);
+		emission.setLocalTranslation(0, 0, -4f);
+		attachChild(emission);
 
 		ParticleEmitter trail = new PeMissileTrail(assetManager);
 		trail.setLocalTranslation(0, 0, -5f);
 		attachChild(trail);
 
-		addControl(new CtMissileEngine(engine, trail, 500f));
+		addControl(new CtMissileEmission(emission, trail, 500f));
 	}
 
 }

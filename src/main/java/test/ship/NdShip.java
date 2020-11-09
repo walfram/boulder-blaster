@@ -45,23 +45,23 @@ final class NdShip extends Node {
 
 		addControl(new CtShipWeapons(weapons));
 
-		PointVisualizer engineLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
-		engineLeft.setLocalTranslation(4, 4, -12);
-		attachChild(engineLeft);
+		PointVisualizer emissionLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
+		emissionLeft.setLocalTranslation(4, 4, -12);
+		attachChild(emissionLeft);
 
-		PointVisualizer engineRight = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
-		engineRight.setLocalTranslation(-4, 4, -12);
-		attachChild(engineRight);
+		PointVisualizer emissionRight = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
+		emissionRight.setLocalTranslation(-4, 4, -12);
+		attachChild(emissionRight);
 
-		List<ParticleEmitter> engines = new ArrayList<>();
-		for (Vector3f engineTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
-			ParticleEmitter engine = new PeShipEngine(assetManager);
-			engine.setLocalTranslation(engineTranslation);
-			attachChild(engine);
-			engines.add(engine);
+		List<ParticleEmitter> emissions = new ArrayList<>();
+		for (Vector3f emissionTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
+			ParticleEmitter emission = new PeShipEngine(assetManager);
+			emission.setLocalTranslation(emissionTranslation);
+			attachChild(emission);
+			emissions.add(emission);
 		}
 
-		addControl(new CtShipEngines(engines));
+		addControl(new CtShipEmissions(emissions));
 
 		PointVisualizer missileLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Yellow, null);
 		missileLeft.setLocalTranslation(7, 1, -2.5f);

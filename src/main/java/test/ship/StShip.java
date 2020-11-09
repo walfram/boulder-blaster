@@ -15,7 +15,7 @@ import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 
 import test.cmn.ScenePick;
-import test.missile.CtMissileEngine;
+import test.missile.CtMissileEmission;
 import test.missile.NdMissile;
 
 final class StShip extends BaseAppState {
@@ -59,7 +59,7 @@ final class StShip extends BaseAppState {
 
 	void toggleEngines() {
 		logger.debug("toggleEngines called");
-		ship.getControl(CtShipEngines.class).toggleEnabled();
+		ship.getControl(CtShipEmissions.class).toggleEnabled();
 	}
 
 	void fireGuns() {
@@ -79,8 +79,8 @@ final class StShip extends BaseAppState {
 		scene.attachChild(missile);
 		
 		// TODO use one method for engine start and launch, or delay engine start
-		missile.getControl(CtMissileEngine.class).setEnabled(true);
-		missile.getControl(CtMissileEngine.class).launch();
+		missile.getControl(CtMissileEmission.class).setEnabled(true);
+		missile.getControl(CtMissileEmission.class).launch();
 		
 //		missile.addControl(chaseCamera);
 	}
