@@ -9,12 +9,9 @@ import com.jme3.input.ChaseCamera;
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-import com.simsilica.lemur.GuiGlobals;
-import com.simsilica.lemur.input.Button;
-import com.simsilica.lemur.input.FunctionId;
-import com.simsilica.lemur.input.InputMapper;
+import com.jme3.scene.Spatial;
 
-import test.cmn.ScenePick;
+import jme3utilities.math.MyVector3f;
 import test.missile.CtMissileEmission;
 import test.missile.CtMissileEngine;
 import test.missile.NdMissile;
@@ -23,13 +20,13 @@ final class StShip extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StShip.class);
 
-	private static final FunctionId F_CLICK = new FunctionId("click");
-
 	private final Node scene = new Node("scene");
 
 	private Node ship;
 
 	private ChaseCamera chaseCamera;
+
+	private Spatial target;
 
 	public StShip(Node rootNode) {
 		rootNode.attachChild(scene);
@@ -40,20 +37,19 @@ final class StShip extends BaseAppState {
 		ship = new NdShip(app.getAssetManager());
 		scene.attachChild(ship);
 
+		ship.setLocalTranslation(5, 10, 15);
+		ship.lookAt(new Vector3f(50, 100, 150f), Vector3f.UNIT_Y);
+
 		// BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
 		// scene.addControl(boundsVisualizer);
 		// boundsVisualizer.setSubject(ship);
 		// boundsVisualizer.setEnabled(true);
 
-		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
-		inputMapper.map(F_CLICK, Button.MOUSE_BUTTON2);
-		inputMapper.addStateListener(new ScenePick(scene, app), F_CLICK);
-
 		chaseCamera = new ChaseCamera(app.getCamera(), app.getInputManager());
 		chaseCamera.setInvertVerticalAxis(true);
 		chaseCamera.setUpVector(Vector3f.UNIT_Y);
-		chaseCamera.setDefaultDistance(50f);
-		chaseCamera.setMaxDistance(150);
+		chaseCamera.setDefaultDistance(100f);
+		chaseCamera.setMaxDistance(250);
 		chaseCamera.setMinVerticalRotation(-FastMath.HALF_PI);
 		ship.addControl(chaseCamera);
 	}
@@ -79,6 +75,8 @@ final class StShip extends BaseAppState {
 
 		scene.attachChild(missile);
 
+		missile.addControl(new CtMissileGuidance(target));
+
 		// TODO use one method for engine start and launch, or delay engine start
 		missile.getControl(CtMissileEmission.class).setEnabled(true);
 		missile.getControl(CtMissileEngine.class).setEnabled(true);
@@ -101,6 +99,20 @@ final class StShip extends BaseAppState {
 
 	@Override
 	protected void onDisable() {
+	}
+
+	public void selectTarget(Spatial target) {
+		logger.debug("targetting = {}", target);
+		this.target = target;
+
+		float azimuth = MyVector3f.azimuth(target.getLocalTranslation());
+		float altitude = MyVector3f.altitude(target.getLocalTranslation());
+
+		logger.debug("azimuth = {}, altitude = {}", azimuth, altitude);
+
+		float saz = MyVector3f.azimuth(ship.getLocalRotation().mult(Vector3f.UNIT_Z));
+		float sal = MyVector3f.altitude(ship.getLocalRotation().mult(Vector3f.UNIT_Z));
+		logger.debug("ship azimuth = {}, altitude = {}", saz, sal);
 	}
 
 }

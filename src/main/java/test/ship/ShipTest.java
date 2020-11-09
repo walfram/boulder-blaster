@@ -53,6 +53,8 @@ public class ShipTest extends SimpleApplication {
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		stateManager.attach(new StLights(rootNode));
 
+		stateManager.attach(new StTargets(rootNode));
+		
 		stateManager.attach(new StShip(rootNode));
 
 		stateManager.attach(new StGui(guiNode));
