@@ -70,7 +70,9 @@ public final class NdMissile extends Node {
 		trail.setLocalTranslation(0, 0, -5f);
 		attachChild(trail);
 
-		addControl(new CtMissileEmission(emission, trail, 500f));
+		addControl(new CtMissileEmission(emission, trail));
+		
+		addControl(new CtMissileEngine(500f));
 	}
 
 }

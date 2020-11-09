@@ -16,6 +16,7 @@ import com.simsilica.lemur.input.InputMapper;
 
 import test.cmn.ScenePick;
 import test.missile.CtMissileEmission;
+import test.missile.CtMissileEngine;
 import test.missile.NdMissile;
 
 final class StShip extends BaseAppState {
@@ -47,7 +48,7 @@ final class StShip extends BaseAppState {
 		InputMapper inputMapper = GuiGlobals.getInstance().getInputMapper();
 		inputMapper.map(F_CLICK, Button.MOUSE_BUTTON2);
 		inputMapper.addStateListener(new ScenePick(scene, app), F_CLICK);
-		
+
 		chaseCamera = new ChaseCamera(app.getCamera(), app.getInputManager());
 		chaseCamera.setInvertVerticalAxis(true);
 		chaseCamera.setUpVector(Vector3f.UNIT_Y);
@@ -71,20 +72,20 @@ final class StShip extends BaseAppState {
 		logger.debug("fireMissile called");
 		// ship.getControl(CtShipMissiles.class).
 		Node missile = new NdMissile(getApplication().getAssetManager());
-		
+
 		Vector3f translation = ship.getLocalTranslation().add(new Vector3f(0, -1, 0));
 		missile.setLocalTranslation(translation);
 		missile.setLocalRotation(ship.getLocalRotation());
-		
+
 		scene.attachChild(missile);
-		
+
 		// TODO use one method for engine start and launch, or delay engine start
 		missile.getControl(CtMissileEmission.class).setEnabled(true);
-		missile.getControl(CtMissileEmission.class).launch();
-		
-//		missile.addControl(chaseCamera);
+		missile.getControl(CtMissileEngine.class).setEnabled(true);
+
+		missile.addControl(chaseCamera);
 	}
-	
+
 	@Override
 	public void update(float tpf) {
 		super.update(tpf);
