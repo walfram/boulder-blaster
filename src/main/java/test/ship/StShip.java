@@ -82,7 +82,7 @@ final class StShip extends BaseAppState {
 		missile.getControl(CtMissileEngine.class).setEnabled(true);
 		missile.getControl(CtMissileEngine.class).launch();
 		
-		missile.addControl(chaseCamera);
+//		missile.addControl(chaseCamera);
 	}
 	
 	@Override

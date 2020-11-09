@@ -37,7 +37,7 @@ final class NdShip extends Node {
 
 		List<ParticleEmitter> weapons = new ArrayList<>();
 		for (Vector3f weaponTranslation : new Vector3f[] { new Vector3f(14f, 2f, -1.5f), new Vector3f(-14f, 2f, -1.5f) }) {
-			ParticleEmitter weapon = new PeWeapon(assetManager);
+			ParticleEmitter weapon = new PeShipWeapon(assetManager);
 			weapon.setLocalTranslation(weaponTranslation);
 			attachChild(weapon);
 			weapons.add(weapon);
@@ -55,7 +55,7 @@ final class NdShip extends Node {
 
 		List<ParticleEmitter> engines = new ArrayList<>();
 		for (Vector3f engineTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
-			ParticleEmitter engine = new PeEngine(assetManager);
+			ParticleEmitter engine = new PeShipEngine(assetManager);
 			engine.setLocalTranslation(engineTranslation);
 			attachChild(engine);
 			engines.add(engine);

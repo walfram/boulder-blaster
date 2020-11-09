@@ -12,13 +12,15 @@ public final class CtMissileEngine extends SimpleControl {
 
 	private static final Logger logger = LoggerFactory.getLogger(CtMissileEngine.class);
 	private final ParticleEmitter engine;
+	private final ParticleEmitter trail;
 	private boolean moving = false;
 	private final float speed;
 
 	private float elapsed = 0f;
 
-	public CtMissileEngine(ParticleEmitter engine, float speed) {
+	public CtMissileEngine(ParticleEmitter engine, ParticleEmitter trail, float speed) {
 		this.engine = engine;
+		this.trail = trail;
 		this.speed = speed;
 
 		setEnabled(false);
@@ -52,6 +54,7 @@ public final class CtMissileEngine extends SimpleControl {
 		super.setEnabled(enabled);
 		logger.debug("engine enabled = {}", isEnabled());
 		engine.setParticlesPerSec(isEnabled() ? 10 : 0);
+		trail.setParticlesPerSec(isEnabled() ? 25 : 0);
 	}
 
 }

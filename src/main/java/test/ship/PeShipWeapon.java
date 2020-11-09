@@ -9,9 +9,9 @@ import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
 
-final class PeWeapon extends ParticleEmitter {
+final class PeShipWeapon extends ParticleEmitter {
 
-	public PeWeapon(AssetManager assetManager) {
+	public PeShipWeapon(AssetManager assetManager) {
 		super("weapon", Type.Triangle, 8);
 
 		setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flash.png"));
@@ -27,6 +27,8 @@ final class PeWeapon extends ParticleEmitter {
 		setLowLife(0.09f);
 		setHighLife(1f / 8.33f);
 		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.clone());
+
+		setInWorldSpace(false);
 	}
 
 }

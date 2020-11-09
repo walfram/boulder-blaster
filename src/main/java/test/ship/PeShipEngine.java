@@ -8,9 +8,9 @@ import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
 
-final class PeEngine extends ParticleEmitter {
+final class PeShipEngine extends ParticleEmitter {
 
-	public PeEngine(AssetManager assetManager) {
+	public PeShipEngine(AssetManager assetManager) {
 		super("engine", Type.Triangle, 50);
 		setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flame.png"));
 		setImagesX(2);
