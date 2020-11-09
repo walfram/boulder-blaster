@@ -19,7 +19,7 @@ import jme3utilities.debug.PointVisualizer;
 import jme3utilities.mesh.Cone;
 import jme3utilities.mesh.Prism;
 
-final class NdMissile extends Node {
+public final class NdMissile extends Node {
 
 	public NdMissile(AssetManager assetManager) {
 		super("missile");
@@ -62,23 +62,26 @@ final class NdMissile extends Node {
 		tailHoriz.move(0, 0, -1.75f);
 
 		PointVisualizer engineLoc = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
-		engineLoc.setLocalTranslation(0, 0, -2.5f);
+		engineLoc.setLocalTranslation(0, 0, -4f);
 		attachChild(engineLoc);
 
-		ParticleEmitter engine = new ParticleEmitter("engine", Type.Triangle, 100);
-		engine.setLocalTranslation(0, 0, -2.75f);
+		ParticleEmitter engine = new ParticleEmitter("engine", Type.Triangle, 10);
+		engine.setLocalTranslation(0, 0, -4f);
 		engine.setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flame.png"));
 		engine.setImagesX(2);
 		engine.setImagesY(2);
 		engine.setGravity(0, 0, 0);
 		engine.setStartColor(ColorRGBA.Yellow);
 		engine.setEndColor(ColorRGBA.Red);
-		engine.setStartSize(1.25f);
-		engine.setEndSize(0.15f);
-		engine.setLowLife(0.2f);
-		engine.setHighLife(0.3f);
-		engine.getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.negate().mult(20));
-		engine.getParticleInfluencer().setVelocityVariation(0.05f);
+		engine.setStartSize(2.5f);
+		engine.setEndSize(0.5f);
+		engine.setLowLife(0.125f);
+		engine.setHighLife(0.125f);
+//		engine.getParticleInfluencer().setInitialVelocity(Vector3f.ZERO.clone());
+//		engine.getParticleInfluencer().setVelocityVariation(0);
+		engine.setInWorldSpace(false);
+		engine.setSelectRandomImage(true);
+
 		attachChild(engine);
 
 		addControl(new CtMissileEngine(engine, 500f));

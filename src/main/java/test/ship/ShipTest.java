@@ -10,6 +10,7 @@ import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.style.BaseStyles;
 
 import jme3.common.debug.NdDebugGrid;
+import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StLights;
 
@@ -47,6 +48,7 @@ public class ShipTest extends SimpleApplication {
 		cam.setRotation(new Quaternion(-0.093374066f, 0.9066154f, -0.28852183f, -0.29340255f));
 
 		viewPort.setBackgroundColor(ColorRGBA.DarkGray);
+		MyCamera.setNearFar(cam, 1, 32768f);
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		stateManager.attach(new StLights(rootNode));

@@ -8,17 +8,19 @@ import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
-final class CtMissileEngine extends SimpleControl {
+public final class CtMissileEngine extends SimpleControl {
 
 	private static final Logger logger = LoggerFactory.getLogger(CtMissileEngine.class);
 	private final ParticleEmitter engine;
 	private boolean moving = false;
 	private final float speed;
 
+	private float elapsed = 0f;
+
 	public CtMissileEngine(ParticleEmitter engine, float speed) {
 		this.engine = engine;
 		this.speed = speed;
-		
+
 		setEnabled(false);
 	}
 
@@ -31,6 +33,13 @@ final class CtMissileEngine extends SimpleControl {
 
 		Vector3f forward = spatial.getLocalRotation().mult(Vector3f.UNIT_Z);
 		spatial.move(forward.mult(updateInterval * speed));
+
+		elapsed += updateInterval;
+
+		if (elapsed > 7) {
+			spatial.removeFromParent();
+			logger.debug("missile self-destruct");
+		}
 	}
 
 	public void launch() {
@@ -42,7 +51,7 @@ final class CtMissileEngine extends SimpleControl {
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
 		logger.debug("engine enabled = {}", isEnabled());
-		engine.setParticlesPerSec(isEnabled() ? 20 : 0);
+		engine.setParticlesPerSec(isEnabled() ? 10 : 0);
 	}
 
 }
