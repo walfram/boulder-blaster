@@ -1,4 +1,4 @@
-package test.ship;
+package test.navigation;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
@@ -14,10 +14,10 @@ import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StLights;
 
-public class ShipTest extends SimpleApplication {
+public class NavigationTest extends SimpleApplication {
 
 	public static void main(String[] args) {
-		ShipTest app = new ShipTest();
+		NavigationTest app = new NavigationTest();
 
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
@@ -52,11 +52,9 @@ public class ShipTest extends SimpleApplication {
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		stateManager.attach(new StLights(rootNode));
-
-		stateManager.attach(new StTargets(rootNode));
 		
-		stateManager.attach(new StShip(rootNode));
-
+		stateManager.attach(new StTarget(rootNode));
+		
 		stateManager.attach(new StGui(guiNode));
 	}
 

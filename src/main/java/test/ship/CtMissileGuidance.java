@@ -17,8 +17,8 @@ final class CtMissileGuidance extends SimpleControl {
 
 	private final Spatial target;
 
-	private static final float MAX_AZIMUTH = FastMath.DEG_TO_RAD * 45f;
-	private static final float MAX_ALTITUDE = FastMath.DEG_TO_RAD * 45f;
+	private static final float MAX_YAW = FastMath.DEG_TO_RAD * 60f;
+	private static final float MAX_PITCH = FastMath.DEG_TO_RAD * 30f;
 
 	public CtMissileGuidance(Spatial target) {
 		this.target = target;
@@ -36,33 +36,67 @@ final class CtMissileGuidance extends SimpleControl {
 		}
 
 		// if (target.getWorldBound().intersects(spatial.getWorldBound())) {
-		if (target.getWorldBound().intersects(spatial.getLocalTranslation())) {
-			logger.debug("hit!");
-//			spatial.removeControl(this);
+		if (target.getWorldBound().intersects(spatial.getWorldTranslation())) {
+			logger.debug("hit! = {}", target);
+			// spatial.removeControl(this);
 			spatial.removeFromParent();
+			target.removeFromParent();
 			return;
 		}
 
-		Vector3f offset = target.getLocalTranslation().subtract(spatial.getLocalTranslation());
+		Quaternion from = spatial.getLocalRotation().clone();
+		Quaternion to = from.clone().lookAt(
+				target.getWorldTranslation().subtract(spatial.getWorldTranslation()),
+				Vector3f.UNIT_Y);
 
-		float targetAzm = MyVector3f.azimuth(offset);
-		float targetAlt = MyVector3f.altitude(offset);
+		float[] aFrom = from.toAngles(null);
+		float[] aTo = to.toAngles(null);
 
-		float missileAzm = MyVector3f.azimuth(spatial.getLocalRotation().mult(Vector3f.UNIT_Z));
-		float missileAlt = MyVector3f.altitude(spatial.getLocalRotation().mult(Vector3f.UNIT_Z));
+		float deltaPitch = aTo[0] - aFrom[0];
+		float deltaYaw = aTo[1] - aFrom[1];
 
-		float signAzm = Math.signum(targetAzm - missileAzm);
-		float signAlt = Math.signum(targetAlt - missileAlt);
+		Quaternion pitch = new Quaternion();
+		Quaternion yaw = new Quaternion();
 
-		float azimuth = missileAzm + (signAzm * MAX_AZIMUTH * updateInterval);
-		float altitude = missileAlt + (signAlt * MAX_ALTITUDE * updateInterval);
+		float maxPitch = MAX_PITCH * updateInterval;
+		if (Math.abs(deltaPitch * updateInterval) > maxPitch) {
+			pitch.fromAngleAxis(Math.signum(deltaPitch) * maxPitch, Vector3f.UNIT_X);
+		} else {
+			pitch.fromAngleAxis(deltaPitch * updateInterval, Vector3f.UNIT_X);
+		}
 
-		Vector3f direction = MyVector3f.fromAltAz(altitude, azimuth);
-		Quaternion q = new Quaternion().lookAt(direction, Vector3f.UNIT_Y);
+		float maxYaw = MAX_YAW * updateInterval;
+		if (Math.abs(deltaYaw * updateInterval) > maxYaw) {
+			yaw.fromAngleAxis(Math.signum(deltaYaw) * maxYaw, Vector3f.UNIT_Y);
+		} else {
+			yaw.fromAngleAxis(deltaYaw * updateInterval, Vector3f.UNIT_Y);
+		}
 
+		// pitch.multLocal(updateInterval);
+		// yaw.multLocal(updateInterval);
+
+		Quaternion q = yaw.mult(pitch).mult(from);
 		spatial.setLocalRotation(q);
+		// spatial.rotate(yaw.mult(pitch));
 
-		// FastMath.extrapolateLinear(scale, startValue, endValue)
+		// Vector3f offset = target.getLocalTranslation().subtract(spatial.getLocalTranslation());
+		// float targetAzm = MyVector3f.azimuth(offset);
+		// float targetAlt = MyVector3f.altitude(offset);
+		//
+		// float missileAzm = MyVector3f.azimuth(spatial.getLocalRotation().mult(Vector3f.UNIT_Z));
+		// float missileAlt = MyVector3f.altitude(spatial.getLocalRotation().mult(Vector3f.UNIT_Z));
+		//
+		// float signAzm = Math.signum(targetAzm - missileAzm);
+		// float signAlt = Math.signum(targetAlt - missileAlt);
+		// float azimuth = missileAzm + (signAzm * MAX_AZIMUTH * updateInterval);
+		// float altitude = missileAlt + (signAlt * MAX_ALTITUDE * updateInterval);
+		// Vector3f direction = MyVector3f.fromAltAz(altitude, azimuth);
+		//
+		// // Quaternion q = new Quaternion().lookAt(direction, Vector3f.UNIT_Y);
+		// Quaternion q = spatial.getLocalRotation().lookAt(direction, Vector3f.UNIT_Y);
+		//
+		// spatial.setLocalRotation(q);
+
 	}
 
 }

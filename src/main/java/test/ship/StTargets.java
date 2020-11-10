@@ -16,6 +16,8 @@ import com.simsilica.lemur.event.DefaultMouseListener;
 import com.simsilica.lemur.event.MouseEventControl;
 
 import jme3.common.material.MtlLighting;
+import jme3utilities.SimpleControl;
+import jme3utilities.debug.BoundsVisualizer;
 import jme3utilities.math.MyVector3f;
 import jme3utilities.math.noise.Generator;
 
@@ -29,6 +31,11 @@ final class StTargets extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
+		BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
+		scene.addControl(boundsVisualizer);
+		boundsVisualizer.setLineWidth(3f);
+		boundsVisualizer.setColor(ColorRGBA.Yellow);
+
 		Generator random = new Generator(37);
 
 		Mesh mesh = new Box(1, 1, 1);
@@ -52,10 +59,21 @@ final class StTargets extends BaseAppState {
 			MouseEventControl.addListenersToSpatial(target, new DefaultMouseListener() {
 				@Override
 				protected void click(MouseButtonEvent event, Spatial target, Spatial capture) {
-					getState(StShip.class).selectTarget(target);
+					getState(StShip.class).selectTarget(capture);
+					boundsVisualizer.setSubject(capture);
+					boundsVisualizer.setEnabled(true);
 				}
 			});
 		}
+		
+		scene.addControl(new SimpleControl() {
+			@Override
+			protected void controlUpdate(float updateInterval) {
+				super.controlUpdate(updateInterval);
+				
+//				spatial.rotate(0, 0, FastMath.DEG_TO_RAD * updateInterval * 5f);
+			}
+		});
 	}
 
 	@Override
