@@ -18,7 +18,7 @@ final class CtShipEmissions extends SimpleControl {
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
-		emissions.forEach(engine -> engine.setParticlesPerSec(isEnabled() ? 50 : 0));
+		emissions.forEach(engine -> engine.setEnabled(isEnabled()));
 	}
 
 }

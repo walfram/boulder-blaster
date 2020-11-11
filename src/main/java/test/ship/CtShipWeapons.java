@@ -18,7 +18,7 @@ final class CtShipWeapons extends SimpleControl {
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
-		weapons.forEach(weapon -> weapon.setParticlesPerSec(isEnabled() ? 8 : 0));
+		weapons.forEach(weapon -> weapon.setEnabled(isEnabled()));
 	}
 
 }
