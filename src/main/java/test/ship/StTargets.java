@@ -65,13 +65,12 @@ final class StTargets extends BaseAppState {
 				}
 			});
 		}
-		
+
 		scene.addControl(new SimpleControl() {
 			@Override
 			protected void controlUpdate(float updateInterval) {
 				super.controlUpdate(updateInterval);
-				
-//				spatial.rotate(0, 0, FastMath.DEG_TO_RAD * updateInterval * 5f);
+				spatial.rotate(0, 0, FastMath.DEG_TO_RAD * updateInterval * 5f);
 			}
 		});
 	}

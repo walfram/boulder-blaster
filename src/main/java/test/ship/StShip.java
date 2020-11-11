@@ -11,7 +11,6 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-import jme3utilities.math.MyVector3f;
 import test.missile.CtMissileEmission;
 import test.missile.CtMissileEngine;
 import test.missile.NdMissile;
@@ -38,7 +37,7 @@ final class StShip extends BaseAppState {
 		scene.attachChild(ship);
 
 		ship.setLocalTranslation(5, 10, 15);
-//		ship.lookAt(new Vector3f(50, 100, 150f), Vector3f.UNIT_Y);
+		// ship.lookAt(new Vector3f(50, 100, 150f), Vector3f.UNIT_Y);
 
 		// BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
 		// scene.addControl(boundsVisualizer);
@@ -51,7 +50,7 @@ final class StShip extends BaseAppState {
 		chaseCamera.setDefaultDistance(100f);
 		chaseCamera.setMaxDistance(250);
 		chaseCamera.setMinVerticalRotation(-FastMath.HALF_PI);
-//		ship.addControl(chaseCamera);
+		// ship.addControl(chaseCamera);
 	}
 
 	void toggleEngines() {
@@ -81,7 +80,7 @@ final class StShip extends BaseAppState {
 		missile.getControl(CtMissileEmission.class).setEnabled(true);
 		missile.getControl(CtMissileEngine.class).setEnabled(true);
 
-//		 missile.addControl(chaseCamera);
+		// missile.addControl(chaseCamera);
 	}
 
 	@Override
@@ -104,22 +103,6 @@ final class StShip extends BaseAppState {
 	public void selectTarget(Spatial target) {
 		logger.debug("targetting = {}", target);
 		this.target = target;
-
-		Vector3f offset = target.getLocalTranslation().subtract(ship.getLocalTranslation());
-		logger.debug("target offset = {}", offset);
-		
-		float targetAzm = MyVector3f.azimuth(offset);
-		float targetAlt = MyVector3f.altitude(offset);
-		logger.debug("target azm = {}, alt = {}", targetAzm, targetAlt);
-		
-		float missileAzm = MyVector3f.azimuth(ship.getLocalRotation().mult(Vector3f.UNIT_Z));
-		float missileAlt = MyVector3f.altitude(ship.getLocalRotation().mult(Vector3f.UNIT_Z));
-		logger.debug("missile azm = {}, alt = {}", missileAzm, missileAlt);
-		
-		float signAzm = Math.signum(targetAzm - missileAzm);
-		float signAlt = Math.signum(targetAlt - missileAlt);
-		logger.debug("sign azm = {}, sign alt = {}", signAzm, signAlt);
-		
 	}
 
 }
