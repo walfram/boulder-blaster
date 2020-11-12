@@ -29,6 +29,7 @@ final class PeShipWeapon extends ParticleEmitter {
 		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.clone());
 
 		setInWorldSpace(false);
+		setEnabled(false);
 	}
 
 }

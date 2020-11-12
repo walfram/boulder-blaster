@@ -10,22 +10,16 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-import jme3utilities.debug.BoundsVisualizer;
 import jme3utilities.debug.PointVisualizer;
 
-final class NdShip extends Node {
+public final class NdSpeederD extends Node {
 
-	public NdShip(AssetManager assetManager) {
+	public NdSpeederD(AssetManager assetManager) {
 		super("ship");
 
 		Spatial hull = assetManager.loadModel("models/spacekit2/craft_speederD.obj");
 		hull.scale(10f);
 		attachChild(hull);
-
-		BoundsVisualizer boundsVisualizer = new BoundsVisualizer(assetManager);
-		addControl(boundsVisualizer);
-		boundsVisualizer.setSubject(hull);
-		boundsVisualizer.setEnabled(true);
 
 		PointVisualizer wpnLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Red, "saltire");
 		wpnLeft.setLocalTranslation(14f, 2f, -1.5f);

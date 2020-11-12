@@ -94,8 +94,8 @@ public final class StHud extends BaseAppState {
 			protected void controlUpdate(float updateInterval) {
 				super.controlUpdate(updateInterval);
 
-				targetHealth.setProgressPercent(getState(StTargetting.class).healthPercent());
-				targetHealth.setMessage(String.format("%.03f / %.03f", getState(StTargetting.class).healthValue(), getState(StTargetting.class).healthMax()));
+//				targetHealth.setProgressPercent(getState(StTargetting.class).healthPercent());
+//				targetHealth.setMessage(String.format("%.03f / %.03f", getState(StTargetting.class).healthValue(), getState(StTargetting.class).healthMax()));
 			}
 		});
 
@@ -119,11 +119,11 @@ public final class StHud extends BaseAppState {
 	public void update(float tpf) {
 		super.update(tpf);
 
-		if (getState(StTargetting.class).currentTarget() == null) {
-			targetCursor.removeFromParent();
-		} else {
-			hud.attachChild(targetCursor);
-		}
+//		if (getState(StTargetting.class).currentTarget() == null) {
+//			targetCursor.removeFromParent();
+//		} else {
+//			hud.attachChild(targetCursor);
+//		}
 
 		// getApplication().getInputManager().setCursorVisible( !getState(StControls.class).isMouseLook() );
 	}

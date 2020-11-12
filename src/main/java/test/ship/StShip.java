@@ -33,7 +33,7 @@ final class StShip extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		ship = new NdShip(app.getAssetManager());
+		ship = new NdSpeederD(app.getAssetManager());
 		scene.attachChild(ship);
 
 		ship.setLocalTranslation(5, 10, 15);

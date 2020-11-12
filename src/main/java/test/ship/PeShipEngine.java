@@ -26,6 +26,9 @@ final class PeShipEngine extends ParticleEmitter {
 		// TODO tweak these two and setInWorldSpace
 		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.negate().mult(50));
 		getParticleInfluencer().setVelocityVariation(0.005f);
+		
+		setInWorldSpace(false);
+		setEnabled(false);
 	}
 
 }

@@ -22,6 +22,7 @@ public final class StCamera extends BaseAppState {
 		followingCamera.setEnabled(false);
 		
 		app.getCamera().setLocation(cameraOffset);
+		app.getCamera().lookAt(new Vector3f(), Vector3f.UNIT_Y);
 	}
 
 	@Override

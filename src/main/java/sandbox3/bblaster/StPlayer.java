@@ -1,5 +1,8 @@
 package sandbox3.bblaster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.ColorRGBA;
@@ -9,6 +12,7 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
+import jme3utilities.debug.BoundsVisualizer;
 import jme3utilities.debug.PointVisualizer;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPitch;
@@ -16,9 +20,12 @@ import sandbox3.bblaster.controls.CtRoll;
 import sandbox3.bblaster.controls.CtThrust;
 import sandbox3.bblaster.controls.CtYaw;
 import sandbox3.bblaster.misc.Cooldown;
+import test.ship.NdSpeederD;
 
 public final class StPlayer extends BaseAppState {
 
+	private static final Logger logger = LoggerFactory.getLogger(StPlayer.class);
+	
 	private final Node player = new Node("player");
 
 	private Geometry wpnLeft;
@@ -27,36 +34,46 @@ public final class StPlayer extends BaseAppState {
 	private final Cooldown cooldownGuns = new Cooldown(60f / 600f);
 	private final Cooldown cooldownMissiles = new Cooldown(0.33f);
 
+	private Node ship;
+
 	public StPlayer(Node rootNode) {
 		rootNode.attachChild(player);
 	}
 
 	@Override
 	protected void initialize(Application app) {
-		Spatial hull = app.getAssetManager().loadModel("models/spacekit2/craft_speederD.obj");
-		hull.scale(10f);
+		// Spatial hull = app.getAssetManager().loadModel("models/spacekit2/craft_speederD.obj");
+		// hull.scale(10f);
 
-		player.attachChild(hull);
+		// player.attachChild(hull);
 
-		wpnLeft = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Red, "saltire");
-		wpnLeft.setLocalTranslation(14f, 2f, -1.5f);
-		player.attachChild(wpnLeft);
+		ship = new NdSpeederD(app.getAssetManager());
+		player.attachChild(ship);
 
-		wpnRight = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Green, "saltire");
-		wpnRight.setLocalTranslation(-14f, 2f, -1.5f);
-		player.attachChild(wpnRight);
+		BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
+		player.getParent().addControl(boundsVisualizer);
+		boundsVisualizer.setSubject(ship);
+		boundsVisualizer.setEnabled(true);
 
-		player.addControl(new CtYaw());
-		player.addControl(new CtPitch());
-		player.addControl(new CtRoll());
-		player.addControl(new CtThrust(new GameSettings().playerMaxSpeed()));
+		// wpnLeft = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Red, "saltire");
+		// wpnLeft.setLocalTranslation(14f, 2f, -1.5f);
+		// player.attachChild(wpnLeft);
 
-		player.addControl(new CtCollision(other -> {
-		}));
+		// wpnRight = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Green, "saltire");
+		// wpnRight.setLocalTranslation(-14f, 2f, -1.5f);
+		// player.attachChild(wpnRight);
 
-		getState(StCollision.class).register(player);
+		ship.addControl(new CtYaw());
+		ship.addControl(new CtPitch());
+		ship.addControl(new CtRoll());
+		ship.addControl(new CtThrust(new GameSettings().playerMaxSpeed()));
 
-		getState(StCamera.class).enableFlightCamera(player);
+		// player.addControl(new CtCollision(other -> {
+		// }));
+
+		// getState(StCollision.class).register(player);
+
+		getState(StCamera.class).enableFlightCamera(ship);
 	}
 
 	@Override
@@ -100,27 +117,27 @@ public final class StPlayer extends BaseAppState {
 	}
 
 	void yaw(double value, double tpf) {
-		player.getControl(CtYaw.class).yaw(value, tpf);
+		ship.getControl(CtYaw.class).yaw(value, tpf);
 	}
 
 	void pitch(double value, double tpf) {
-		player.getControl(CtPitch.class).pitch(value, tpf);
+		ship.getControl(CtPitch.class).pitch(value, tpf);
 	}
 
 	void roll(double value, double tpf) {
-		player.getControl(CtRoll.class).roll(value, tpf);
+		ship.getControl(CtRoll.class).roll(value, tpf);
 	}
 
 	void updateThrust(double value, double tpf) {
-		player.getControl(CtThrust.class).thrust(value, tpf);
+		ship.getControl(CtThrust.class).thrust(value, tpf);
 	}
 
 	public double thrustValue() {
-		return player.getControl(CtThrust.class).value();
+		return ship.getControl(CtThrust.class).value();
 	}
 
 	public Vector3f position() {
-		return player.getLocalTranslation();
+		return ship.getLocalTranslation();
 	}
 
 }
