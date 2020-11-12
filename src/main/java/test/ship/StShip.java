@@ -56,6 +56,8 @@ final class StShip extends BaseAppState {
 	void toggleEngines() {
 		logger.debug("toggleEngines called");
 		ship.getControl(CtShipEmissions.class).toggleEnabled();
+		
+		ship.getControl(CtShipEngine.class).setEnabled(ship.getControl(CtShipEmissions.class).isEnabled());
 	}
 
 	void fireGuns() {

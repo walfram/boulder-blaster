@@ -18,7 +18,11 @@ final class CtShipWeapons extends SimpleControl {
 	@Override
 	public void setEnabled(boolean enabled) {
 		super.setEnabled(enabled);
-		weapons.forEach(weapon -> weapon.setEnabled(isEnabled()));
+		weapons.forEach(weapon -> {
+			weapon.setEnabled(isEnabled());
+			if (!isEnabled())
+				weapon.killAllParticles();
+		});
 	}
 
 }
