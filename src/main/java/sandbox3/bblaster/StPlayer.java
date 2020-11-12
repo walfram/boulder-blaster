@@ -3,15 +3,13 @@ package sandbox3.bblaster;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 
-import jme3.common.material.MtlUnshaded;
+import jme3utilities.debug.PointVisualizer;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPitch;
 import sandbox3.bblaster.controls.CtRoll;
@@ -35,19 +33,17 @@ public final class StPlayer extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		Spatial hull = app.getAssetManager().loadModel("models/spacekit/spaceCraft1.obj");
-		hull.rotate(0, FastMath.PI, 0);
+		Spatial hull = app.getAssetManager().loadModel("models/spacekit2/craft_speederD.obj");
+		hull.scale(10f);
 
 		player.attachChild(hull);
 
-		wpnLeft = new Geometry("weapon-left", new Box(0.5f, 0.5f, 0.5f));
-		wpnLeft.move(5f, 0, 0);
-		wpnLeft.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Red));
+		wpnLeft = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Red, "saltire");
+		wpnLeft.setLocalTranslation(14f, 2f, -1.5f);
 		player.attachChild(wpnLeft);
 
-		wpnRight = new Geometry("weapon-right", new Box(0.5f, 0.5f, 0.5f));
-		wpnRight.move(-5, 0, 0);
-		wpnRight.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Green));
+		wpnRight = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Green, "saltire");
+		wpnRight.setLocalTranslation(-14f, 2f, -1.5f);
 		player.attachChild(wpnRight);
 
 		player.addControl(new CtYaw());
