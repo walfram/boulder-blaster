@@ -11,6 +11,11 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
+import sandbox3.bblaster.ships.CtMissileGuidance;
+import sandbox3.bblaster.ships.CtShipEmissions;
+import sandbox3.bblaster.ships.CtShipEngine;
+import sandbox3.bblaster.ships.CtShipWeapons;
+import sandbox3.bblaster.ships.NdSpeederD;
 import test.missile.CtMissileEmission;
 import test.missile.CtMissileEngine;
 import test.missile.NdMissile;
@@ -56,7 +61,7 @@ final class StShip extends BaseAppState {
 	void toggleEngines() {
 		logger.debug("toggleEngines called");
 		ship.getControl(CtShipEmissions.class).toggleEnabled();
-		
+
 		ship.getControl(CtShipEngine.class).setEnabled(ship.getControl(CtShipEmissions.class).isEnabled());
 	}
 

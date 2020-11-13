@@ -1,10 +1,10 @@
-package test.ship;
+package sandbox3.bblaster.ships;
 
 import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
-final class CtShipEngine extends SimpleControl {
+public final class CtShipEngine extends SimpleControl {
 
 	public CtShipEngine() {
 		setEnabled(false);

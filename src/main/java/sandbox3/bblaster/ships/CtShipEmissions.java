@@ -1,4 +1,4 @@
-package test.ship;
+package sandbox3.bblaster.ships;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.jme3.effect.ParticleEmitter;
 
 import jme3utilities.SimpleControl;
 
-final class CtShipEmissions extends SimpleControl {
+public final class CtShipEmissions extends SimpleControl {
 
 	private final List<ParticleEmitter> emissions;
 

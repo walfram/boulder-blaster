@@ -1,4 +1,4 @@
-package test.ship;
+package sandbox3.bblaster.ships;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.effect.ParticleEmitter;

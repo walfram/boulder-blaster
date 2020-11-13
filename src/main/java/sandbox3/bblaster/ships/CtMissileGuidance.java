@@ -1,4 +1,4 @@
-package test.ship;
+package sandbox3.bblaster.ships;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,7 +9,7 @@ import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 
-final class CtMissileGuidance extends SimpleControl {
+public final class CtMissileGuidance extends SimpleControl {
 
 	private static final Logger logger = LoggerFactory.getLogger(CtMissileGuidance.class);
 

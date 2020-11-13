@@ -5,22 +5,18 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 
 import jme3utilities.debug.BoundsVisualizer;
-import jme3utilities.debug.PointVisualizer;
-import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPitch;
 import sandbox3.bblaster.controls.CtRoll;
 import sandbox3.bblaster.controls.CtThrust;
 import sandbox3.bblaster.controls.CtYaw;
 import sandbox3.bblaster.misc.Cooldown;
-import test.ship.NdSpeederD;
+import sandbox3.bblaster.ships.NdSpeederD;
 
 public final class StPlayer extends BaseAppState {
 
