@@ -67,6 +67,8 @@ public class BoulderBlasterApp extends SimpleApplication {
 		stateManager.attach(new StControls());
 
 		stateManager.attach(new StHud(guiNode));
+		
+		stateManager.attach(new StCrosshair(guiNode));
 
 		stateManager.attach(new StPlayer(rootNode));
 	}

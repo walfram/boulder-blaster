@@ -25,21 +25,12 @@ public final class StHud extends BaseAppState {
 
 	private Picture targetCursor;
 
-	private Picture crosshair;
-
 	public StHud(Node guiNode) {
 		guiNode.attachChild(hud);
 	}
 
 	@Override
 	protected void initialize(Application app) {
-		// TODO move to separate state
-		crosshair = new Picture("crosshair");
-		crosshair.setImage(getApplication().getAssetManager(), "textures/crosshair/crosshair161.png", true);
-		crosshair.setWidth(72);
-		crosshair.setHeight(72);
-		crosshair.setPosition(800 - 36, 400 - 36);
-
 		// TODO move to separate state
 		Texture txTarget = getApplication().getAssetManager().loadTexture("textures/crosshair/crosshair098.png");
 		targetCursor = new Picture("hud-target");
@@ -49,7 +40,6 @@ public final class StHud extends BaseAppState {
 
 		targetCursor.addControl(new CtTargetCursor(getState(StTargetting.class), getApplication().getCamera()));
 		
-		hud.attachChild(crosshair);
 
 		Container playerContainer = new Container();
 		playerContainer.addChild(new Label("player", new ElementId("window.title.label"))).setMaxWidth(320f);
