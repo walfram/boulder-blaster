@@ -1,4 +1,4 @@
-package sandbox3.bblaster.ships;
+package sandbox3.bblaster.models.ships;
 
 import com.jme3.math.Vector3f;
 

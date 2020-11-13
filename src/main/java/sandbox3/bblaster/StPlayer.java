@@ -1,5 +1,7 @@
 package sandbox3.bblaster;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -7,7 +9,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 
 import jme3utilities.debug.BoundsVisualizer;
@@ -16,17 +17,17 @@ import sandbox3.bblaster.controls.CtRoll;
 import sandbox3.bblaster.controls.CtThrust;
 import sandbox3.bblaster.controls.CtYaw;
 import sandbox3.bblaster.misc.Cooldown;
-import sandbox3.bblaster.ships.NdSpeederD;
+import sandbox3.bblaster.models.ships.CtShipBlasters;
+import sandbox3.bblaster.models.ships.CtShipMissiles;
+import sandbox3.bblaster.models.ships.NdSpeederD;
 
 public final class StPlayer extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StPlayer.class);
-	
+
 	private final Node player = new Node("player");
 
-	private Geometry wpnLeft;
-	private Geometry wpnRight;
-
+	// TODO move to CtShipWeapons
 	private final Cooldown cooldownGuns = new Cooldown(60f / 600f);
 	private final Cooldown cooldownMissiles = new Cooldown(0.33f);
 
@@ -38,11 +39,6 @@ public final class StPlayer extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		// Spatial hull = app.getAssetManager().loadModel("models/spacekit2/craft_speederD.obj");
-		// hull.scale(10f);
-
-		// player.attachChild(hull);
-
 		ship = new NdSpeederD(app.getAssetManager());
 		player.attachChild(ship);
 
@@ -50,14 +46,6 @@ public final class StPlayer extends BaseAppState {
 		player.getParent().addControl(boundsVisualizer);
 		boundsVisualizer.setSubject(ship);
 		boundsVisualizer.setEnabled(true);
-
-		// wpnLeft = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Red, "saltire");
-		// wpnLeft.setLocalTranslation(14f, 2f, -1.5f);
-		// player.attachChild(wpnLeft);
-
-		// wpnRight = new PointVisualizer(app.getAssetManager(), 10, ColorRGBA.Green, "saltire");
-		// wpnRight.setLocalTranslation(-14f, 2f, -1.5f);
-		// player.attachChild(wpnRight);
 
 		ship.addControl(new CtYaw());
 		ship.addControl(new CtPitch());
@@ -98,8 +86,8 @@ public final class StPlayer extends BaseAppState {
 
 		cooldownMissiles.reset();
 
-		Transform transform = wpnLeft.getWorldTransform();
-		getState(StMissiles.class).spawnMissile(transform);
+		List<Transform> transforms = ship.getControl(CtShipMissiles.class).transforms();
+		getState(StMissiles.class).spawnMissiles(transforms);
 	}
 
 	void fireGuns() {
@@ -108,8 +96,10 @@ public final class StPlayer extends BaseAppState {
 
 		cooldownGuns.reset();
 
-		Transform transform = wpnRight.getWorldTransform();
-		getState(StGuns.class).spawnProjectile(transform);
+		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
+
+		// getState(StBlasters.class).spawnProjectile(transform);
+		getState(StBlasters.class).spawnProjectiles(transforms);
 	}
 
 	void yaw(double value, double tpf) {

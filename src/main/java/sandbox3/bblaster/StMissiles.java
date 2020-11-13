@@ -1,5 +1,7 @@
 package sandbox3.bblaster;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,8 +13,10 @@ import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 import jme3.common.material.MtlShowNormals;
+import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Cone;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
@@ -22,6 +26,7 @@ import sandbox3.bblaster.controls.CtSmokeTrail;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
 import sandbox3.bblaster.effects.PeSmokeTrail;
+import sandbox3.bblaster.models.missiles.NdMissile;
 
 public final class StMissiles extends BaseAppState {
 
@@ -52,6 +57,7 @@ public final class StMissiles extends BaseAppState {
 	protected void onDisable() {
 	}
 
+	@Deprecated
 	void spawnMissile(Transform transform) {
 		Geometry geometry = new Geometry("missile-geometry", new Cone(4, 2f, 5f, true));
 		geometry.setMaterial(new MtlShowNormals(getApplication().getAssetManager()));
@@ -62,24 +68,17 @@ public final class StMissiles extends BaseAppState {
 		Node missile = new Node("missile");
 		missile.attachChild(geometry);
 
-		// BoundsVisualizer boundsVisualizer = new BoundsVisualizer(getApplication().getAssetManager());
-		// boundsVisualizer.setSubject(geometry);
-		// missile.addControl(boundsVisualizer);
-		// boundsVisualizer.setEnabled(true);
-
 		missile.addControl(new CtDamage(new GameSettings().missileDamage()));
 		missile.addControl(new CtMissileMove(new GameSettings().missileSpeed()));
 
 		missile.addControl(new CtMissileTarget(getState(StTargetting.class).currentTarget()));
-		
+
 		missile.addControl(new CtTimeout(15f, (spatial) -> {
 			missile.removeFromParent();
 			getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
 			getState(StCollision.class).unregister(missile);
 		}));
 
-		// missile.setLocalTranslation(transform.getTranslation());
-		// missile.setLocalRotation(transform.getRotation());
 		missile.setLocalTransform(transform);
 
 		missiles.attachChild(missile);
@@ -95,8 +94,37 @@ public final class StMissiles extends BaseAppState {
 				getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
 			}
 		}));
-		
+
 		getState(StCollision.class).register(missile);
+	}
+
+	public void spawnMissiles(List<Transform> transforms) {
+		for (Transform t : transforms) {
+			Node missile = new NdMissile(getApplication().getAssetManager());
+			missile.setLocalTransform(t);
+			missiles.attachChild(missile);
+
+			missile.addControl(new SimpleControl() {
+				float elapsed = 0f;
+
+				@Override
+				protected void controlUpdate(float updateInterval) {
+					super.controlUpdate(updateInterval);
+
+					elapsed += updateInterval;
+
+					if (elapsed > 15f) {
+						missileSelfDestruct(missile);
+					}
+				}
+			});
+		}
+	}
+
+	protected void missileSelfDestruct(Spatial missile) {
+		logger.debug("missile self-destruct = {}", missile);
+		missile.removeFromParent();
+		// TODO make explosion
 	}
 
 }

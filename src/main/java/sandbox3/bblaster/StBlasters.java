@@ -1,5 +1,7 @@
 package sandbox3.bblaster;
 
+import java.util.List;
+
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingSphere;
@@ -16,11 +18,11 @@ import sandbox3.bblaster.controls.CtMissileMove;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
 
-public final class StGuns extends BaseAppState {
+public final class StBlasters extends BaseAppState {
 
 	private final Node projectiles = new Node("projectiles");
 
-	public StGuns(Node rootNode) {
+	public StBlasters(Node rootNode) {
 		rootNode.attachChild(projectiles);
 	}
 
@@ -45,6 +47,7 @@ public final class StGuns extends BaseAppState {
 		super.update(tpf);
 	}
 
+	@Deprecated
 	void spawnProjectile(Transform transform) {
 		Geometry geometry = new Geometry("projectile-geometry", new Box(0.25f, 0.25f, 1f));
 		geometry.setMaterial(new MtlShowNormals(getApplication().getAssetManager()));
@@ -74,6 +77,10 @@ public final class StGuns extends BaseAppState {
 		}));
 
 		getState(StCollision.class).register(projectile);
+	}
+
+	public void spawnProjectiles(List<Transform> transforms) {
+		throw new UnsupportedOperationException("not yet implemented");
 	}
 
 }

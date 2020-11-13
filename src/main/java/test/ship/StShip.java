@@ -11,14 +11,14 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-import sandbox3.bblaster.ships.CtMissileGuidance;
-import sandbox3.bblaster.ships.CtShipEmissions;
-import sandbox3.bblaster.ships.CtShipEngine;
-import sandbox3.bblaster.ships.CtShipWeapons;
-import sandbox3.bblaster.ships.NdSpeederD;
-import test.missile.CtMissileEmission;
-import test.missile.CtMissileEngine;
-import test.missile.NdMissile;
+import sandbox3.bblaster.models.missiles.CtMissileEmission;
+import sandbox3.bblaster.models.missiles.CtMissileEngine;
+import sandbox3.bblaster.models.missiles.NdMissile;
+import sandbox3.bblaster.models.ships.CtMissileGuidance;
+import sandbox3.bblaster.models.ships.CtShipBlasters;
+import sandbox3.bblaster.models.ships.CtShipEmissions;
+import sandbox3.bblaster.models.ships.CtShipEngine;
+import sandbox3.bblaster.models.ships.NdSpeederD;
 
 final class StShip extends BaseAppState {
 
@@ -67,7 +67,7 @@ final class StShip extends BaseAppState {
 
 	void fireGuns() {
 		logger.debug("fireGuns called");
-		ship.getControl(CtShipWeapons.class).toggleEnabled();
+		ship.getControl(CtShipBlasters.class).toggleEnabled();
 	}
 
 	void fireMissile() {

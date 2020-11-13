@@ -1,4 +1,4 @@
-package test.missile;
+package sandbox3.bblaster.models.missiles;
 
 import com.jme3.effect.ParticleEmitter;
 

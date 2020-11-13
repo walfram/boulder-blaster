@@ -16,6 +16,8 @@ import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.style.ElementId;
 
+import sandbox3.bblaster.models.missiles.CtMissileEmission;
+import sandbox3.bblaster.models.missiles.NdMissile;
 import test.cmn.ScenePick;
 
 final class StMissile extends BaseAppState {

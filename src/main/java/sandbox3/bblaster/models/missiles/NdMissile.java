@@ -1,4 +1,4 @@
-package test.missile;
+package sandbox3.bblaster.models.missiles;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.effect.ParticleEmitter;
@@ -66,6 +66,7 @@ public final class NdMissile extends Node {
 		emission.setLocalTranslation(0, 0, -4f);
 		attachChild(emission);
 
+		// TODO trail must be in StMissiles::fx node, because it modifies node bound
 		ParticleEmitter trail = new PeMissileTrail(assetManager);
 		trail.setLocalTranslation(0, 0, -5f);
 		attachChild(trail);

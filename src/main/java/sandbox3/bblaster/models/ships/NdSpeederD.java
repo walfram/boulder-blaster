@@ -1,4 +1,4 @@
-package sandbox3.bblaster.ships;
+package sandbox3.bblaster.models.ships;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,23 +21,23 @@ public final class NdSpeederD extends Node {
 		hull.scale(10f);
 		attachChild(hull);
 
-		PointVisualizer wpnLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Red, "saltire");
-		wpnLeft.setLocalTranslation(14f, 2f, -1.5f);
-		attachChild(wpnLeft);
+		PointVisualizer blasterLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Red, "saltire");
+		blasterLeft.setLocalTranslation(14f, 2f, -1.5f);
+		attachChild(blasterLeft);
 
-		PointVisualizer wpnRight = new PointVisualizer(assetManager, 10, ColorRGBA.Green, "saltire");
-		wpnRight.setLocalTranslation(-14f, 2f, -1.5f);
-		attachChild(wpnRight);
+		PointVisualizer blasterRight = new PointVisualizer(assetManager, 10, ColorRGBA.Green, "saltire");
+		blasterRight.setLocalTranslation(-14f, 2f, -1.5f);
+		attachChild(blasterRight);
 
-		List<ParticleEmitter> weapons = new ArrayList<>();
+		List<ParticleEmitter> blasters = new ArrayList<>();
 		for (Vector3f weaponTranslation : new Vector3f[] { new Vector3f(14f, 2f, -1.5f), new Vector3f(-14f, 2f, -1.5f) }) {
-			ParticleEmitter weapon = new PeShipWeapon(assetManager);
-			weapon.setLocalTranslation(weaponTranslation);
-			attachChild(weapon);
-			weapons.add(weapon);
+			ParticleEmitter blaster = new PeShipBlaster(assetManager);
+			blaster.setLocalTranslation(weaponTranslation);
+			attachChild(blaster);
+			blasters.add(blaster);
 		}
 
-		addControl(new CtShipWeapons(weapons));
+		addControl(new CtShipBlasters(blasters));
 
 		PointVisualizer emissionLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
 		emissionLeft.setLocalTranslation(4, 4, -12);
@@ -56,12 +56,13 @@ public final class NdSpeederD extends Node {
 		}
 
 		addControl(new CtShipEmissions(emissions));
-
 		addControl(new CtShipEngine());
 
 		PointVisualizer missileLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Yellow, null);
 		missileLeft.setLocalTranslation(7, 1, -2.5f);
 		attachChild(missileLeft);
+		
+		addControl(new CtShipMissiles(missileLeft));
 	}
 
 }

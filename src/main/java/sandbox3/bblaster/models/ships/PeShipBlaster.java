@@ -1,4 +1,4 @@
-package sandbox3.bblaster.ships;
+package sandbox3.bblaster.models.ships;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.effect.ParticleEmitter;
@@ -9,9 +9,9 @@ import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
 
-final class PeShipWeapon extends ParticleEmitter {
+final class PeShipBlaster extends ParticleEmitter {
 
-	public PeShipWeapon(AssetManager assetManager) {
+	public PeShipBlaster(AssetManager assetManager) {
 		super("weapon", Type.Triangle, 8);
 
 		setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flash.png"));

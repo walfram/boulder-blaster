@@ -1,4 +1,4 @@
-package sandbox3.bblaster.ships;
+package sandbox3.bblaster.models.ships;
 
 import java.util.List;
 
