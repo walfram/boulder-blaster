@@ -21,7 +21,7 @@ import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Cone;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
-import sandbox3.bblaster.controls.CtMissileMove;
+import sandbox3.bblaster.controls.CtProjectileMove;
 import sandbox3.bblaster.controls.CtMissileTarget;
 import sandbox3.bblaster.controls.CtSmokeTrail;
 import sandbox3.bblaster.controls.CtTargettable;
@@ -72,7 +72,7 @@ public final class StMissiles extends BaseAppState {
 		missile.attachChild(geometry);
 
 		missile.addControl(new CtDamage(new GameSettings().missileDamage()));
-		missile.addControl(new CtMissileMove(new GameSettings().missileSpeed()));
+		missile.addControl(new CtProjectileMove(new GameSettings().missileSpeed()));
 
 		missile.addControl(new CtMissileTarget(getState(StTargetting.class).currentTarget()));
 

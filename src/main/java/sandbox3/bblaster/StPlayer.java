@@ -97,7 +97,7 @@ public final class StPlayer extends BaseAppState {
 		cooldownGuns.reset();
 
 		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
-
+		
 		// getState(StBlasters.class).spawnProjectile(transform);
 		getState(StBlasters.class).spawnProjectiles(transforms);
 	}

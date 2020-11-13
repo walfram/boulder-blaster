@@ -60,7 +60,7 @@ public class BoulderBlasterApp extends SimpleApplication {
 		// stateManager.attach(new StBoulders(rootNode));
 
 		stateManager.attach(new StMissiles(rootNode));
-		// stateManager.attach(new StGuns(rootNode));
+		stateManager.attach(new StBlasters(rootNode));
 
 		stateManager.attach(new StCamera());
 

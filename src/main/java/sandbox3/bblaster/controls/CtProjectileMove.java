@@ -4,12 +4,11 @@ import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
-@Deprecated
-public final class CtMissileMove extends SimpleControl {
+public final class CtProjectileMove extends SimpleControl {
 
 	private final float speed;
 
-	public CtMissileMove(float speed) {
+	public CtProjectileMove(float speed) {
 		this.speed = speed;
 	}
 
@@ -18,9 +17,8 @@ public final class CtMissileMove extends SimpleControl {
 		super.controlUpdate(updateInterval);
 
 		Vector3f velocity = spatial.getLocalRotation().mult(Vector3f.UNIT_Z).mult(updateInterval).mult(speed);
-		Vector3f updated = spatial.getLocalTranslation().add(velocity);
+		spatial.move(velocity);
 
-		spatial.setLocalTranslation(updated);
 	}
 
 }

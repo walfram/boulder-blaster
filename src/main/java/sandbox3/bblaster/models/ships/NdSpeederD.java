@@ -30,9 +30,9 @@ public final class NdSpeederD extends Node {
 		attachChild(blasterRight);
 
 		List<ParticleEmitter> blasters = new ArrayList<>();
-		for (Vector3f weaponTranslation : new Vector3f[] { new Vector3f(14f, 2f, -1.5f), new Vector3f(-14f, 2f, -1.5f) }) {
+		for (Vector3f blasterTranslation : new Vector3f[] { new Vector3f(14f, 2f, -1.5f), new Vector3f(-14f, 2f, -1.5f) }) {
 			ParticleEmitter blaster = new PeShipBlaster(assetManager);
-			blaster.setLocalTranslation(weaponTranslation);
+			blaster.setLocalTranslation(blasterTranslation);
 			attachChild(blaster);
 			blasters.add(blaster);
 		}
