@@ -5,6 +5,7 @@ import com.jme3.math.Vector3f;
 import jme3utilities.SimpleControl;
 
 // TODO rename this class to better reflect it's purpose
+@Deprecated
 public final class CtBounds extends SimpleControl {
 
 	private final float boundary;
