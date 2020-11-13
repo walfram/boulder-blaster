@@ -6,6 +6,7 @@ import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 
+@Deprecated
 public final class CtMissileTarget extends SimpleControl {
 
 	private final Spatial target;

@@ -4,6 +4,7 @@ import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
+@Deprecated
 public final class CtMissileMove extends SimpleControl {
 
 	private final float speed;
