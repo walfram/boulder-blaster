@@ -11,7 +11,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-import sandbox3.bblaster.models.missiles.CtMissileEmission;
+import sandbox3.bblaster.models.missiles.CtMissileTrail;
 import sandbox3.bblaster.models.missiles.CtMissileEngine;
 import sandbox3.bblaster.models.missiles.NdMissile;
 import sandbox3.bblaster.models.ships.CtMissileGuidance;
@@ -84,7 +84,7 @@ final class StShip extends BaseAppState {
 		missile.addControl(new CtMissileGuidance(target));
 
 		// TODO use one method for engine start and launch, or delay engine start
-		missile.getControl(CtMissileEmission.class).setEnabled(true);
+		missile.getControl(CtMissileTrail.class).setEnabled(true);
 		missile.getControl(CtMissileEngine.class).setEnabled(true);
 
 		// missile.addControl(chaseCamera);

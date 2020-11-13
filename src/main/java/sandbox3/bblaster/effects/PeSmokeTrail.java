@@ -8,6 +8,7 @@ import com.jme3.math.ColorRGBA;
 
 import jme3.common.material.MtlParticle;
 
+@Deprecated
 public final class PeSmokeTrail extends ParticleEmitter {
 
 	public PeSmokeTrail(AssetManager assetManager) {

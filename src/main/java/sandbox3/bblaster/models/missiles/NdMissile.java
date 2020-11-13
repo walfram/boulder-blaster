@@ -67,12 +67,10 @@ public final class NdMissile extends Node {
 		attachChild(emission);
 
 		// TODO trail must be in StMissiles::fx node, because it modifies node bound
-		ParticleEmitter trail = new PeMissileTrail(assetManager);
-		trail.setLocalTranslation(0, 0, -5f);
-		attachChild(trail);
+		// ParticleEmitter trail = new PeMissileTrail(assetManager);
+		// trail.setLocalTranslation(0, 0, -5f);
+		// attachChild(trail);
 
-		addControl(new CtMissileEmission(emission, trail));
-		
 		addControl(new CtMissileEngine(500f));
 	}
 

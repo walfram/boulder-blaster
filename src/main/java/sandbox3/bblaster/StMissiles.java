@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingSphere;
+import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.FastMath;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
@@ -26,7 +27,9 @@ import sandbox3.bblaster.controls.CtSmokeTrail;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
 import sandbox3.bblaster.effects.PeSmokeTrail;
+import sandbox3.bblaster.models.missiles.CtMissileTrail;
 import sandbox3.bblaster.models.missiles.NdMissile;
+import sandbox3.bblaster.models.missiles.PeMissileTrail;
 
 public final class StMissiles extends BaseAppState {
 
@@ -118,6 +121,10 @@ public final class StMissiles extends BaseAppState {
 					}
 				}
 			});
+
+			ParticleEmitter missileTrail = new PeMissileTrail(getApplication().getAssetManager());
+			missileTrail.addControl(new CtMissileTrail(missile));
+			fx.attachChild(missileTrail);
 		}
 	}
 

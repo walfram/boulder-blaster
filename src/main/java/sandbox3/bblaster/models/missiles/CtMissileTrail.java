@@ -1,23 +1,22 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.models.missiles;
 
 import com.jme3.effect.ParticleEmitter;
-import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 
-@Deprecated
-public final class CtSmokeTrail extends SimpleControl {
+public final class CtMissileTrail extends SimpleControl {
 
-	private final Node missile;
+	private final Spatial missile;
 
-	public CtSmokeTrail(Node missile) {
+	public CtMissileTrail(Spatial missile) {
 		this.missile = missile;
 	}
 
 	@Override
 	protected void controlUpdate(float updateInterval) {
 		super.controlUpdate(updateInterval);
-
+		
 		getSpatial().setLocalTranslation(missile.getLocalTranslation());
 
 		if (missile.getParent() == null) {
@@ -27,4 +26,5 @@ public final class CtSmokeTrail extends SimpleControl {
 				spatial.removeFromParent();
 		}
 	}
+
 }

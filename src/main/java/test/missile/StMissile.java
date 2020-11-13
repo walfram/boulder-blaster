@@ -16,7 +16,7 @@ import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 import com.simsilica.lemur.style.ElementId;
 
-import sandbox3.bblaster.models.missiles.CtMissileEmission;
+import sandbox3.bblaster.models.missiles.CtMissileTrail;
 import sandbox3.bblaster.models.missiles.NdMissile;
 import test.cmn.ScenePick;
 
@@ -55,8 +55,8 @@ final class StMissile extends BaseAppState {
 
 		Container container = new Container();
 		container.addChild(new Label("missile controls", new ElementId("window.title.label")));
-		container.addChild(new ActionButton(new CallMethodAction("toggle engine", missile.getControl(CtMissileEmission.class), "toggleEnabled")));
-		container.addChild(new ActionButton(new CallMethodAction("launch", missile.getControl(CtMissileEmission.class), "launch")));
+		container.addChild(new ActionButton(new CallMethodAction("toggle engine", missile.getControl(CtMissileTrail.class), "toggleEnabled")));
+		container.addChild(new ActionButton(new CallMethodAction("launch", missile.getControl(CtMissileTrail.class), "launch")));
 		
 		gui.attachChild(container);
 		container.setLocalTranslation(1600 - container.getPreferredSize().x - 10, 800 - 10, 0);

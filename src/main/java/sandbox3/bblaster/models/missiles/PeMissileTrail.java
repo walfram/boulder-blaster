@@ -7,7 +7,7 @@ import com.jme3.math.ColorRGBA;
 
 import jme3.common.material.MtlParticle;
 
-final class PeMissileTrail extends ParticleEmitter {
+public final class PeMissileTrail extends ParticleEmitter {
 
 	public PeMissileTrail(AssetManager assetManager) {
 		super("smoke-trail", Type.Triangle, 300);
@@ -23,6 +23,8 @@ final class PeMissileTrail extends ParticleEmitter {
 		setLowLife(6f);
 		setHighLife(7f);
 		setInWorldSpace(true);
+		
+		setParticlesPerSec(30);
 	}
 
 }
