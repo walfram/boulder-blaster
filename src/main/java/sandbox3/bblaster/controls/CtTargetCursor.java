@@ -1,4 +1,4 @@
-package sandbox3.bblaster.gui;
+package sandbox3.bblaster.controls;
 
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
@@ -6,7 +6,7 @@ import com.jme3.renderer.Camera;
 import jme3utilities.SimpleControl;
 import sandbox3.bblaster.StTargetting;
 
-final class CtTargetCursor extends SimpleControl {
+public final class CtTargetCursor extends SimpleControl {
 
 	private final StTargetting stTargetting;
 	private final Camera camera;

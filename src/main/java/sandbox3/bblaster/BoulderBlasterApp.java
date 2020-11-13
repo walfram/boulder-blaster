@@ -10,7 +10,6 @@ import com.simsilica.lemur.style.BaseStyles;
 import jme3.common.debug.NdDebugGrid;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
-import sandbox3.bblaster.gui.StHud;
 
 public class BoulderBlasterApp extends SimpleApplication {
 
