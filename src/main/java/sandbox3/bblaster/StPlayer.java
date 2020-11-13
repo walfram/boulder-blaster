@@ -97,7 +97,7 @@ public final class StPlayer extends BaseAppState {
 		cooldownGuns.reset();
 
 		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
-		
+
 		// getState(StBlasters.class).spawnProjectile(transform);
 		getState(StBlasters.class).spawnProjectiles(transforms);
 	}
@@ -124,6 +124,10 @@ public final class StPlayer extends BaseAppState {
 
 	public Vector3f position() {
 		return ship.getLocalTranslation();
+	}
+
+	public Vector3f direction() {
+		return ship.getLocalRotation().mult(Vector3f.UNIT_Z);
 	}
 
 }

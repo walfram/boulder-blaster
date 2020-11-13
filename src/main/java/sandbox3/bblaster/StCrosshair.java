@@ -3,6 +3,7 @@ package sandbox3.bblaster;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.Vector2f;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
 
@@ -48,6 +49,20 @@ public final class StCrosshair extends BaseAppState {
 
 	@Override
 	protected void onDisable() {
+	}
+
+	public Vector3f direction() {
+		if (getState(StControls.class).isMouseLook()) {
+			Vector2f click2d = getApplication().getInputManager().getCursorPosition();
+			Vector3f origin = getApplication().getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 0f).clone();
+
+			Vector3f direction = getApplication().getCamera().getWorldCoordinates(new Vector2f(click2d.x, click2d.y), 1f)
+					.subtractLocal(origin).normalizeLocal();
+
+			return direction;
+		} else {
+			return getState(StPlayer.class).direction();
+		}
 	}
 
 }

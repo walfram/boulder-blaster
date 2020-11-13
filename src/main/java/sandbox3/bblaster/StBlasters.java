@@ -98,9 +98,12 @@ public final class StBlasters extends BaseAppState {
 
 	public void spawnProjectiles(List<Transform> transforms) {
 		for (Transform t : transforms) {
-
 			Spatial projectile = new Geometry("projectile", projectileMesh);
 			projectile.setMaterial(projectileMaterial);
+			
+			// TODO temporary
+			Vector3f direction = getState(StCrosshair.class).direction();
+			t.getRotation().lookAt(direction, Vector3f.UNIT_Y);
 			projectile.setLocalTransform(t);
 
 			projectile.addControl(new CtProjectileMove(1000f));
