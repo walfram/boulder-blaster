@@ -1,4 +1,4 @@
-package sandbox3.bblaster.models.ships;
+package sandbox3.bblaster.ships;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

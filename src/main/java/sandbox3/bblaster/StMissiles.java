@@ -27,9 +27,9 @@ import sandbox3.bblaster.controls.CtSmokeTrail;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
 import sandbox3.bblaster.effects.PeSmokeTrail;
-import sandbox3.bblaster.models.missiles.CtMissileTrail;
-import sandbox3.bblaster.models.missiles.NdMissile;
-import sandbox3.bblaster.models.missiles.PeMissileTrail;
+import sandbox3.bblaster.missiles.CtMissileTrail;
+import sandbox3.bblaster.missiles.NdMissile;
+import sandbox3.bblaster.missiles.PeMissileTrail;
 
 public final class StMissiles extends BaseAppState {
 

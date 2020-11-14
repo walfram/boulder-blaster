@@ -17,9 +17,9 @@ import sandbox3.bblaster.controls.CtRoll;
 import sandbox3.bblaster.controls.CtThrust;
 import sandbox3.bblaster.controls.CtYaw;
 import sandbox3.bblaster.misc.Cooldown;
-import sandbox3.bblaster.models.ships.CtShipBlasters;
-import sandbox3.bblaster.models.ships.CtShipMissiles;
-import sandbox3.bblaster.models.ships.NdSpeederD;
+import sandbox3.bblaster.ships.CtShipBlasters;
+import sandbox3.bblaster.ships.CtShipMissiles;
+import sandbox3.bblaster.ships.NdSpeederD;
 
 public final class StPlayer extends BaseAppState {
 

@@ -11,14 +11,14 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
-import sandbox3.bblaster.models.missiles.CtMissileTrail;
-import sandbox3.bblaster.models.missiles.CtMissileEngine;
-import sandbox3.bblaster.models.missiles.NdMissile;
-import sandbox3.bblaster.models.ships.CtMissileGuidance;
-import sandbox3.bblaster.models.ships.CtShipBlasters;
-import sandbox3.bblaster.models.ships.CtShipEmissions;
-import sandbox3.bblaster.models.ships.CtShipEngine;
-import sandbox3.bblaster.models.ships.NdSpeederD;
+import sandbox3.bblaster.missiles.CtMissileEngine;
+import sandbox3.bblaster.missiles.CtMissileTrail;
+import sandbox3.bblaster.missiles.NdMissile;
+import sandbox3.bblaster.ships.CtMissileGuidance;
+import sandbox3.bblaster.ships.CtShipBlasters;
+import sandbox3.bblaster.ships.CtShipEmissions;
+import sandbox3.bblaster.ships.CtShipEngine;
+import sandbox3.bblaster.ships.NdSpeederD;
 
 final class StShip extends BaseAppState {
 
