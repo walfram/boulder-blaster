@@ -55,12 +55,6 @@ public final class StBoulders2 extends BaseAppState {
 
 		material = new MtlLighting(app.getAssetManager(), ColorRGBA.Gray);
 		material.setBoolean("UseInstancing", true);
-
-		// for (int idx = 0; idx < 2048; idx++) {
-		// spawnBoulder(idx);
-		// }
-
-		// scene.instance();
 	}
 
 	@Override
