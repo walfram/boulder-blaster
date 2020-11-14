@@ -2,12 +2,11 @@ package sandbox3.bblaster.controls;
 
 import jme3utilities.SimpleControl;
 
-@Deprecated
-public final class CtDamage extends SimpleControl {
+public final class CtPayload extends SimpleControl {
 
 	private final float value;
 	
-	public CtDamage(float value) {
+	public CtPayload(float value) {
 		this.value = value;
 	}
 

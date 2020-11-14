@@ -27,7 +27,7 @@ import sandbox3.bblaster.boulders.CtBoulderBounds;
 import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.controls.CtCollision;
-import sandbox3.bblaster.controls.CtDamage;
+import sandbox3.bblaster.controls.CtPayload;
 import sandbox3.bblaster.controls.CtTargettable;
 
 @Deprecated
@@ -95,7 +95,7 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtTargettable());
 		
 		boulder.addControl(new CtCollision(other -> {
-			CtDamage control = other.getControl(CtDamage.class);
+			CtPayload control = other.getControl(CtPayload.class);
 
 			if (control != null) {
 

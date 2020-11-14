@@ -21,7 +21,7 @@ import jme3.common.material.MtlShowNormals;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.controls.CtCollision;
-import sandbox3.bblaster.controls.CtDamage;
+import sandbox3.bblaster.controls.CtPayload;
 import sandbox3.bblaster.controls.CtProjectileMove;
 import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.controls.CtTimeout;
@@ -73,7 +73,7 @@ public final class StBlasters extends BaseAppState {
 			projectile.setLocalTransform(t);
 
 			projectile.addControl(new CtProjectileMove(Settings.projectileSpeed));
-			projectile.addControl(new CtDamage(Settings.projectileDamage));
+			projectile.addControl(new CtPayload(Settings.projectileDamage));
 
 			projectile.addControl(new SimpleControl() {
 				float elapsed = 0f;
