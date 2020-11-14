@@ -28,7 +28,7 @@ public final class StPlayer extends BaseAppState {
 	private final Node player = new Node("player");
 
 	// TODO move to CtShipWeapons
-	private final Cooldown cooldownGuns = new Cooldown(60f / 600f);
+	private final Cooldown cooldownBlasters = new Cooldown(1f / 8.33f);
 	private final Cooldown cooldownMissiles = new Cooldown(0.33f);
 
 	private Node ship;
@@ -76,7 +76,7 @@ public final class StPlayer extends BaseAppState {
 	public void update(float tpf) {
 		super.update(tpf);
 
-		cooldownGuns.update(tpf);
+		cooldownBlasters.update(tpf);
 		cooldownMissiles.update(tpf);
 	}
 
@@ -91,10 +91,10 @@ public final class StPlayer extends BaseAppState {
 	}
 
 	void fireGuns() {
-		if (!cooldownGuns.isReady())
+		if (!cooldownBlasters.isReady())
 			return;
 
-		cooldownGuns.reset();
+		cooldownBlasters.reset();
 
 		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
 

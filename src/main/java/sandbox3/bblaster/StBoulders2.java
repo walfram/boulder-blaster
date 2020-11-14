@@ -86,11 +86,8 @@ public final class StBoulders2 extends BaseAppState {
 		boulder.setMaterial(material);
 
 		Vector3f translation = random.nextUnitVector3f().mult(maxDistance);
-
 		Quaternion rotation = random.nextQuaternion();
-
-		// float scale = random.nextFloat(minScale, maxScale);
-		float size = random.nextFloat(minScale, 2f * minScale);
+		float size = random.nextFloat(minScale, maxScale);
 
 		boulder.setLocalTranslation(translation);
 		boulder.setLocalRotation(rotation);
