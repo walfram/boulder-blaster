@@ -12,9 +12,9 @@ import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 
 import sandbox3.bblaster.missiles.CtMissileEngine;
+import sandbox3.bblaster.missiles.CtMissileGuidance;
 import sandbox3.bblaster.missiles.CtMissileTrail;
 import sandbox3.bblaster.missiles.NdMissile;
-import sandbox3.bblaster.ships.CtMissileGuidance;
 import sandbox3.bblaster.ships.CtShipBlasters;
 import sandbox3.bblaster.ships.CtShipEmissions;
 import sandbox3.bblaster.ships.CtShipEngine;

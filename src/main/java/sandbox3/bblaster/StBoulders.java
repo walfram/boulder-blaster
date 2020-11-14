@@ -23,13 +23,14 @@ import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
-import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
 import sandbox3.bblaster.boulders.CtBoulderHealth;
+import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
 import sandbox3.bblaster.controls.CtTargettable;
 
+@Deprecated
 public final class StBoulders extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StBoulders.class);

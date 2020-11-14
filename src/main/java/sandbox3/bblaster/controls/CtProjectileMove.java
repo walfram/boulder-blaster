@@ -18,7 +18,6 @@ public final class CtProjectileMove extends SimpleControl {
 
 		Vector3f velocity = spatial.getLocalRotation().mult(Vector3f.UNIT_Z).mult(updateInterval).mult(speed);
 		spatial.move(velocity);
-
 	}
 
 }
