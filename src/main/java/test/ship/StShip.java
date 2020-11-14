@@ -17,7 +17,6 @@ import sandbox3.bblaster.missiles.CtMissileTrail;
 import sandbox3.bblaster.missiles.NdMissile;
 import sandbox3.bblaster.ships.CtShipBlasters;
 import sandbox3.bblaster.ships.CtShipEmissions;
-import sandbox3.bblaster.ships.CtShipEngine;
 import sandbox3.bblaster.ships.NdSpeederD;
 
 final class StShip extends BaseAppState {
@@ -62,7 +61,7 @@ final class StShip extends BaseAppState {
 		logger.debug("toggleEngines called");
 		ship.getControl(CtShipEmissions.class).toggleEnabled();
 
-		ship.getControl(CtShipEngine.class).setEnabled(ship.getControl(CtShipEmissions.class).isEnabled());
+		// ship.getControl(CtShipEngine.class).setEnabled(ship.getControl(CtShipEmissions.class).isEnabled());
 	}
 
 	void fireGuns() {

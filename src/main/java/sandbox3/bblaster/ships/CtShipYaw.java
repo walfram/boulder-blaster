@@ -1,11 +1,11 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.ships;
 
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
-public final class CtYaw extends SimpleControl {
+public final class CtShipYaw extends SimpleControl {
 
 	public void yaw(double value, double tpf) {
 		Vector3f up = spatial.getLocalRotation().mult(Vector3f.UNIT_Y);

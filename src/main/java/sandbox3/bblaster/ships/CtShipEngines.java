@@ -1,18 +1,18 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.ships;
 
 import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
-public final class CtThrust extends SimpleControl {
+public final class CtShipEngines extends SimpleControl {
 
 	private final float maxSpeed;
 	
 	private float thrust = 0f;
 	private float target = 0f;
 	
-	public CtThrust(float maxSpeed) {
+	public CtShipEngines(float maxSpeed) {
 		this.maxSpeed = maxSpeed;
 	}
 

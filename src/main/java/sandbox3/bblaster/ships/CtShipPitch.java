@@ -1,11 +1,11 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.ships;
 
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
 
-public final class CtPitch extends SimpleControl {
+public final class CtShipPitch extends SimpleControl {
 
 	public void pitch(double value, double tpf) {
 		Vector3f left = spatial.getLocalRotation().mult(Vector3f.UNIT_X);

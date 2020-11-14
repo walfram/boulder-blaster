@@ -12,13 +12,13 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 import jme3utilities.debug.BoundsVisualizer;
-import sandbox3.bblaster.controls.CtPitch;
-import sandbox3.bblaster.controls.CtRoll;
-import sandbox3.bblaster.controls.CtThrust;
-import sandbox3.bblaster.controls.CtYaw;
 import sandbox3.bblaster.misc.Cooldown;
+import sandbox3.bblaster.ships.CtShipPitch;
+import sandbox3.bblaster.ships.CtShipRoll;
 import sandbox3.bblaster.ships.CtShipBlasters;
 import sandbox3.bblaster.ships.CtShipMissiles;
+import sandbox3.bblaster.ships.CtShipEngines;
+import sandbox3.bblaster.ships.CtShipYaw;
 import sandbox3.bblaster.ships.NdSpeederD;
 
 public final class StPlayer extends BaseAppState {
@@ -47,10 +47,11 @@ public final class StPlayer extends BaseAppState {
 		boundsVisualizer.setSubject(ship);
 		boundsVisualizer.setEnabled(true);
 
-		ship.addControl(new CtYaw());
-		ship.addControl(new CtPitch());
-		ship.addControl(new CtRoll());
-		ship.addControl(new CtThrust(Settings.playerMaxSpeed));
+		ship.addControl(new CtShipYaw());
+		ship.addControl(new CtShipPitch());
+		ship.addControl(new CtShipRoll());
+
+		ship.addControl(new CtShipEngines(Settings.playerMaxSpeed));
 
 		// player.addControl(new CtCollision(other -> {
 		// }));
@@ -58,6 +59,8 @@ public final class StPlayer extends BaseAppState {
 		// getState(StCollision.class).register(player);
 
 		getState(StCamera.class).enableFlightCamera(ship);
+
+		logger.debug("initialized");
 	}
 
 	@Override
@@ -103,23 +106,23 @@ public final class StPlayer extends BaseAppState {
 	}
 
 	void yaw(double value, double tpf) {
-		ship.getControl(CtYaw.class).yaw(value, tpf);
+		ship.getControl(CtShipYaw.class).yaw(value, tpf);
 	}
 
 	void pitch(double value, double tpf) {
-		ship.getControl(CtPitch.class).pitch(value, tpf);
+		ship.getControl(CtShipPitch.class).pitch(value, tpf);
 	}
 
 	void roll(double value, double tpf) {
-		ship.getControl(CtRoll.class).roll(value, tpf);
+		ship.getControl(CtShipRoll.class).roll(value, tpf);
 	}
 
 	void updateThrust(double value, double tpf) {
-		ship.getControl(CtThrust.class).thrust(value, tpf);
+		ship.getControl(CtShipEngines.class).thrust(value, tpf);
 	}
 
 	public double thrustValue() {
-		return ship.getControl(CtThrust.class).value();
+		return ship.getControl(CtShipEngines.class).value();
 	}
 
 	public Vector3f position() {

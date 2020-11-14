@@ -56,8 +56,7 @@ public final class NdSpeederD extends Node {
 		}
 
 		addControl(new CtShipEmissions(emissions));
-		addControl(new CtShipEngine());
-
+		
 		PointVisualizer missileLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Yellow, null);
 		missileLeft.setLocalTranslation(7, 1, -2.5f);
 		attachChild(missileLeft);
