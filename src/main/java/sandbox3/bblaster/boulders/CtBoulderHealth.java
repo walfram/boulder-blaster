@@ -2,7 +2,6 @@ package sandbox3.bblaster.boulders;
 
 import jme3utilities.SimpleControl;
 
-@Deprecated
 public final class CtBoulderHealth extends SimpleControl {
 
 	private final float health;

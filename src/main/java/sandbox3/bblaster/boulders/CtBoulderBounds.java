@@ -4,9 +4,7 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
-import jme3utilities.math.MyMath;
 
-@Deprecated
 public final class CtBoulderBounds extends SimpleControl {
 
 	private final float boundary;

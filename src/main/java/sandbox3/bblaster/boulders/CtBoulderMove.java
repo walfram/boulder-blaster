@@ -5,7 +5,6 @@ import com.jme3.math.Vector3f;
 import jme3utilities.SimpleControl;
 import sandbox3.bblaster.Settings;
 
-@Deprecated
 public final class CtBoulderMove extends SimpleControl {
 
 	private final float speed;
