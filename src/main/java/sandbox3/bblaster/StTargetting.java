@@ -11,7 +11,7 @@ import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 
-import sandbox3.bblaster.controls.CtHealth;
+import sandbox3.bblaster.boulders.CtBoulderHealth;
 
 public final class StTargetting extends BaseAppState {
 
@@ -77,7 +77,7 @@ public final class StTargetting extends BaseAppState {
 
 	public float healthPercent() {
 		if (currentTarget != null) {
-			return currentTarget.getControl(CtHealth.class).percent();
+			return currentTarget.getControl(CtBoulderHealth.class).percent();
 		}
 
 		return Float.NaN;
@@ -85,7 +85,7 @@ public final class StTargetting extends BaseAppState {
 
 	public float healthValue() {
 		if (currentTarget != null) {
-			return currentTarget.getControl(CtHealth.class).value();
+			return currentTarget.getControl(CtBoulderHealth.class).value();
 		}
 
 		return Float.NaN;
@@ -93,7 +93,7 @@ public final class StTargetting extends BaseAppState {
 
 	public float healthMax() {
 		if (currentTarget != null) {
-			return currentTarget.getControl(CtHealth.class).max();
+			return currentTarget.getControl(CtBoulderHealth.class).max();
 		}
 		
 		return Float.NaN;

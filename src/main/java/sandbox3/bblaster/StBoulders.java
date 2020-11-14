@@ -25,9 +25,9 @@ import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
+import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
-import sandbox3.bblaster.controls.CtHealth;
 import sandbox3.bblaster.controls.CtTargettable;
 
 public final class StBoulders extends BaseAppState {
@@ -86,7 +86,7 @@ public final class StBoulders extends BaseAppState {
 
 		boulders.attachChild(boulder);
 
-		boulder.addControl(new CtHealth(radius));
+		boulder.addControl(new CtBoulderHealth(radius));
 
 		boulder.addControl(new CtBoulderMove(radius));
 		boulder.addControl(new CtBoulderBounds(new GameSettings().boundarySize()));
@@ -98,8 +98,8 @@ public final class StBoulders extends BaseAppState {
 
 			if (control != null) {
 
-				boulder.getControl(CtHealth.class).applyDamage(control.value());
-				if (boulder.getControl(CtHealth.class).isDead()) {
+				boulder.getControl(CtBoulderHealth.class).applyDamage(control.value());
+				if (boulder.getControl(CtBoulderHealth.class).isDead()) {
 					boulder.removeFromParent();
 
 					getState(StCollision.class).unregister(boulder);

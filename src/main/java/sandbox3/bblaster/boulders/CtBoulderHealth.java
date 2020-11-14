@@ -1,14 +1,14 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.boulders;
 
 import jme3utilities.SimpleControl;
 
 @Deprecated
-public final class CtHealth extends SimpleControl {
+public final class CtBoulderHealth extends SimpleControl {
 
 	private final float health;
 	private float value;
 
-	public CtHealth(float health) {
+	public CtBoulderHealth(float health) {
 		this.health = health;
 		this.value = health;
 	}
