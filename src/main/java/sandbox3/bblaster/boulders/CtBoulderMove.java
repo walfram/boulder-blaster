@@ -1,4 +1,4 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.boulders;
 
 import com.jme3.math.Vector3f;
 
@@ -19,9 +19,7 @@ public final class CtBoulderMove extends SimpleControl {
 		super.controlUpdate(updateInterval);
 
 		Vector3f velocity = spatial.getLocalRotation().mult(Vector3f.UNIT_Z).mult(updateInterval).mult(speed);
-		Vector3f updated = spatial.getLocalTranslation().add(velocity);
-
-		spatial.setLocalTranslation(updated);
+		spatial.move(velocity);
 
 	}
 

@@ -1,5 +1,6 @@
 package sandbox3.bblaster;
 
+@Deprecated
 public final class GameSettings {
 
 	public float missileSpeed() {

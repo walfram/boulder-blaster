@@ -23,8 +23,8 @@ import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
-import sandbox3.bblaster.controls.CtBoulderMove;
-import sandbox3.bblaster.controls.CtBounds;
+import sandbox3.bblaster.boulders.CtBoulderMove;
+import sandbox3.bblaster.boulders.CtBoulderBounds;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamage;
 import sandbox3.bblaster.controls.CtHealth;
@@ -89,7 +89,7 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtHealth(radius));
 
 		boulder.addControl(new CtBoulderMove(radius));
-		boulder.addControl(new CtBounds(new GameSettings().boundarySize()));
+		boulder.addControl(new CtBoulderBounds(new GameSettings().boundarySize()));
 
 		boulder.addControl(new CtTargettable());
 		
