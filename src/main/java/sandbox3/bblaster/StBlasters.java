@@ -62,49 +62,18 @@ public final class StBlasters extends BaseAppState {
 		super.update(tpf);
 	}
 
-	@Deprecated
-	void spawnProjectile(Transform transform) {
-		Geometry geometry = new Geometry("projectile-geometry", new Box(0.25f, 0.25f, 1f));
-		geometry.setMaterial(new MtlShowNormals(getApplication().getAssetManager()));
-
-		geometry.setModelBound(new BoundingSphere(1f, new Vector3f()));
-
-		Node projectile = new Node("projectile");
-		projectile.attachChild(geometry);
-
-		projectile.setLocalTransform(transform);
-
-		projectile.addControl(new CtDamage(Settings.projectileDamage));
-		projectile.addControl(new CtProjectileMove(Settings.projectileSpeed));
-
-		projectile.addControl(new CtTimeout(5f, (spatial) -> {
-			projectile.removeFromParent();
-		}));
-
-		projectiles.attachChild(projectile);
-
-		projectile.addControl(new CtCollision(other -> {
-			if (other.getControl(CtTargettable.class) != null) {
-				projectile.removeFromParent();
-				getState(StCollision.class).unregister(projectile);
-				getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
-			}
-		}));
-
-		getState(StCollision.class).register(projectile);
-	}
-
 	public void spawnProjectiles(List<Transform> transforms) {
 		for (Transform t : transforms) {
 			Spatial projectile = new Geometry("projectile", projectileMesh);
 			projectile.setMaterial(projectileMaterial);
-			
+
 			// TODO temporary
 			Vector3f direction = getState(StCrosshair.class).direction();
 			t.getRotation().lookAt(direction, Vector3f.UNIT_Y);
 			projectile.setLocalTransform(t);
 
 			projectile.addControl(new CtProjectileMove(Settings.projectileSpeed));
+			projectile.addControl(new CtDamage(Settings.projectileDamage));
 
 			projectile.addControl(new SimpleControl() {
 				float elapsed = 0f;
@@ -118,6 +87,15 @@ public final class StBlasters extends BaseAppState {
 						projectile.removeFromParent();
 				}
 			});
+
+			// projectile.addControl(new CtCollision(other -> {
+			// if (other.getControl(CtTargettable.class) != null) {
+			// projectile.removeFromParent();
+			// getState(StCollision.class).unregister(projectile);
+			// getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
+			// }
+			// }));
+			// getState(StCollision.class).register(projectile);
 
 			projectiles.attachChild(projectile);
 		}
