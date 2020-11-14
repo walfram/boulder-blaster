@@ -3,7 +3,7 @@ package sandbox3.bblaster.boulders;
 import com.jme3.math.Vector3f;
 
 import jme3utilities.SimpleControl;
-import sandbox3.bblaster.GameSettings;
+import sandbox3.bblaster.Settings;
 
 @Deprecated
 public final class CtBoulderMove extends SimpleControl {
@@ -11,7 +11,7 @@ public final class CtBoulderMove extends SimpleControl {
 	private final float speed;
 
 	public CtBoulderMove(float size) {
-		this.speed = new GameSettings().boulderMaxSpeed() * (1f - size / new GameSettings().boulderMaxSize());
+		this.speed = Settings.boulderMaxSpeed * (1f - size / Settings.boulderMaxSize);
 	}
 
 	@Override

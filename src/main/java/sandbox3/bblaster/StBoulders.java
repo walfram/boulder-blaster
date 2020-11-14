@@ -64,7 +64,7 @@ public final class StBoulders extends BaseAppState {
 		while (idx.incrementAndGet() < 1024) {
 			Vector3f translation = random.nextVector3f().mult(4096f);
 			Quaternion rotation = random.nextQuaternion();
-			float radius = random.nextFloat(new GameSettings().boulderMinRadius(), new GameSettings().boulderMaxRadius());
+			float radius = random.nextFloat(Settings.boulderMinRadius, Settings.boulderMaxRadius);
 
 			createBoulder(idx.get(), translation, rotation, radius);
 		}
@@ -90,7 +90,7 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtBoulderHealth(radius));
 
 		boulder.addControl(new CtBoulderMove(radius));
-		boulder.addControl(new CtBoulderBounds(new GameSettings().boundarySize()));
+		boulder.addControl(new CtBoulderBounds(Settings.boundarySize));
 
 		boulder.addControl(new CtTargettable());
 		
@@ -121,7 +121,7 @@ public final class StBoulders extends BaseAppState {
 	private void createFragments(float originalRadius, Vector3f originalTranslation) {
 		float radius = originalRadius * 0.5f;
 
-		if (radius < new GameSettings().boulderMinRadius())
+		if (radius < Settings.boulderMinRadius)
 			return;
 
 		// for (int i = 0; i < 2; i++) {

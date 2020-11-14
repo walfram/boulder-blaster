@@ -9,7 +9,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingSphere;
 import com.jme3.material.Material;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -19,7 +18,6 @@ import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Box;
 
 import jme3.common.material.MtlShowNormals;
-import jme3.common.material.MtlUnshaded;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.controls.CtCollision;
@@ -76,8 +74,8 @@ public final class StBlasters extends BaseAppState {
 
 		projectile.setLocalTransform(transform);
 
-		projectile.addControl(new CtDamage(new GameSettings().projectileDamage()));
-		projectile.addControl(new CtProjectileMove(new GameSettings().projectileSpeed()));
+		projectile.addControl(new CtDamage(Settings.projectileDamage));
+		projectile.addControl(new CtProjectileMove(Settings.projectileSpeed));
 
 		projectile.addControl(new CtTimeout(5f, (spatial) -> {
 			projectile.removeFromParent();

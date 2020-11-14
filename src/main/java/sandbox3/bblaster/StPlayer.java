@@ -50,7 +50,7 @@ public final class StPlayer extends BaseAppState {
 		ship.addControl(new CtYaw());
 		ship.addControl(new CtPitch());
 		ship.addControl(new CtRoll());
-		ship.addControl(new CtThrust(new GameSettings().playerMaxSpeed()));
+		ship.addControl(new CtThrust(Settings.playerMaxSpeed));
 
 		// player.addControl(new CtCollision(other -> {
 		// }));
