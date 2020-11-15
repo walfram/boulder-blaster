@@ -6,9 +6,11 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingSphere;
+import com.jme3.collision.CollisionResults;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
@@ -20,6 +22,7 @@ import jme3.common.mesh.FlatShaded;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
+import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
 
 public final class StBoulders2 extends BaseAppState {
@@ -87,6 +90,7 @@ public final class StBoulders2 extends BaseAppState {
 
 		boulder.addControl(new CtBoulderMove(size));
 		boulder.addControl(new CtBoulderBounds(5000f));
+		boulder.addControl(new CtBoulderHealth(size));
 
 		scene.attachChild(boulder);
 
@@ -103,6 +107,10 @@ public final class StBoulders2 extends BaseAppState {
 
 	@Override
 	protected void onDisable() {
+	}
+
+	public void findTargets(Ray ray, CollisionResults results) {
+		scene.collideWith(ray, results);
 	}
 
 }

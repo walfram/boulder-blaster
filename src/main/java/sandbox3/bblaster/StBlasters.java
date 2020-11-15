@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.bounding.BoundingSphere;
 import com.jme3.material.Material;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
@@ -15,16 +14,12 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
-import com.jme3.scene.shape.Box;
 
 import jme3.common.material.MtlShowNormals;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
-import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPayload;
 import sandbox3.bblaster.controls.CtProjectileMove;
-import sandbox3.bblaster.controls.CtTargettable;
-import sandbox3.bblaster.controls.CtTimeout;
 
 public final class StBlasters extends BaseAppState {
 
@@ -55,11 +50,6 @@ public final class StBlasters extends BaseAppState {
 
 	@Override
 	protected void onDisable() {
-	}
-
-	@Override
-	public void update(float tpf) {
-		super.update(tpf);
 	}
 
 	public void spawnProjectiles(List<Transform> transforms) {

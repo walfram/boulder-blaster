@@ -15,7 +15,6 @@ public final class CtMissileGuidance extends SimpleControl {
 
 	private final Spatial target;
 
-
 	public CtMissileGuidance(Spatial target) {
 		this.target = target;
 	}
@@ -26,7 +25,6 @@ public final class CtMissileGuidance extends SimpleControl {
 
 		if (target == null || target.getParent() == null) {
 			logger.debug("no target or target lost");
-			// setEnabled(false);
 			spatial.removeControl(this);
 			return;
 		}
@@ -34,9 +32,8 @@ public final class CtMissileGuidance extends SimpleControl {
 		// if (target.getWorldBound().intersects(spatial.getWorldBound())) {
 		if (target.getWorldBound().intersects(spatial.getWorldTranslation())) {
 			logger.debug("hit! = {}", target);
-			// spatial.removeControl(this);
 			spatial.removeFromParent();
-			target.removeFromParent();
+			// target.removeFromParent();
 			return;
 		}
 
@@ -46,7 +43,7 @@ public final class CtMissileGuidance extends SimpleControl {
 		Quaternion to = new Quaternion().lookAt(offset, Vector3f.UNIT_Y);
 
 		from.slerp(to, updateInterval * 2f);
-		
+
 		spatial.setLocalRotation(from);
 	}
 

@@ -16,7 +16,7 @@ import sandbox3.bblaster.boulders.CtBoulderHealth;
 public final class StTargetting extends BaseAppState {
 
 	private static final Logger logger = LoggerFactory.getLogger(StTargetting.class);
-	
+
 	private Spatial currentTarget;
 
 	@Override
@@ -55,19 +55,19 @@ public final class StTargetting extends BaseAppState {
 		CollisionResults results = new CollisionResults();
 
 		currentTarget = null;
-		getState(StBoulders.class).findTargets(ray, results);
+		getState(StBoulders2.class).findTargets(ray, results);
 
 		if (results.size() > 0) {
 			currentTarget = results.getClosestCollision().getGeometry();
 		} else {
 			ray = new Ray(getApplication().getCamera().getLocation(), getApplication().getCamera().getDirection());
-			getState(StBoulders.class).findTargets(ray, results);
+			getState(StBoulders2.class).findTargets(ray, results);
 
 			if (results.size() > 0) {
 				currentTarget = results.getClosestCollision().getGeometry();
 			}
 		}
-		
+
 		logger.debug("aquire target = {}", currentTarget);
 	}
 
@@ -76,27 +76,31 @@ public final class StTargetting extends BaseAppState {
 	}
 
 	public float healthPercent() {
-		if (currentTarget != null) {
+		if (currentTarget != null)
 			return currentTarget.getControl(CtBoulderHealth.class).percent();
-		}
 
 		return Float.NaN;
 	}
 
 	public float healthValue() {
-		if (currentTarget != null) {
+		if (currentTarget != null)
 			return currentTarget.getControl(CtBoulderHealth.class).value();
-		}
 
 		return Float.NaN;
 	}
 
 	public float healthMax() {
-		if (currentTarget != null) {
+		if (currentTarget != null)
 			return currentTarget.getControl(CtBoulderHealth.class).max();
-		}
-		
+
 		return Float.NaN;
+	}
+
+	public String targetId() {
+		if (currentTarget != null)
+			return currentTarget.getName();
+
+		return "<no target>";
 	}
 
 }

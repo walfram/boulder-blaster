@@ -41,7 +41,10 @@ public final class StHudTarget extends BaseAppState {
 		Container targetPanel = target.addChild(
 				new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
 
-		targetPanel.addChild(new Label("health")).setMaxWidth(72f);
+		targetPanel.addChild(new Label("id")).setMaxWidth(72f);
+		Label targetId = targetPanel.addChild(new Label("id.value"), 1);
+
+		targetPanel.addChild(new Label("health"));
 		ProgressBar targetHealth = targetPanel.addChild(new ProgressBar(), 1);
 
 		targetHealth.getLabel().setColor(ColorRGBA.Yellow);
@@ -51,8 +54,14 @@ public final class StHudTarget extends BaseAppState {
 			protected void controlUpdate(float updateInterval) {
 				super.controlUpdate(updateInterval);
 
-				// targetHealth.setProgressPercent(getState(StTargetting.class).healthPercent());
-				// targetHealth.setMessage(String.format("%.03f / %.03f", getState(StTargetting.class).healthValue(), getState(StTargetting.class).healthMax()));
+				targetId.setText(getState(StTargetting.class).targetId());
+				
+				targetHealth.setProgressPercent(getState(StTargetting.class).healthPercent());
+				targetHealth.setMessage(
+						String.format(
+								"%.03f / %.03f",
+								getState(StTargetting.class).healthValue(),
+								getState(StTargetting.class).healthMax()));
 			}
 		});
 
@@ -65,11 +74,11 @@ public final class StHudTarget extends BaseAppState {
 	public void update(float tpf) {
 		super.update(tpf);
 
-		// if (getState(StTargetting.class).currentTarget() == null) {
-		// targetCursor.removeFromParent();
-		// } else {
-		// hud.attachChild(targetCursor);
-		// }
+		if (getState(StTargetting.class).currentTarget() == null) {
+			targetCursor.removeFromParent();
+		} else {
+			hud.attachChild(targetCursor);
+		}
 	}
 
 	@Override
