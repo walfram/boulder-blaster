@@ -82,7 +82,7 @@ public final class StBlasters extends BaseAppState {
 			projectile.addControl(new CtCollision(other -> {
 				projectile.removeFromParent();
 				getState(StCollision.class).unregister(projectile);
-				// getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
+				getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
 			}));
 			getState(StCollision.class).register(projectile);
 

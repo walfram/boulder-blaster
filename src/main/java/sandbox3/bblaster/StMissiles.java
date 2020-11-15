@@ -70,16 +70,15 @@ public final class StMissiles extends BaseAppState {
 					elapsed += updateInterval;
 
 					if (elapsed > 15f) {
-						missileSelfDestruct(missile);
+						logger.debug("missile self-destruct = {}", missile);
+						destroyMissile(missile);
 					}
 				}
 			});
 
 			missile.addControl(new CtCollision(other -> {
-				// TODO use missileSelfDestruct method, refactor it
-				missile.removeFromParent();
-				getState(StCollision.class).unregister(missile);
-				// getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
+				logger.debug("missile hit = {}", other);
+				destroyMissile(missile);
 			}));
 			getState(StCollision.class).register(missile);
 
@@ -89,10 +88,10 @@ public final class StMissiles extends BaseAppState {
 		}
 	}
 
-	protected void missileSelfDestruct(Spatial missile) {
-		logger.debug("missile self-destruct = {}", missile);
+	protected void destroyMissile(Spatial missile) {
 		missile.removeFromParent();
-		// TODO make explosion
+		getState(StCollision.class).unregister(missile);
+		getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
 	}
 
 }

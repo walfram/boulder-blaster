@@ -103,8 +103,8 @@ public final class StBoulders2 extends BaseAppState {
 					boulder.removeFromParent();
 					getState(StCollision.class).unregister(boulder);
 					logger.debug("destroyed boulder = {}", boulder);
-					// getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation());
-					// createFragments(size, boulder.getLocalTranslation());
+					getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation());
+					createFragments(size, boulder.getLocalTranslation());
 					// scene.instance();
 				}
 			}
@@ -118,7 +118,7 @@ public final class StBoulders2 extends BaseAppState {
 
 	private void createFragments(float size, Vector3f localTranslation) {
 	}
-	
+
 	// private void createFragments(float originalRadius, Vector3f originalTranslation) {
 	// float radius = originalRadius * 0.5f;
 	//
