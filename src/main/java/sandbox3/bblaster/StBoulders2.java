@@ -1,7 +1,5 @@
 package sandbox3.bblaster;
 
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,8 +19,8 @@ import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
-import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
+import sandbox3.bblaster.boulders.CtBoulderMove;
 
 public final class StBoulders2 extends BaseAppState {
 
@@ -92,7 +90,7 @@ public final class StBoulders2 extends BaseAppState {
 
 		scene.attachChild(boulder);
 
-		logger.debug("spawned boulder = {}, translation = {}, scale = {}", boulder, translation, size);
+		// logger.debug("spawned boulder = {}, translation = {}, scale = {}", boulder, translation, size);
 	}
 
 	@Override
