@@ -65,11 +65,11 @@ public final class StHudTarget extends BaseAppState {
 	public void update(float tpf) {
 		super.update(tpf);
 
-		if (getState(StTargetting.class).currentTarget() == null) {
-			targetCursor.removeFromParent();
-		} else {
-			hud.attachChild(targetCursor);
-		}
+		// if (getState(StTargetting.class).currentTarget() == null) {
+		// targetCursor.removeFromParent();
+		// } else {
+		// hud.attachChild(targetCursor);
+		// }
 	}
 
 	@Override
