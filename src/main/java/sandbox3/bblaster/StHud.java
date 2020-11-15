@@ -4,9 +4,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.scene.Node;
-import com.jme3.texture.Texture;
-import com.jme3.texture.Texture2D;
-import com.jme3.ui.Picture;
 import com.simsilica.lemur.Axis;
 import com.simsilica.lemur.Container;
 import com.simsilica.lemur.FillMode;
@@ -17,13 +14,10 @@ import com.simsilica.lemur.style.ElementId;
 
 import jme3.common.vector.FormattedVector3f;
 import jme3utilities.SimpleControl;
-import sandbox3.bblaster.controls.CtTargetCursor;
 
 public final class StHud extends BaseAppState {
 
 	private final Node hud = new Node("flight-hud");
-
-	private Picture targetCursor;
 
 	public StHud(Node guiNode) {
 		guiNode.attachChild(hud);
@@ -31,20 +25,11 @@ public final class StHud extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		// TODO move to separate state
-		Texture txTarget = getApplication().getAssetManager().loadTexture("textures/crosshair/crosshair098.png");
-		targetCursor = new Picture("hud-target");
-		targetCursor.setTexture(getApplication().getAssetManager(), (Texture2D) txTarget, true);
-		targetCursor.setWidth(72);
-		targetCursor.setHeight(72);
-
-		targetCursor.addControl(new CtTargetCursor(getState(StTargetting.class), getApplication().getCamera()));
-		
-
 		Container playerContainer = new Container();
 		playerContainer.addChild(new Label("player", new ElementId("window.title.label"))).setMaxWidth(320f);
 
-		Container playerPanel = playerContainer.addChild(new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
+		Container playerPanel = playerContainer.addChild(
+				new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
 
 		playerPanel.addChild(new Label("thrust")).setMaxWidth(72f);
 		ProgressBar thrust = playerPanel.addChild(new ProgressBar(), 1);
@@ -67,29 +52,6 @@ public final class StHud extends BaseAppState {
 
 		hud.attachChild(playerContainer);
 		playerContainer.setLocalTranslation(10, 800 - 10, 0);
-
-		Container target = new Container();
-		target.addChild(new Label("target", new ElementId("window.title.label"))).setMaxWidth(320f);
-
-		Container targetPanel = target.addChild(new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
-
-		targetPanel.addChild(new Label("health")).setMaxWidth(72f);
-		ProgressBar targetHealth = targetPanel.addChild(new ProgressBar(), 1);
-
-		targetHealth.getLabel().setColor(ColorRGBA.Yellow);
-
-		targetPanel.addControl(new SimpleControl() {
-			@Override
-			protected void controlUpdate(float updateInterval) {
-				super.controlUpdate(updateInterval);
-
-//				targetHealth.setProgressPercent(getState(StTargetting.class).healthPercent());
-//				targetHealth.setMessage(String.format("%.03f / %.03f", getState(StTargetting.class).healthValue(), getState(StTargetting.class).healthMax()));
-			}
-		});
-
-		hud.attachChild(target);
-		target.setLocalTranslation(10, 800 - playerContainer.getPreferredSize().y - 20f, 0);
 	}
 
 	@Override
@@ -107,18 +69,7 @@ public final class StHud extends BaseAppState {
 	@Override
 	public void update(float tpf) {
 		super.update(tpf);
-
-//		if (getState(StTargetting.class).currentTarget() == null) {
-//			targetCursor.removeFromParent();
-//		} else {
-//			hud.attachChild(targetCursor);
-//		}
-
 		// getApplication().getInputManager().setCursorVisible( !getState(StControls.class).isMouseLook() );
 	}
-
-	// public void showFlightHud() {
-	// hud.detachAllChildren();
-	// }
 
 }

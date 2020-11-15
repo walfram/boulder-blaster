@@ -68,7 +68,7 @@ public final class StBlasters extends BaseAppState {
 			projectile.setMaterial(projectileMaterial);
 
 			// TODO temporary
-			Vector3f direction = getState(StCrosshair.class).direction();
+			Vector3f direction = getState(StHudCrosshair.class).direction();
 			t.getRotation().lookAt(direction, Vector3f.UNIT_Y);
 			projectile.setLocalTransform(t);
 

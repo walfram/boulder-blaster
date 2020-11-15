@@ -7,20 +7,20 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
 
-public final class StCrosshair extends BaseAppState {
+public final class StHudCrosshair extends BaseAppState {
 
 	private final Node scene = new Node("crosshair");
 
 	private Picture crosshair;
 
-	public StCrosshair(Node guiNode) {
+	public StHudCrosshair(Node guiNode) {
 		guiNode.attachChild(scene);
 	}
 
 	@Override
 	protected void initialize(Application app) {
 		crosshair = new Picture("crosshair");
-		crosshair.setImage(getApplication().getAssetManager(), "textures/crosshair/crosshair161.png", true);
+		crosshair.setImage(app.getAssetManager(), "textures/crosshair/crosshair161.png", true);
 		crosshair.setWidth(72);
 		crosshair.setHeight(72);
 		crosshair.setPosition(800 - 36, 400 - 36);

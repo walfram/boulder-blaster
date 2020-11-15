@@ -101,7 +101,6 @@ public final class StPlayer extends BaseAppState {
 
 		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
 
-		// getState(StBlasters.class).spawnProjectile(transform);
 		getState(StBlasters.class).spawnProjectiles(transforms);
 	}
 
