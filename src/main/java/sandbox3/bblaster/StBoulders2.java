@@ -26,7 +26,6 @@ import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPayload;
-import sandbox3.bblaster.controls.CtTargettable;
 
 public final class StBoulders2 extends BaseAppState {
 
@@ -94,7 +93,6 @@ public final class StBoulders2 extends BaseAppState {
 		boulder.addControl(new CtBoulderMove(size));
 		boulder.addControl(new CtBoulderBounds(5000f));
 		boulder.addControl(new CtBoulderHealth(size));
-		boulder.addControl(new CtTargettable());
 
 		boulder.addControl(new CtCollision(other -> {
 			CtPayload control = other.getControl(CtPayload.class);
@@ -107,7 +105,7 @@ public final class StBoulders2 extends BaseAppState {
 					logger.debug("destroyed boulder = {}", boulder);
 					// getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation());
 					// createFragments(size, boulder.getLocalTranslation());
-					scene.instance();
+					// scene.instance();
 				}
 			}
 		}));
@@ -119,9 +117,24 @@ public final class StBoulders2 extends BaseAppState {
 	}
 
 	private void createFragments(float size, Vector3f localTranslation) {
-		// TODO Auto-generated method stub
-
 	}
+	
+	// private void createFragments(float originalRadius, Vector3f originalTranslation) {
+	// float radius = originalRadius * 0.5f;
+	//
+	// if (radius < Settings.boulderMinRadius)
+	// return;
+	//
+	// Vector3f offset = random.nextUnitVector3f().mult(radius * 1.1f);
+	// Vector3f translation = originalTranslation.add(offset);
+	//
+	// Quaternion rotation = new Quaternion().lookAt(offset, Vector3f.UNIT_Z);
+	// createBoulder(idx.incrementAndGet(), translation, rotation, radius);
+	//
+	// createBoulder(idx.incrementAndGet(), originalTranslation.add(offset.negate()), rotation.opposite(), radius);
+	//
+	// boulders.instance();
+	// }
 
 	@Override
 	protected void cleanup(Application app) {

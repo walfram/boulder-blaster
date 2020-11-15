@@ -15,7 +15,6 @@ import com.jme3.scene.Spatial;
 import jme3utilities.SimpleControl;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPayload;
-import sandbox3.bblaster.controls.CtTargettable;
 import sandbox3.bblaster.missiles.CtMissileEngine;
 import sandbox3.bblaster.missiles.CtMissileGuidance;
 import sandbox3.bblaster.missiles.CtMissileTrail;
@@ -77,12 +76,10 @@ public final class StMissiles extends BaseAppState {
 			});
 
 			missile.addControl(new CtCollision(other -> {
-				if (other.getControl(CtTargettable.class) != null) {
-					// TODO use missileSelfDestruct method, refactor it
-					missile.removeFromParent();
-					getState(StCollision.class).unregister(missile);
-					// getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
-				}
+				// TODO use missileSelfDestruct method, refactor it
+				missile.removeFromParent();
+				getState(StCollision.class).unregister(missile);
+				// getState(StExplosion.class).missileExplosion(missile.getLocalTranslation());
 			}));
 			getState(StCollision.class).register(missile);
 

@@ -21,7 +21,6 @@ import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPayload;
 import sandbox3.bblaster.controls.CtProjectileMove;
-import sandbox3.bblaster.controls.CtTargettable;
 
 public final class StBlasters extends BaseAppState {
 
@@ -81,11 +80,9 @@ public final class StBlasters extends BaseAppState {
 			});
 
 			projectile.addControl(new CtCollision(other -> {
-				if (other.getControl(CtTargettable.class) != null) {
-					projectile.removeFromParent();
-					getState(StCollision.class).unregister(projectile);
-					// getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
-				}
+				projectile.removeFromParent();
+				getState(StCollision.class).unregister(projectile);
+				// getState(StExplosion.class).projectileExplosion(projectile.getLocalTranslation());
 			}));
 			getState(StCollision.class).register(projectile);
 
