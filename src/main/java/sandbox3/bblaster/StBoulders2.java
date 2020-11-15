@@ -24,6 +24,9 @@ import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
 import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
+import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.controls.CtPayload;
+import sandbox3.bblaster.controls.CtTargettable;
 
 public final class StBoulders2 extends BaseAppState {
 
@@ -39,7 +42,7 @@ public final class StBoulders2 extends BaseAppState {
 	private float elapsed = 0f;
 	private int idx = 0;
 
-	private final int maxBoulders = 2048;
+	private final int maxBoulders = 1024;
 	private final float minDistance = 1024f;
 	private final float maxDistance = 4096f;
 	private final float minScale = 10f;
@@ -91,10 +94,33 @@ public final class StBoulders2 extends BaseAppState {
 		boulder.addControl(new CtBoulderMove(size));
 		boulder.addControl(new CtBoulderBounds(5000f));
 		boulder.addControl(new CtBoulderHealth(size));
+		boulder.addControl(new CtTargettable());
+
+		boulder.addControl(new CtCollision(other -> {
+			CtPayload control = other.getControl(CtPayload.class);
+
+			if (control != null) {
+				boulder.getControl(CtBoulderHealth.class).applyDamage(control.value());
+				if (boulder.getControl(CtBoulderHealth.class).isDead()) {
+					boulder.removeFromParent();
+					getState(StCollision.class).unregister(boulder);
+					logger.debug("destroyed boulder = {}", boulder);
+					// getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation());
+					// createFragments(size, boulder.getLocalTranslation());
+					scene.instance();
+				}
+			}
+		}));
+		getState(StCollision.class).register(boulder);
 
 		scene.attachChild(boulder);
 
 		// logger.debug("spawned boulder = {}, translation = {}, scale = {}", boulder, translation, size);
+	}
+
+	private void createFragments(float size, Vector3f localTranslation) {
+		// TODO Auto-generated method stub
+
 	}
 
 	@Override

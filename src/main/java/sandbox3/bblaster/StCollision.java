@@ -55,8 +55,8 @@ public final class StCollision extends BaseAppState {
 				if (!outer.getWorldBound().intersects(inner.getWorldBound()))
 					continue;
 
-//				logger.debug("collision between {} and {}", outer, inner);
-				
+				// logger.debug("collision between {} and {}", outer, inner);
+
 				inner.getControl(CtCollision.class).collideWith(outer);
 				outer.getControl(CtCollision.class).collideWith(inner);
 			}

@@ -32,7 +32,7 @@ public final class CtMissileGuidance extends SimpleControl {
 		// if (target.getWorldBound().intersects(spatial.getWorldBound())) {
 		if (target.getWorldBound().intersects(spatial.getWorldTranslation())) {
 			logger.debug("hit! = {}", target);
-			spatial.removeFromParent();
+			// spatial.removeFromParent();
 			// target.removeFromParent();
 			return;
 		}
