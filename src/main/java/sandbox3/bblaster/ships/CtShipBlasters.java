@@ -1,35 +1,33 @@
 package sandbox3.bblaster.ships;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Transform;
+import com.jme3.math.Vector3f;
+import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 
 public final class CtShipBlasters extends SimpleControl {
 
-	private final List<ParticleEmitter> blasters;
+	private final List<Spatial> blasters;
 
-	public CtShipBlasters(List<ParticleEmitter> blasters) {
-		this.blasters = List.copyOf(blasters);
-		setEnabled(false);
+	public CtShipBlasters(Spatial... blasters) {
+		this(Arrays.asList(blasters));
 	}
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		
-		blasters.forEach(blaster -> {
-			blaster.setEnabled(isEnabled());
-			if (!isEnabled())
-				blaster.killAllParticles();
-		});
+	public CtShipBlasters(List<Spatial> blasters) {
+		this.blasters = blasters;
+	}
+
+	public List<Vector3f> offsets() {
+		return blasters.stream().map(s -> s.getLocalTranslation().clone()).collect(Collectors.toList());
 	}
 
 	public List<Transform> transforms() {
-		return blasters.stream().map(pe -> pe.getWorldTransform().clone()).collect(Collectors.toList());
+		return blasters.stream().map(s -> s.getWorldTransform().clone()).collect(Collectors.toList());
 	}
 
 }

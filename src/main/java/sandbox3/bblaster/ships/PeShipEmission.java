@@ -22,13 +22,13 @@ public final class PeShipEmission extends ParticleEmitter {
 		setEndSize(0.15f);
 		setLowLife(0.5f);
 		setHighLife(0.75f);
-		
+
 		// TODO tweak these two and setInWorldSpace
 		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.negate());
 		getParticleInfluencer().setVelocityVariation(0.005f);
-		
+
 		setInWorldSpace(false);
-		setEnabled(false);
+		// setEnabled(false);
 	}
 
 }

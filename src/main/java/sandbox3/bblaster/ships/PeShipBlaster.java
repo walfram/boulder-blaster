@@ -9,7 +9,7 @@ import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
 
-final class PeShipBlaster extends ParticleEmitter {
+public final class PeShipBlaster extends ParticleEmitter {
 
 	public PeShipBlaster(AssetManager assetManager) {
 		super("weapon", Type.Triangle, 8);

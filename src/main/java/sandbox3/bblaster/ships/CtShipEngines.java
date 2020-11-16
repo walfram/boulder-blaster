@@ -44,7 +44,7 @@ public final class CtShipEngines extends SimpleControl {
 		return thrust;
 	}
 
-	public double value() {
+	public double thrust() {
 		return thrust;
 	}
 	

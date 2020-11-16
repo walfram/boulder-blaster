@@ -1,51 +1,28 @@
 package sandbox3.bblaster.ships;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import com.jme3.effect.ParticleEmitter;
-import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 
 public final class CtShipEmissions extends SimpleControl {
 
-	private static final Vector3f emissionVector = Vector3f.UNIT_Z.negate().mult(50f);
+	private final List<Spatial> emissions;
 
-	private final Node ship;
-	private final List<ParticleEmitter> emissions;
-
-	public CtShipEmissions(Node ship, List<ParticleEmitter> emissions) {
-		this.ship = ship;
-		this.emissions = List.copyOf(emissions);
-		setEnabled(false);
+	public CtShipEmissions(Spatial... emissions) {
+		this(Arrays.asList(emissions));
 	}
 
-	@Override
-	public void update(float tpf) {
-		super.update(tpf);
-		Transform shipTransform = ship.getWorldTransform().clone();
-		shipTransform.setScale(1f);
-		spatial.setLocalTransform(shipTransform);
+	public CtShipEmissions(List<Spatial> emissions) {
+		this.emissions = emissions;
 	}
 
-	@Override
-	public void setEnabled(boolean enabled) {
-		super.setEnabled(enabled);
-		emissions.forEach(emission -> {
-			emission.setEnabled(isEnabled());
-			if (!isEnabled())
-				emission.killAllParticles();
-		});
-	}
-
-	public void updateThrust(float thrust) {
-		setEnabled(thrust > 0f);
-
-		emissions.forEach(emission -> {
-			emission.getParticleInfluencer().setInitialVelocity(emissionVector.mult(thrust));
-		});
+	public List<Vector3f> offsets() {
+		return emissions.stream().map(s -> s.getLocalTranslation().clone()).collect(Collectors.toList());
 	}
 
 }

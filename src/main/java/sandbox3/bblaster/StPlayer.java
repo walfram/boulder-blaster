@@ -9,22 +9,24 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.effect.ParticleEmitter;
-import com.jme3.math.ColorRGBA;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 import jme3utilities.debug.BoundsVisualizer;
-import jme3utilities.debug.PointVisualizer;
+import sandbox3.bblaster.controls.CtBlastersFx;
+import sandbox3.bblaster.controls.CtEmissionFx;
+import sandbox3.bblaster.controls.CtTransformCopy;
 import sandbox3.bblaster.misc.Cooldown;
-import sandbox3.bblaster.ships.CtShipPitch;
-import sandbox3.bblaster.ships.CtShipRoll;
 import sandbox3.bblaster.ships.CtShipBlasters;
 import sandbox3.bblaster.ships.CtShipEmissions;
-import sandbox3.bblaster.ships.CtShipMissiles;
 import sandbox3.bblaster.ships.CtShipEngines;
+import sandbox3.bblaster.ships.CtShipMissiles;
+import sandbox3.bblaster.ships.CtShipPitch;
+import sandbox3.bblaster.ships.CtShipRoll;
 import sandbox3.bblaster.ships.CtShipYaw;
 import sandbox3.bblaster.ships.NdSpeederD;
+import sandbox3.bblaster.ships.PeShipBlaster;
 import sandbox3.bblaster.ships.PeShipEmission;
 
 public final class StPlayer extends BaseAppState {
@@ -42,6 +44,7 @@ public final class StPlayer extends BaseAppState {
 	private Node ship;
 
 	private Node emissionFx;
+	private Node blastersFx;
 
 	public StPlayer(Node rootNode) {
 		rootNode.attachChild(player);
@@ -66,14 +69,27 @@ public final class StPlayer extends BaseAppState {
 
 		emissionFx = new Node("emission-fx");
 		List<ParticleEmitter> emissions = new ArrayList<>();
-		for (Vector3f emissionTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
+		for (Vector3f offset : ship.getControl(CtShipEmissions.class).offsets()) {
 			ParticleEmitter emission = new PeShipEmission(app.getAssetManager());
-			emission.setLocalTranslation(emissionTranslation);
+			emission.setLocalTranslation(offset);
 			emissionFx.attachChild(emission);
 			emissions.add(emission);
 		}
-		emissionFx.addControl(new CtShipEmissions(ship, emissions));
 		fx.attachChild(emissionFx);
+		emissionFx.addControl(new CtTransformCopy(ship));
+		emissionFx.addControl(new CtEmissionFx(emissions));
+
+		blastersFx = new Node("balsters-fx");
+		List<ParticleEmitter> blasters = new ArrayList<>();
+		for (Vector3f offset : ship.getControl(CtShipBlasters.class).offsets()) {
+			ParticleEmitter blaster = new PeShipBlaster(app.getAssetManager());
+			blaster.setLocalTranslation(offset);
+			blastersFx.attachChild(blaster);
+			blasters.add(blaster);
+		}
+		fx.attachChild(blastersFx);
+		blastersFx.addControl(new CtTransformCopy(ship));
+		blastersFx.addControl(new CtBlastersFx(blasters));
 
 		// player.addControl(new CtCollision(other -> {
 		// }));
@@ -121,8 +137,8 @@ public final class StPlayer extends BaseAppState {
 		cooldownBlasters.reset();
 
 		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
-
 		getState(StBlasters.class).spawnProjectiles(transforms);
+		blastersFx.getControl(CtBlastersFx.class).emit();
 	}
 
 	void yaw(double value, double tpf) {
@@ -139,11 +155,11 @@ public final class StPlayer extends BaseAppState {
 
 	void updateThrust(double value, double tpf) {
 		float thrust = ship.getControl(CtShipEngines.class).thrust(value, tpf);
-		emissionFx.getControl(CtShipEmissions.class).updateThrust(thrust);
+		emissionFx.getControl(CtEmissionFx.class).updateThrust(thrust);
 	}
 
 	public double thrustValue() {
-		return ship.getControl(CtShipEngines.class).value();
+		return ship.getControl(CtShipEngines.class).thrust();
 	}
 
 	public Vector3f position() {
