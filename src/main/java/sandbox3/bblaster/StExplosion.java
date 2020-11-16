@@ -1,7 +1,12 @@
 package sandbox3.bblaster;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.effect.ParticleMesh.Type;
 import com.jme3.material.Material;
 import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
@@ -11,11 +16,14 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 
+import jme3.common.material.MtlParticle;
 import jme3.common.material.MtlUnshaded;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
 
 public final class StExplosion extends BaseAppState {
+
+	private static final Logger logger = LoggerFactory.getLogger(StExplosion.class);
 
 	private final Node explosions = new Node("explosions");
 
@@ -53,8 +61,43 @@ public final class StExplosion extends BaseAppState {
 		createExplosion(translation, 1.5f, 0.25f);
 	}
 
-	public void boulderExplosion(Vector3f translation) {
-		createExplosion(translation, 150f, 1.5f);
+	public void boulderExplosion(Vector3f translation, float size) {
+		// createExplosion(translation, 150f, 1.5f);
+		explosion(translation, size);
+	}
+
+	private void explosion(Vector3f translation, float size) {
+		ParticleEmitter e = new ParticleEmitter("shockwave", Type.Triangle, 1);
+		
+		e.setStartColor(ColorRGBA.Yellow);
+		e.setEndColor(ColorRGBA.Gray);
+		e.setStartSize(0);
+		e.setEndSize(size * 10f);
+		e.setGravity(0, 0, 0);
+		e.setLowLife(1.5f);
+		e.setHighLife(1.5f);
+		e.getParticleInfluencer().setInitialVelocity(Vector3f.ZERO.clone());
+		e.getParticleInfluencer().setVelocityVariation(0f);
+		e.setImagesX(1);
+		e.setImagesY(1);
+		e.setMaterial(new MtlParticle(getApplication().getAssetManager(), "Effects/Explosion/shockwave.png"));
+
+		e.setLocalTranslation(translation);
+		explosions.attachChild(e);
+		e.emitAllParticles();
+		e.setParticlesPerSec(0);
+		
+		e.addControl(new SimpleControl() {
+			@Override
+			protected void controlUpdate(float updateInterval) {
+				super.controlUpdate(updateInterval);
+
+				if (e.getNumVisibleParticles() < 1) {
+					logger.debug("no visible particles, removing shockwave");
+					e.removeFromParent();
+				}
+			}
+		});
 	}
 
 	private void createExplosion(Vector3f translation, float maxSize, float time) {

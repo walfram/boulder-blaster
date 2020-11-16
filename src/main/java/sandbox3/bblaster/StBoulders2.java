@@ -103,7 +103,7 @@ public final class StBoulders2 extends BaseAppState {
 					boulder.removeFromParent();
 					getState(StCollision.class).unregister(boulder);
 					logger.debug("destroyed boulder = {}", boulder);
-					getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation());
+					getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
 					createFragments(size, boulder.getLocalTranslation());
 					// scene.instance();
 				}
