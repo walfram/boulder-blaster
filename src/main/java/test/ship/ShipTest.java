@@ -46,8 +46,10 @@ public class ShipTest extends SimpleApplication {
 
 		// cam.setLocation(new Vector3f(19.184437f, 23.092829f, 21.250187f));
 		// cam.setRotation(new Quaternion(-0.093374066f, 0.9066154f, -0.28852183f, -0.29340255f));
-		cam.setLocation(new Vector3f(119.05582f, 85.26459f, -259.29294f));
-		cam.setRotation(new Quaternion(0.064766675f, -0.06329711f, 0.00411477f, 0.99588245f));
+		// cam.setLocation(new Vector3f(119.05582f, 85.26459f, -259.29294f));
+		// cam.setRotation(new Quaternion(0.064766675f, -0.06329711f, 0.00411477f, 0.99588245f));
+		cam.setLocation(new Vector3f(47.215347f, 32.46507f, -12.565666f));
+		cam.setRotation(new Quaternion(0.1492671f, -0.33998245f, 0.054748856f, 0.9268947f));
 
 		viewPort.setBackgroundColor(ColorRGBA.DarkGray);
 		MyCamera.setNearFar(cam, 1, 32768f);

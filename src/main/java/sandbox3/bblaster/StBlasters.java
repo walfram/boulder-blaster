@@ -62,6 +62,7 @@ public final class StBlasters extends BaseAppState {
 			Vector3f direction = getState(StHudCrosshair.class).direction();
 			t.getRotation().lookAt(direction, Vector3f.UNIT_Y);
 			projectile.setLocalTransform(t);
+			projectile.scale(1f, 1f, 10f);
 
 			projectile.addControl(new CtProjectileMove(Settings.projectileSpeed));
 			projectile.addControl(new CtPayload(Settings.projectileDamage));
