@@ -49,7 +49,7 @@ public final class NdSpeederD extends Node {
 
 		List<ParticleEmitter> emissions = new ArrayList<>();
 		for (Vector3f emissionTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
-			ParticleEmitter emission = new PeShipEngine(assetManager);
+			ParticleEmitter emission = new PeShipEmission(assetManager);
 			emission.setLocalTranslation(emissionTranslation);
 			attachChild(emission);
 			emissions.add(emission);

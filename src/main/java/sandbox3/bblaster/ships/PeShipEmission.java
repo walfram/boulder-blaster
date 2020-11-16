@@ -8,9 +8,9 @@ import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
 
-final class PeShipEngine extends ParticleEmitter {
+final class PeShipEmission extends ParticleEmitter {
 
-	public PeShipEngine(AssetManager assetManager) {
+	public PeShipEmission(AssetManager assetManager) {
 		super("engine", Type.Triangle, 50);
 		setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flame.png"));
 		setImagesX(2);
@@ -24,7 +24,7 @@ final class PeShipEngine extends ParticleEmitter {
 		setHighLife(0.75f);
 		
 		// TODO tweak these two and setInWorldSpace
-		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.negate().mult(50));
+		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Z.negate());
 		getParticleInfluencer().setVelocityVariation(0.005f);
 		
 		setInWorldSpace(false);

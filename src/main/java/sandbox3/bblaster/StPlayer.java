@@ -16,6 +16,7 @@ import sandbox3.bblaster.misc.Cooldown;
 import sandbox3.bblaster.ships.CtShipPitch;
 import sandbox3.bblaster.ships.CtShipRoll;
 import sandbox3.bblaster.ships.CtShipBlasters;
+import sandbox3.bblaster.ships.CtShipEmissions;
 import sandbox3.bblaster.ships.CtShipMissiles;
 import sandbox3.bblaster.ships.CtShipEngines;
 import sandbox3.bblaster.ships.CtShipYaw;
@@ -117,7 +118,8 @@ public final class StPlayer extends BaseAppState {
 	}
 
 	void updateThrust(double value, double tpf) {
-		ship.getControl(CtShipEngines.class).thrust(value, tpf);
+		float thrust = ship.getControl(CtShipEngines.class).thrust(value, tpf);
+		ship.getControl(CtShipEmissions.class).updateThrust(thrust);
 	}
 
 	public double thrustValue() {

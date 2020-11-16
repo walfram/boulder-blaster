@@ -35,10 +35,13 @@ public final class CtShipEngines extends SimpleControl {
 		spatial.setLocalTranslation(translated);
 	}
 
-	public void thrust(double value, double tpf) {
+	public float thrust(double value, double tpf) {
 		thrust += value * tpf;
+		
 		thrust = Math.min(thrust, 1.0f);
 		thrust = Math.max(thrust, 0f);
+		
+		return thrust;
 	}
 
 	public double value() {
