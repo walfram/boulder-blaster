@@ -82,6 +82,7 @@ public final class StMissiles extends BaseAppState {
 			}));
 			getState(StCollision.class).register(missile);
 
+			// TODO missile trail offset
 			ParticleEmitter missileTrail = new PeMissileTrail(getApplication().getAssetManager());
 			missileTrail.addControl(new CtMissileTrail(missile));
 			fx.attachChild(missileTrail);

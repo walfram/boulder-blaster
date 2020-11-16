@@ -8,7 +8,7 @@ import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
 
-final class PeShipEmission extends ParticleEmitter {
+public final class PeShipEmission extends ParticleEmitter {
 
 	public PeShipEmission(AssetManager assetManager) {
 		super("engine", Type.Triangle, 50);

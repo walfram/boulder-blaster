@@ -1,5 +1,6 @@
 package sandbox3.bblaster;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -7,11 +8,14 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.effect.ParticleEmitter;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
 import jme3utilities.debug.BoundsVisualizer;
+import jme3utilities.debug.PointVisualizer;
 import sandbox3.bblaster.misc.Cooldown;
 import sandbox3.bblaster.ships.CtShipPitch;
 import sandbox3.bblaster.ships.CtShipRoll;
@@ -21,6 +25,7 @@ import sandbox3.bblaster.ships.CtShipMissiles;
 import sandbox3.bblaster.ships.CtShipEngines;
 import sandbox3.bblaster.ships.CtShipYaw;
 import sandbox3.bblaster.ships.NdSpeederD;
+import sandbox3.bblaster.ships.PeShipEmission;
 
 public final class StPlayer extends BaseAppState {
 
@@ -28,14 +33,19 @@ public final class StPlayer extends BaseAppState {
 
 	private final Node player = new Node("player");
 
+	private final Node fx = new Node("player-fx");
+
 	// TODO move to CtShipWeapons
 	private final Cooldown cooldownBlasters = new Cooldown(1f / 8.33f);
 	private final Cooldown cooldownMissiles = new Cooldown(0.33f);
 
 	private Node ship;
 
+	private Node emissionFx;
+
 	public StPlayer(Node rootNode) {
 		rootNode.attachChild(player);
+		rootNode.attachChild(fx);
 	}
 
 	@Override
@@ -54,9 +64,19 @@ public final class StPlayer extends BaseAppState {
 
 		ship.addControl(new CtShipEngines(Settings.playerMaxSpeed));
 
+		emissionFx = new Node("emission-fx");
+		List<ParticleEmitter> emissions = new ArrayList<>();
+		for (Vector3f emissionTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
+			ParticleEmitter emission = new PeShipEmission(app.getAssetManager());
+			emission.setLocalTranslation(emissionTranslation);
+			emissionFx.attachChild(emission);
+			emissions.add(emission);
+		}
+		emissionFx.addControl(new CtShipEmissions(ship, emissions));
+		fx.attachChild(emissionFx);
+
 		// player.addControl(new CtCollision(other -> {
 		// }));
-
 		// getState(StCollision.class).register(player);
 
 		getState(StCamera.class).enableFlightCamera(ship);
@@ -119,7 +139,7 @@ public final class StPlayer extends BaseAppState {
 
 	void updateThrust(double value, double tpf) {
 		float thrust = ship.getControl(CtShipEngines.class).thrust(value, tpf);
-		ship.getControl(CtShipEmissions.class).updateThrust(thrust);
+		emissionFx.getControl(CtShipEmissions.class).updateThrust(thrust);
 	}
 
 	public double thrustValue() {

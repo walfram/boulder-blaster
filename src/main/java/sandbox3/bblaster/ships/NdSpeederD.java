@@ -42,25 +42,14 @@ public final class NdSpeederD extends Node {
 		PointVisualizer emissionLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
 		emissionLeft.setLocalTranslation(4, 4, -12);
 		attachChild(emissionLeft);
-
 		PointVisualizer emissionRight = new PointVisualizer(assetManager, 10, ColorRGBA.Blue, null);
 		emissionRight.setLocalTranslation(-4, 4, -12);
 		attachChild(emissionRight);
-
-		List<ParticleEmitter> emissions = new ArrayList<>();
-		for (Vector3f emissionTranslation : new Vector3f[] { new Vector3f(4, 4, -12), new Vector3f(-4, 4, -12) }) {
-			ParticleEmitter emission = new PeShipEmission(assetManager);
-			emission.setLocalTranslation(emissionTranslation);
-			attachChild(emission);
-			emissions.add(emission);
-		}
-
-		addControl(new CtShipEmissions(emissions));
 		
 		PointVisualizer missileLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Yellow, null);
 		missileLeft.setLocalTranslation(7, 1, -2.5f);
 		attachChild(missileLeft);
-		
+
 		addControl(new CtShipMissiles(missileLeft));
 	}
 
