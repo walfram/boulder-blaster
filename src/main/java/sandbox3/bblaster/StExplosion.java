@@ -21,6 +21,8 @@ import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.explosion.PeExplosionFlash;
 import sandbox3.bblaster.explosion.PeExplosionShockwave;
 import sandbox3.bblaster.explosion.PeExplosionSparks;
+import sandbox3.bblaster.explosion.PeMissileFlash;
+import sandbox3.bblaster.explosion.PeMissileSparks;
 import sandbox3.bblaster.explosion.PeProjectileSparks;
 
 public final class StExplosion extends BaseAppState {
@@ -56,8 +58,15 @@ public final class StExplosion extends BaseAppState {
 	}
 
 	public void missileExplosion(Vector3f translation) {
-		createExplosion(translation, 50f, 0.75f);
-		// explosion(translation, 50f);
+		ParticleEmitter sparks = new PeMissileSparks(getApplication().getAssetManager(), 20f);
+		sparks.setLocalTranslation(translation);
+		explosions.attachChild(sparks);
+		sparks.emitAllParticles();
+
+		ParticleEmitter flash = new PeMissileFlash(getApplication().getAssetManager(), 20f);
+		flash.setLocalTranslation(translation);
+		explosions.attachChild(flash);
+		flash.emitAllParticles();
 	}
 
 	public void projectileExplosion(Vector3f translation) {
