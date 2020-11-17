@@ -41,11 +41,10 @@ public final class StBoulders2 extends BaseAppState {
 	private float elapsed = 0f;
 	private int idx = 0;
 
-	private final int maxBoulders = 1024;
-	private final float minDistance = 1024f;
-	private final float maxDistance = 4096f;
-	private final float minScale = 10f;
-	private final float maxScale = 100f;
+	private final int maxBoulders = Settings.bouldersTotal;
+	private final float maxDistance = Settings.boulderSpawnDistance;
+	private final float minScale = Settings.boulderMinRadius;
+	private final float maxScale = Settings.boulderMaxRadius;
 
 	public StBoulders2(Node rootNode) {
 		rootNode.attachChild(scene);
@@ -91,7 +90,7 @@ public final class StBoulders2 extends BaseAppState {
 		boulder.setLocalScale(size);
 
 		boulder.addControl(new CtBoulderMove(size));
-		boulder.addControl(new CtBoulderBounds(5000f));
+		boulder.addControl(new CtBoulderBounds(Settings.boulderBoundarySize));
 		boulder.addControl(new CtBoulderHealth(size));
 
 		boulder.addControl(new CtCollision(other -> {

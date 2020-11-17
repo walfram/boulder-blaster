@@ -10,7 +10,7 @@ public final class CtBoulderMove extends SimpleControl {
 	private final float speed;
 
 	public CtBoulderMove(float size) {
-		this.speed = Settings.boulderMaxSpeed * (1f - size / Settings.boulderMaxSize);
+		this.speed = Settings.boulderMaxSpeed * (1f - size / Settings.boulderMaxRadius);
 	}
 
 	@Override

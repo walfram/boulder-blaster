@@ -2,9 +2,6 @@ package sandbox3.bblaster;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.material.Material;
@@ -23,8 +20,6 @@ import sandbox3.bblaster.controls.CtPayload;
 import sandbox3.bblaster.controls.CtProjectileMove;
 
 public final class StBlasters extends BaseAppState {
-
-	private static final Logger logger = LoggerFactory.getLogger(StBlasters.class);
 
 	private final Node projectiles = new Node("projectiles");
 
