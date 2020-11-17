@@ -12,6 +12,7 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Spatial;
 
 import sandbox3.bblaster.boulders.CtBoulderHealth;
+import sandbox3.bblaster.boulders.CtBoulderMove;
 
 public final class StTargetting extends BaseAppState {
 
@@ -101,6 +102,13 @@ public final class StTargetting extends BaseAppState {
 			return currentTarget.getName();
 
 		return "<no target>";
+	}
+
+	public float speed() {
+		if (currentTarget != null)
+			return currentTarget.getControl(CtBoulderMove.class).speed();
+			
+		return Float.NaN;
 	}
 
 }

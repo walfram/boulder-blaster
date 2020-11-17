@@ -38,30 +38,38 @@ public final class StHudTarget extends BaseAppState {
 		Container target = new Container();
 		target.addChild(new Label("target", new ElementId("window.title.label"))).setMaxWidth(320f);
 
-		Container targetPanel = target.addChild(
-				new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
+		Container content = target.addChild(new Container(new SpringGridLayout(Axis.Y, Axis.X, FillMode.Even, FillMode.Last)));
 
-		targetPanel.addChild(new Label("id")).setMaxWidth(72f);
-		Label targetId = targetPanel.addChild(new Label("id.value"), 1);
+		content.addChild(new Label("total"));
+		Label labelTotal = content.addChild(new Label("total.value"), 1);
 
-		targetPanel.addChild(new Label("health"));
-		ProgressBar targetHealth = targetPanel.addChild(new ProgressBar(), 1);
+		content.addChild(new Label("id")).setMaxWidth(72f);
+		Label targetId = content.addChild(new Label("id.value"), 1);
 
+		content.addChild(new Label("health"));
+		ProgressBar targetHealth = content.addChild(new ProgressBar(), 1);
 		targetHealth.getLabel().setColor(ColorRGBA.Yellow);
 
-		targetPanel.addControl(new SimpleControl() {
+		content.addChild(new Label("speed"));
+		Label targetSpeed = content.addChild(new Label("speed.value"), 1);
+
+		content.addControl(new SimpleControl() {
 			@Override
 			protected void controlUpdate(float updateInterval) {
 				super.controlUpdate(updateInterval);
 
+				labelTotal.setText(String.format("%s", getState(StBoulders.class).boulderQuantity()));
+
 				targetId.setText(getState(StTargetting.class).targetId());
-				
+
 				targetHealth.setProgressPercent(getState(StTargetting.class).healthPercent());
 				targetHealth.setMessage(
 						String.format(
 								"%.03f / %.03f",
 								getState(StTargetting.class).healthValue(),
 								getState(StTargetting.class).healthMax()));
+
+				targetSpeed.setText(String.format("%.03f", getState(StTargetting.class).speed()));
 			}
 		});
 

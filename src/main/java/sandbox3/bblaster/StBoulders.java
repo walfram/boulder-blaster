@@ -151,4 +151,8 @@ public final class StBoulders extends BaseAppState {
 		scene.collideWith(ray, results);
 	}
 
+	public int boulderQuantity() {
+		return scene.getQuantity() - 1;
+	}
+
 }

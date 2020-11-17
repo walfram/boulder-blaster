@@ -22,4 +22,8 @@ public final class CtBoulderMove extends SimpleControl {
 
 	}
 
+	public float speed() {
+		return speed;
+	}
+
 }
