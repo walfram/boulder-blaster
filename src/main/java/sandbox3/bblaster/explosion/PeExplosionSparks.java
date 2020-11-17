@@ -14,7 +14,7 @@ public final class PeExplosionSparks extends ParticleEmitter {
 		super("sparks", Type.Triangle, 400);
 
 		setStartColor(ColorRGBA.Yellow);
-		setEndColor(new ColorRGBA(1, 0, 0, 0.25f));
+		setEndColor(new ColorRGBA(1, 0, 0, 0.125f));
 		setStartSize(size);
 		setEndSize(size);
 		setGravity(0, 0, 0);
