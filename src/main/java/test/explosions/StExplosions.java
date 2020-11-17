@@ -6,6 +6,7 @@ import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
+import sandbox3.bblaster.explosion.PeExplosionFlash;
 import sandbox3.bblaster.explosion.PeExplosionShockwave;
 import sandbox3.bblaster.explosion.PeExplosionSparks;
 
@@ -34,18 +35,20 @@ final class StExplosions extends BaseAppState {
 	}
 
 	public void createExplosion(Vector3f translation, float size) {
-		// createExplosion(translation, 150f, 1.5f);
 		ParticleEmitter shockwave = new PeExplosionShockwave(getApplication().getAssetManager(), size);
 		shockwave.setLocalTranslation(translation);
 		scene.attachChild(shockwave);
+		shockwave.emitAllParticles();
 
 		ParticleEmitter sparks = new PeExplosionSparks(getApplication().getAssetManager(), size);
 		sparks.setLocalTranslation(translation);
 		scene.attachChild(sparks);
-
-		shockwave.emitAllParticles();
 		sparks.emitAllParticles();
 
+		ParticleEmitter flash = new PeExplosionFlash(getApplication().getAssetManager(), size);
+		flash.setLocalTranslation(translation);
+		scene.attachChild(flash);
+		flash.emitAllParticles();
 	}
 
 }
