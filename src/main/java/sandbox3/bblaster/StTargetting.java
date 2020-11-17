@@ -55,13 +55,13 @@ public final class StTargetting extends BaseAppState {
 		CollisionResults results = new CollisionResults();
 
 		currentTarget = null;
-		getState(StBoulders2.class).findTargets(ray, results);
+		getState(StBoulders.class).findTargets(ray, results);
 
 		if (results.size() > 0) {
 			currentTarget = results.getClosestCollision().getGeometry();
 		} else {
 			ray = new Ray(getApplication().getCamera().getLocation(), getApplication().getCamera().getDirection());
-			getState(StBoulders2.class).findTargets(ray, results);
+			getState(StBoulders.class).findTargets(ray, results);
 
 			if (results.size() > 0) {
 				currentTarget = results.getClosestCollision().getGeometry();

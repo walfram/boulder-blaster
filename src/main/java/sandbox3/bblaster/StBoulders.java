@@ -27,9 +27,9 @@ import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtPayload;
 
-public final class StBoulders2 extends BaseAppState {
+public final class StBoulders extends BaseAppState {
 
-	private static final Logger logger = LoggerFactory.getLogger(StBoulders2.class);
+	private static final Logger logger = LoggerFactory.getLogger(StBoulders.class);
 
 	private final InstancedNode scene = new InstancedNode("scene");
 
@@ -46,7 +46,7 @@ public final class StBoulders2 extends BaseAppState {
 	private final float minScale = Settings.boulderMinRadius;
 	private final float maxScale = Settings.boulderMaxRadius;
 
-	public StBoulders2(Node rootNode) {
+	public StBoulders(Node rootNode) {
 		rootNode.attachChild(scene);
 	}
 
