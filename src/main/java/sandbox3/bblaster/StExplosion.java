@@ -19,6 +19,7 @@ import jme3.common.material.MtlUnshaded;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.explosion.PeExplosionShockwave;
+import sandbox3.bblaster.explosion.PeExplosionSparks;
 
 public final class StExplosion extends BaseAppState {
 
@@ -53,25 +54,27 @@ public final class StExplosion extends BaseAppState {
 	}
 
 	public void missileExplosion(Vector3f translation) {
-		// createExplosion(translation, 50f, 0.75f);
-		explosion(translation, 50f);
+		createExplosion(translation, 50f, 0.75f);
+		// explosion(translation, 50f);
 	}
 
 	public void projectileExplosion(Vector3f translation) {
-		// createExplosion(translation, 1.5f, 0.25f);
-		explosion(translation, 5f);
+		createExplosion(translation, 1.5f, 0.25f);
+		// explosion(translation, 5f);
 	}
 
 	public void boulderExplosion(Vector3f translation, float size) {
 		// createExplosion(translation, 150f, 1.5f);
-		explosion(translation.clone(), size);
-	}
+		ParticleEmitter shockwave = new PeExplosionShockwave(getApplication().getAssetManager(), size);
+		shockwave.setLocalTranslation(translation);
+		explosions.attachChild(shockwave);
 
-	private void explosion(Vector3f translation, float size) {
-		ParticleEmitter e = new PeExplosionShockwave(getApplication().getAssetManager(), size);
-		e.setLocalTranslation(translation);
-		explosions.attachChild(e);
-		e.emitAllParticles();
+		ParticleEmitter sparks = new PeExplosionSparks(getApplication().getAssetManager(), size);
+		sparks.setLocalTranslation(translation);
+		explosions.attachChild(sparks);
+
+		shockwave.emitAllParticles();
+		sparks.emitAllParticles();
 	}
 
 	@Deprecated
