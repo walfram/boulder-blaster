@@ -18,6 +18,7 @@ import com.jme3.scene.Node;
 import jme3.common.material.MtlUnshaded;
 import jme3utilities.SimpleControl;
 import jme3utilities.mesh.Octasphere;
+import sandbox3.bblaster.explosion.PeExplosionFlash;
 import sandbox3.bblaster.explosion.PeExplosionShockwave;
 import sandbox3.bblaster.explosion.PeExplosionSparks;
 
@@ -64,17 +65,20 @@ public final class StExplosion extends BaseAppState {
 	}
 
 	public void boulderExplosion(Vector3f translation, float size) {
-		// createExplosion(translation, 150f, 1.5f);
 		ParticleEmitter shockwave = new PeExplosionShockwave(getApplication().getAssetManager(), size);
 		shockwave.setLocalTranslation(translation);
 		explosions.attachChild(shockwave);
+		shockwave.emitAllParticles();
 
 		ParticleEmitter sparks = new PeExplosionSparks(getApplication().getAssetManager(), size);
 		sparks.setLocalTranslation(translation);
 		explosions.attachChild(sparks);
-
-		shockwave.emitAllParticles();
 		sparks.emitAllParticles();
+
+		ParticleEmitter flash = new PeExplosionFlash(getApplication().getAssetManager(), size);
+		flash.setLocalTranslation(translation);
+		explosions.attachChild(flash);
+		flash.emitAllParticles();
 	}
 
 	@Deprecated
