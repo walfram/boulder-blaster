@@ -14,9 +14,9 @@ public final class PeExplosionShockwave extends ParticleEmitter {
 		super("shockwave", Type.Triangle, 1);
 
 		setStartColor(ColorRGBA.Yellow);
-		setEndColor(ColorRGBA.Gray);
+		setEndColor(new ColorRGBA(0.5f, 0.5f, 0.5f, 0.25f));
 		setStartSize(0);
-		setEndSize(size * 10f);
+		setEndSize(size * 5f);
 		setGravity(0, 0, 0);
 		setLowLife(1.5f);
 		setHighLife(1.5f);

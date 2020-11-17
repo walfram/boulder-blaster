@@ -11,16 +11,16 @@ import jme3.common.material.MtlParticle;
 public final class PeExplosionSparks extends ParticleEmitter {
 
 	public PeExplosionSparks(AssetManager assetManager, float size) {
-		super("sparks", Type.Triangle, 100);
+		super("sparks", Type.Triangle, 400);
 
 		setStartColor(ColorRGBA.Yellow);
-		setEndColor(ColorRGBA.Red);
-		setStartSize(0);
-		setEndSize(size * 10f);
+		setEndColor(new ColorRGBA(1, 0, 0, 0.25f));
+		setStartSize(size);
+		setEndSize(size);
 		setGravity(0, 0, 0);
-		setLowLife(1.5f);
+		setLowLife(1.0f);
 		setHighLife(1.5f);
-		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Y.mult(10f));
+		getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Y.mult(5f * size));
 		getParticleInfluencer().setVelocityVariation(1f);
 		setFacingVelocity(true);
 		setImagesX(1);
