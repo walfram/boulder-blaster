@@ -4,11 +4,9 @@ import com.jme3.asset.AssetManager;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.effect.ParticleMesh.Type;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 
 import jme3.common.material.MtlParticle;
-import jme3utilities.math.MyVector3f;
 
 public final class PeExplosionShockwave extends ParticleEmitter {
 
