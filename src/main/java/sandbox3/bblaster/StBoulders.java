@@ -66,6 +66,9 @@ public final class StBoulders extends BaseAppState {
 		if (scene.getQuantity() > maxBoulders)
 			return;
 
+		if (idx > maxBoulders)
+			return;
+		
 		elapsed += tpf;
 
 		if (elapsed < 0.1f)
