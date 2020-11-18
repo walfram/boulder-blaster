@@ -75,7 +75,10 @@ public final class StHudTarget extends BaseAppState {
 
 		hud.attachChild(target);
 		// target.setLocalTranslation(10, 800 - playerContainer.getPreferredSize().y - 20f, 0);
-		target.setLocalTranslation(1600 - target.getPreferredSize().x - 10f, 800 - 10, 0);
+		target.setLocalTranslation(
+				app.getCamera().getWidth() - target.getPreferredSize().x - 10f,
+				app.getCamera().getHeight() - 10,
+				0);
 	}
 
 	@Override

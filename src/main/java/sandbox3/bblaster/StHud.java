@@ -51,7 +51,7 @@ public final class StHud extends BaseAppState {
 		});
 
 		hud.attachChild(playerContainer);
-		playerContainer.setLocalTranslation(10, 800 - 10, 0);
+		playerContainer.setLocalTranslation(10, app.getCamera().getHeight() - 10, 0);
 	}
 
 	@Override

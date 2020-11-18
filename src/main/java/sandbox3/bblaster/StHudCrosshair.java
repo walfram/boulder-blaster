@@ -23,7 +23,7 @@ public final class StHudCrosshair extends BaseAppState {
 		crosshair.setImage(app.getAssetManager(), "textures/crosshair/crosshair161.png", true);
 		crosshair.setWidth(72);
 		crosshair.setHeight(72);
-		crosshair.setPosition(800 - 36, 400 - 36);
+		crosshair.setPosition(app.getCamera().getWidth() * 0.5f - 36, app.getCamera().getHeight() * 0.5f - 36);
 		scene.attachChild(crosshair);
 	}
 
@@ -35,7 +35,9 @@ public final class StHudCrosshair extends BaseAppState {
 			Vector2f v = getApplication().getInputManager().getCursorPosition();
 			crosshair.setLocalTranslation(v.x - 36, v.y - 36, 0);
 		} else {
-			crosshair.setPosition(800 - 36, 400 - 36);
+			crosshair.setPosition(
+					getApplication().getCamera().getWidth() * 0.5f - 36,
+					getApplication().getCamera().getHeight() * 0.5f - 36);
 		}
 	}
 

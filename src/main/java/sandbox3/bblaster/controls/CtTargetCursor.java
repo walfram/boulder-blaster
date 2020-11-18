@@ -11,9 +11,14 @@ public final class CtTargetCursor extends SimpleControl {
 	private final StTargetting stTargetting;
 	private final Camera camera;
 
+	private final int width;
+	private final int height;
+
 	public CtTargetCursor(StTargetting stTargetting, Camera camera) {
 		this.stTargetting = stTargetting;
 		this.camera = camera;
+		this.width = camera.getWidth();
+		this.height = camera.getHeight();
 	}
 
 	@Override
@@ -29,18 +34,18 @@ public final class CtTargetCursor extends SimpleControl {
 
 			if (xy.x < 0)
 				xy.x = 0f;
-			else if (xy.x > (1600 - 72))
-				xy.x = 1600 - 72;
+			else if (xy.x > (width - 72))
+				xy.x = width - 72;
 
 			if (xy.y < 0)
 				xy.y = 0;
-			else if (xy.y > (800 - 72))
-				xy.y = 800 - 72;
+			else if (xy.y > (height - 72))
+				xy.y = height - 72;
 
 			if (xy.z > 1) {
 				// TODO this is not quite correct, must refactor
-				float dx = xy.x / 1600;
-				float dy = xy.y / 800;
+				float dx = xy.x / width;
+				float dy = xy.y / height;
 				if (dx > dy) {
 					xy.x = 0f;
 				} else {
