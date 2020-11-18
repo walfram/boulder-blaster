@@ -17,10 +17,12 @@ final class PeMissileEmission extends ParticleEmitter {
 		setGravity(0, 0, 0);
 		setStartColor(ColorRGBA.Yellow);
 		setEndColor(ColorRGBA.Red);
-		setStartSize(4.5f);
-		setEndSize(0.5f);
-		setLowLife(0.125f);
-		setHighLife(0.125f);
+		
+		setStartSize(0.5f);
+		setEndSize(5.0f);
+		
+		setLowLife(0.2f);
+		setHighLife(0.2f);
 		setInWorldSpace(false);
 	}
 
