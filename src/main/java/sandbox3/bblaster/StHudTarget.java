@@ -53,6 +53,9 @@ public final class StHudTarget extends BaseAppState {
 		content.addChild(new Label("speed"));
 		Label targetSpeed = content.addChild(new Label("speed.value"), 1);
 
+		content.addChild(new Label("distance"));
+		Label targetDistance = content.addChild(new Label("distance.value"), 1);
+
 		content.addControl(new SimpleControl() {
 			@Override
 			protected void controlUpdate(float updateInterval) {
@@ -70,6 +73,8 @@ public final class StHudTarget extends BaseAppState {
 								getState(StTargetting.class).healthMax()));
 
 				targetSpeed.setText(String.format("%.03f", getState(StTargetting.class).speed()));
+
+				targetDistance.setText(String.format("%.03f", getState(StTargetting.class).distance()));
 			}
 		});
 

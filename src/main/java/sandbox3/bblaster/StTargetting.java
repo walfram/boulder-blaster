@@ -107,7 +107,14 @@ public final class StTargetting extends BaseAppState {
 	public float speed() {
 		if (currentTarget != null)
 			return currentTarget.getControl(CtBoulderMove.class).speed();
-			
+
+		return Float.NaN;
+	}
+
+	public float distance() {
+		if (currentTarget != null)
+			return currentTarget.getWorldTranslation().subtract(getState(StPlayer.class).position()).length();
+
 		return Float.NaN;
 	}
 
