@@ -2,6 +2,8 @@
 
 use `gradle run` to launch game
 
+use `gradle run --args='--debug'` to run in debug mode (currently very limited)
+
 use `left-click + mouse move` to steer ship
 
 use `W` to accelerate, `S` to decelerate
@@ -17,5 +19,3 @@ use `T` to target boulder under cursor or under crosshair
 tested with java 1.8
 
 this is work in progress :)
-
-resolution is currently fixed as 1600x800 windowed mode, this will be changed in future
