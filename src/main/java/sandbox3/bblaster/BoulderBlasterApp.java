@@ -2,9 +2,6 @@ package sandbox3.bblaster;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
 import com.jme3.math.ColorRGBA;
@@ -17,8 +14,6 @@ import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 
 public class BoulderBlasterApp extends SimpleApplication {
-
-	private static final Logger logger = LoggerFactory.getLogger(BoulderBlasterApp.class);
 
 	public static void main(String[] args) {
 		boolean debug = Arrays.asList(args).contains("--debug");
