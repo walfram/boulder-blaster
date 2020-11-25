@@ -2,6 +2,7 @@ package test.boulder;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -14,7 +15,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.FastMath;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -25,7 +25,6 @@ import com.jme3.util.BufferUtils;
 import com.simsilica.event.EventBus;
 
 import jme3.common.material.MtlLighting;
-import jme3utilities.math.MyVector3f;
 import jme3utilities.math.noise.Perlin2;
 import jme3utilities.mesh.Octasphere;
 
@@ -42,6 +41,13 @@ final class StModifiedSphere extends BaseAppState {
 	@Override
 	protected void initialize(Application app) {
 
+		createGeometry(new NoiseSettings());
+
+		EventBus.addListener(this, Events.toggleWireframe);
+		EventBus.addListener(this, Events.noiseSettingsChange);
+	}
+
+	private void createGeometry(NoiseSettings settings) {
 		Mesh mesh = new Octasphere(5, 32f);
 
 		logger.debug("vertices = {}", mesh.getVertexCount());
@@ -63,27 +69,43 @@ final class StModifiedSphere extends BaseAppState {
 			if (processed.contains(idx))
 				continue;
 
-			Vector3f v = positions[idx];
+			Vector3f p = positions[idx];
 
 			List<Integer> indices = new ArrayList<>();
 			for (int i = idx; i < positions.length; i++) {
-				if (Objects.equals(v, positions[i]))
+				if (Objects.equals(p, positions[i]))
 					indices.add(i);
 			}
 
-			float azm = MyVector3f.azimuth(v);// / FastMath.PI;
-			float alt = MyVector3f.altitude(v);// / FastMath.HALF_PI;
+			float noiseValue = 0f;
 
-			float e = 0f;
-			int maxFreq = 5;
-			for (int i = 0; i < maxFreq; i++) {
-				float freq = FastMath.pow(2, i);
+			int numLayers = settings.numLayers;
+			float frequency = settings.baseRoughness;
+			float amplitude = 1f;
+
+			for (int i = 0; i < numLayers; i++) {
+
+				// float u = FastMath.sin(uvs[idx].x - 0.5f);
+				// float v = FastMath.sin(uvs[idx].y - 0.5f);
+
+				float u = uvs[idx].x;
+				float v = uvs[idx].y;
+
+				float e = generator.sampleNormalized(u * frequency, v * frequency);
+				noiseValue += (e + 1) * 0.5f * amplitude;
+
+				frequency *= settings.roughness; // roughness
+				amplitude *= settings.persistence; // persistence;
+
+				// e += (1f / freq) * generator.sampleNormalized(freq * u, freq * v);
 				// e += (1f / freq) * generator.sampleNormalized(freq * uvs[idx].x, freq * uvs[idx].y);
 				// e += (1f / freq) * generator.sampleNormalized(freq * (v.x / 32f), freq * (v.y / 32f));
-				e += (1f / freq) * generator.sampleNormalized(freq * azm, freq * alt);
+				// e += (1f / freq) * generator.sampleNormalized(freq * azm, freq * alt);
+
+				// e *= i * 0.5f;
 			}
 
-			Vector3f offset = v.normalize().mult(e * 10f);
+			Vector3f offset = p.normalize().mult(noiseValue * settings.strength);
 
 			for (int i : indices) {
 				positions[i].addLocal(offset);
@@ -92,6 +114,8 @@ final class StModifiedSphere extends BaseAppState {
 			processed.addAll(indices);
 		}
 
+		logger.debug("processed");
+
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(positions));
 
 		// mesh.setMode(Mode.Points);
@@ -99,7 +123,7 @@ final class StModifiedSphere extends BaseAppState {
 		Geometry geometry = new Geometry("test", mesh);
 		// Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
 
-		geometry.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Gray));
+		geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray));
 		// geometry.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Gray, "textures/uvtest.jpg"));
 
 		// geometry.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Gray));
@@ -108,9 +132,14 @@ final class StModifiedSphere extends BaseAppState {
 		geometry.getMaterial().getAdditionalRenderState().setWireframe(true);
 		// geometry.getMaterial().getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 
+		scene.detachAllChildren();
 		scene.attachChild(geometry);
+	}
 
-		EventBus.addListener(this, Events.toggleWireframe);
+	protected void noiseSettingsChange(NoiseSettings settings) {
+		logger.debug("noise settings change...");
+
+		createGeometry(settings);
 	}
 
 	protected void toggleWireframe(Object o) {

@@ -54,11 +54,13 @@ public class BoulderTest extends SimpleApplication {
 		stateManager.attach(new StLights(rootNode));
 
 		// stateManager.attach(new StGeneratedTexture(guiNode));
-		
 		stateManager.attach(new StModifiedSphere(rootNode));
+
+		// stateManager.attach(new StNoiseMesh(rootNode));
 
 		stateManager.attach(new StCamera(rootNode));
 		stateManager.attach(new StGui(guiNode));
+		stateManager.attach(new StGuiNoise(guiNode));
 	}
 
 }
