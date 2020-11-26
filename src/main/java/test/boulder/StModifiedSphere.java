@@ -48,7 +48,7 @@ final class StModifiedSphere extends BaseAppState {
 	}
 
 	private void createGeometry(NoiseSettings settings) {
-		Mesh mesh = new Octasphere(5, 32f);
+		Mesh mesh = new Octasphere(3, 32f);
 
 		logger.debug("vertices = {}", mesh.getVertexCount());
 		logger.debug("triangles = {}", mesh.getTriangleCount());
@@ -59,9 +59,11 @@ final class StModifiedSphere extends BaseAppState {
 		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
 		logger.debug("positions length = {}", positions.length);
 
-		long seed = -35_930_871;
-		int fundamental = 10;
-		Perlin2 generator = new Perlin2(fundamental, fundamental, seed, seed);
+		// long seed = -35_930_871;
+		// int fundamental = 10;
+		// Perlin2 generator = new Perlin2(fundamental, fundamental, seed, seed);
+
+		Noise noise = new Noise(33);
 
 		Set<Integer> processed = new HashSet<>(positions.length);
 
@@ -91,7 +93,8 @@ final class StModifiedSphere extends BaseAppState {
 				float u = uvs[idx].x;
 				float v = uvs[idx].y;
 
-				float e = generator.sampleNormalized(u * frequency, v * frequency);
+				// float e = generator.sampleNormalized(u * frequency, v * frequency);
+				float e = noise.Evaluate(p.mult(frequency));
 				noiseValue += (e + 1) * 0.5f * amplitude;
 
 				frequency *= settings.roughness; // roughness
@@ -105,10 +108,13 @@ final class StModifiedSphere extends BaseAppState {
 				// e *= i * 0.5f;
 			}
 
-			Vector3f offset = p.normalize().mult(noiseValue * settings.strength);
+			noiseValue = Math.max(0, noiseValue);
+
+			float f = noiseValue * settings.strength;
+			// Vector3f offset = p.normalize().mult(f);
 
 			for (int i : indices) {
-				positions[i].addLocal(offset);
+				positions[i].multLocal(1f + f);
 			}
 
 			processed.addAll(indices);
