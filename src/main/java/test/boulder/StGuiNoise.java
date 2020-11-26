@@ -14,7 +14,8 @@ final class StGuiNoise extends BaseAppState {
 
 	private final Node scene = new Node("scene");
 
-	private final NoiseSettings noiseSettings = new NoiseSettings();
+	// private final FastNoiseLite noise = new FastNoiseLite();
+	private final NoiseSettings settings = new NoiseSettings();
 
 	private VersionedReference<PropertyPanel> reference;
 
@@ -29,11 +30,19 @@ final class StGuiNoise extends BaseAppState {
 
 		PropertyPanel panel = new PropertyPanel(BaseStyles.GLASS);
 
-		panel.addFloatField("strength", noiseSettings, "strength", 0f, 100f, 0.25f);
-		panel.addIntField("numLayers", noiseSettings, "numLayers", 1, 8, 1);
-		panel.addFloatField("baseRoughness", noiseSettings, "baseRoughness", 0f, 10f, 0.25f);
-		panel.addFloatField("roughness", noiseSettings, "roughness", 0f, 16f, 0.25f);
-		panel.addFloatField("persistence", noiseSettings, "persistence", 0, 10f, 0.25f);
+		panel.addFloatField("strength", settings, "strength", 0f, 100f, 0.25f);
+
+		panel.addEnumField("mNoiseType", settings, "mNoiseType");
+		panel.addEnumField("mFractalType", settings, "mFractalType");
+
+		panel.addEnumField("mRotationType3D", settings, "mRotationType3D");
+		panel.addEnumField("mCellularDistanceFunction", settings, "mCellularDistanceFunction");
+		panel.addEnumField("mCellularReturnType", settings, "mCellularReturnType");
+
+		panel.addFloatField("mFrequency", settings, "mFrequency", 0f, 1f, 0.001f);
+		panel.addIntField("mOctaves", settings, "mOctaves", 0, 32, 1);
+		panel.addFloatField("mLacunarity", settings, "mLacunarity", 0, 32, 0.25f);
+		panel.addFloatField("mGain", settings, "mGain", 0, 1f, 0.01f);
 
 		container.addChild(panel);
 
@@ -42,18 +51,20 @@ final class StGuiNoise extends BaseAppState {
 				app.getCamera().getWidth() - container.getPreferredSize().x - 5,
 				app.getCamera().getHeight() - 5,
 				0);
-		
+
 		reference = panel.createReference();
+
+		EventBus.publish(Events.noiseChange, settings);
 	}
-	
+
 	@Override
 	public void update(float tpf) {
 		super.update(tpf);
-		
+
 		if (reference.update()) {
-			EventBus.publish(Events.noiseSettingsChange, noiseSettings);
+			EventBus.publish(Events.noiseChange, settings);
 		}
-		
+
 	}
 
 	@Override
