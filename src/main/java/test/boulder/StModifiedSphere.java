@@ -81,20 +81,18 @@ final class StModifiedSphere extends BaseAppState {
 			processed.addAll(indices);
 		}
 
-		logger.debug("processed");
-
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(positions));
 
 		Geometry geometry = new Geometry("test", mesh);
 		// Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
 
-		// geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray));
-		geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray, "textures/uvtest.jpg"));
+		geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray));
+		// geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray, "textures/uvtest.jpg"));
 
 		// geometry.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Gray));
 		// geometry.getMaterial().setFloat("PointSize", 5);
 
-		// geometry.getMaterial().getAdditionalRenderState().setWireframe(true);
+		geometry.getMaterial().getAdditionalRenderState().setWireframe(true);
 		// geometry.getMaterial().getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 
 		scene.detachAllChildren();
