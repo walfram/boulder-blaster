@@ -10,6 +10,7 @@ import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.style.BaseStyles;
 
 import jme3.common.debug.NdDebugGrid;
+import jme3.common.noise.NoiseGuiState;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StLights;
@@ -60,7 +61,7 @@ public class BoulderTest extends SimpleApplication {
 
 		stateManager.attach(new StCamera(rootNode));
 		stateManager.attach(new StGui(guiNode));
-		stateManager.attach(new StGuiNoise(guiNode));
+		stateManager.attach(new NoiseGuiState(guiNode));
 	}
 
 }

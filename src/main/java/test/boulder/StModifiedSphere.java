@@ -23,6 +23,9 @@ import com.jme3.util.BufferUtils;
 import com.simsilica.event.EventBus;
 
 import jme3.common.material.MtlLighting;
+import jme3.common.noise.FastNoiseLite;
+import jme3.common.noise.NoiseEvents;
+import jme3.common.noise.NoiseSettings;
 import jme3utilities.mesh.Octasphere;
 
 final class StModifiedSphere extends BaseAppState {
@@ -39,7 +42,7 @@ final class StModifiedSphere extends BaseAppState {
 	protected void initialize(Application app) {
 		createGeometry(new NoiseSettings());
 		EventBus.addListener(this, Events.toggleWireframe);
-		EventBus.addListener(this, Events.noiseChange);
+		EventBus.addListener(this, NoiseEvents.noiseChange);
 	}
 
 	private void createGeometry(NoiseSettings settings) {
