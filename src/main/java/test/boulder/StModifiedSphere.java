@@ -14,7 +14,6 @@ import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
-import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
@@ -24,7 +23,6 @@ import com.jme3.util.BufferUtils;
 import com.simsilica.event.EventBus;
 
 import jme3.common.material.MtlLighting;
-import jme3.common.mesh.FlatShaded;
 import jme3utilities.mesh.Octasphere;
 
 final class StModifiedSphere extends BaseAppState {
@@ -68,7 +66,6 @@ final class StModifiedSphere extends BaseAppState {
 			float noiseValue = noise.GetNoise(p.x, p.y, p.z);
 
 			if (noiseValue > 0) {
-
 				float f = noiseValue * settings.strength;
 
 				Vector3f delta = positions[idx].normalize().mult(f);
@@ -100,7 +97,6 @@ final class StModifiedSphere extends BaseAppState {
 	}
 
 	protected void noiseChange(NoiseSettings settings) {
-		logger.debug("noise settings change...");
 		createGeometry(settings);
 	}
 
