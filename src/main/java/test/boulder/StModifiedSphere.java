@@ -34,18 +34,23 @@ final class StModifiedSphere extends BaseAppState {
 
 	private final Node scene = new Node("scene");
 
+	private NoiseSettings noiseSettings = new NoiseSettings();
+
 	public StModifiedSphere(Node rootNode) {
 		rootNode.attachChild(scene);
 	}
 
 	@Override
 	protected void initialize(Application app) {
-		createGeometry(new NoiseSettings());
-		EventBus.addListener(this, Events.toggleWireframe);
+		createGeometry(new NoiseSettings(), new SphereSettings());
+
 		EventBus.addListener(this, NoiseEvents.noiseChange);
+
+		EventBus.addListener(this, Events.toggleWireframe);
+		EventBus.addListener(this, Events.sphereSettings);
 	}
 
-	private void createGeometry(NoiseSettings settings) {
+	private void createGeometry(NoiseSettings settings, SphereSettings ss) {
 		Mesh mesh = new Octasphere(5, 32f);
 
 		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
@@ -65,11 +70,12 @@ final class StModifiedSphere extends BaseAppState {
 			}
 
 			FastNoiseLite noise = new FastNoiseLite();
-			settings.bind(noise);
+			settings.applyTo(noise);
 			float noiseValue = noise.GetNoise(p.x, p.y, p.z);
 
 			if (noiseValue > 0) {
-				float f = noiseValue * settings.strength;
+				float f = noiseValue * ss.noiseScale;
+				// float f = noiseValue;
 
 				Vector3f delta = positions[idx].normalize().mult(f);
 
@@ -95,12 +101,20 @@ final class StModifiedSphere extends BaseAppState {
 		geometry.getMaterial().getAdditionalRenderState().setWireframe(true);
 		// geometry.getMaterial().getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 
+		geometry.setLocalScale(ss.scale());
+
 		scene.detachAllChildren();
 		scene.attachChild(geometry);
 	}
 
-	protected void noiseChange(NoiseSettings settings) {
-		createGeometry(settings);
+	protected void sphereSettings(SphereSettings settings) {
+		createGeometry(noiseSettings, settings);
+	}
+
+	protected void noiseChange(NoiseSettings noiseSettings) {
+		this.noiseSettings = noiseSettings;
+		SphereSettings sphereSettings = getState(StGui.class).sphereSettings();
+		createGeometry(noiseSettings, sphereSettings);
 	}
 
 	protected void toggleWireframe(Object o) {
