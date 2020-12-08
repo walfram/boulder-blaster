@@ -1,7 +1,8 @@
-package test.boulder;
+package test.boulder2;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
+import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -10,16 +11,15 @@ import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.style.BaseStyles;
 
 import jme3.common.debug.NdDebugGrid;
-import jme3.common.noise.NoiseGuiState;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StLights;
 import test.cmn.StCamera;
 
-public class BoulderTest extends SimpleApplication {
+public class Boulder2Test extends SimpleApplication {
 
 	public static void main(String[] args) {
-		BoulderTest app = new BoulderTest();
+		Boulder2Test app = new Boulder2Test();
 
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
@@ -53,16 +53,12 @@ public class BoulderTest extends SimpleApplication {
 		MyCamera.setNearFar(cam, 1, 32768f);
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
-		stateManager.attach(new StLights(rootNode));
-
-		// stateManager.attach(new StGeneratedTexture(guiNode));
-		stateManager.attach(new StModifiedSphere(rootNode));
-
-		// stateManager.attach(new StNoiseMesh(rootNode));
+		// stateManager.attach(new StLights(rootNode));
+		rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
 
 		stateManager.attach(new StCamera(rootNode));
-		stateManager.attach(new StGui(guiNode));
-		stateManager.attach(new NoiseGuiState(guiNode));
+
+		stateManager.attach(new StBoulder(rootNode));
 	}
 
 }

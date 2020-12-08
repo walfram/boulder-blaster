@@ -51,7 +51,7 @@ final class StModifiedSphere extends BaseAppState {
 	}
 
 	private void createGeometry(NoiseSettings settings, SphereSettings ss) {
-		Mesh mesh = new Octasphere(5, 32f);
+		Mesh mesh = new Octasphere(4, 32f);
 
 		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
 

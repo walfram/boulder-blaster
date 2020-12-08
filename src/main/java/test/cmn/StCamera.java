@@ -1,4 +1,4 @@
-package test.boulder;
+package test.cmn;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
@@ -9,7 +9,7 @@ import com.jme3.math.FastMath;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
-final class StCamera extends BaseAppState {
+public final class StCamera extends BaseAppState {
 
 	private final Node pivot = new Node("pivot");
 
