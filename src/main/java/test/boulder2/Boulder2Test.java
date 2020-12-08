@@ -59,6 +59,7 @@ public class Boulder2Test extends SimpleApplication {
 		stateManager.attach(new StCamera(rootNode));
 
 		stateManager.attach(new StBoulder(rootNode));
+		stateManager.attach(new StDeformGui(guiNode));
 	}
 
 }
