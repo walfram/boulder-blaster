@@ -13,6 +13,11 @@ public final class CtBoulderMove extends SimpleControl {
 		this.speed = Settings.boulderMaxSpeed * (1f - size / Settings.boulderMaxRadius);
 	}
 
+	// TODO debug constructor, no move for boulder
+	public CtBoulderMove(float size, float speed) {
+		this.speed = speed;
+	}
+
 	@Override
 	protected void controlUpdate(float updateInterval) {
 		super.controlUpdate(updateInterval);
