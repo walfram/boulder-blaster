@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingSphere;
+import com.jme3.collision.CollisionResult;
 import com.jme3.collision.CollisionResults;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
@@ -38,13 +39,9 @@ public final class StBoulders extends BaseAppState {
 	private Mesh mesh;
 	private Material material;
 
-	private float elapsed = 0f;
 	private int idx = 0;
 
-	private final int maxBoulders = Settings.bouldersTotal;
 	private final float maxDistance = Settings.boulderSpawnDistance;
-	private final float minScale = Settings.boulderMinRadius;
-	private final float maxScale = Settings.boulderMaxRadius;
 
 	public StBoulders(Node rootNode) {
 		rootNode.attachChild(scene);
@@ -58,94 +55,30 @@ public final class StBoulders extends BaseAppState {
 		material = new MtlLighting(app.getAssetManager(), ColorRGBA.Gray);
 		material.setBoolean("UseInstancing", true);
 
+		float size = 512f;
 		for (int i = 0; i < 16; i++) {
-			spawnBoulder2(idx++);
+			Geometry boulder = createBoulder(idx++, size);
+
+			Vector3f translation = random.nextUnitVector3f().mult(maxDistance);
+			BoundingSphere b = new BoundingSphere(size, translation);
+
+			while (scene.getChildren().stream().filter(s -> s.getWorldBound().intersects(b)).findFirst().isPresent()) {
+				translation = random.nextUnitVector3f().mult(maxDistance);
+				b.setCenter(translation);
+			}
+
+			Quaternion rotation = random.nextQuaternion();
+
+			boulder.setLocalTranslation(translation);
+			boulder.setLocalRotation(rotation);
+
+			scene.attachChild(boulder);
 		}
 
 		scene.instance();
 	}
 
-	// @Override
-	// public void update(float tpf) {
-	// super.update(tpf);
-
-	// if (scene.getQuantity() > maxBoulders)
-	// return;
-	//
-	// if (idx > maxBoulders)
-	// return;
-	//
-	// elapsed += tpf;
-	//
-	// if (elapsed < 0.1f)
-	// return;
-	//
-	// elapsed = 0f;
-	//
-	// spawnBoulder(idx++);
-	// scene.instance();
-	// }
-
-	private void spawnBoulder2(int idx) {
-		Geometry boulder = new Geometry("boulder#" + idx, mesh);
-		boulder.setMaterial(material);
-
-		float size = 512f;
-		Vector3f translation = random.nextUnitVector3f().mult(maxDistance);
-		BoundingSphere b = new BoundingSphere(size, translation);
-		logger.debug("b.volume = {}", String.format("%10.2f", b.getVolume()));
-
-		while (scene.getChildren().stream().filter(s -> s.getWorldBound().intersects(b)).findFirst().isPresent()) {
-			translation = random.nextUnitVector3f().mult(maxDistance);
-			b.setCenter(translation);
-		}
-
-		Quaternion rotation = random.nextQuaternion();
-
-		boulder.setLocalTranslation(translation);
-		boulder.setLocalRotation(rotation);
-		boulder.setLocalScale(size);
-
-		boulder.addControl(new CtBoulderMove(size));
-		boulder.addControl(new CtBoulderBounds(Settings.boulderBoundarySize));
-		boulder.addControl(new CtBoulderHealth(size));
-
-		boulder.addControl(new CtCollision(other -> {
-			CtPayload control = other.getControl(CtPayload.class);
-
-			if (control != null) {
-				boulder.getControl(CtBoulderHealth.class).applyDamage(control.value());
-				if (boulder.getControl(CtBoulderHealth.class).isDead()) {
-					boulder.removeFromParent();
-					getState(StCollision.class).unregister(boulder);
-					logger.debug("destroyed boulder = {}", boulder);
-					getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
-					createFragments(size, boulder.getLocalTranslation());
-					// scene.instance();
-				}
-			}
-		}));
-		getState(StCollision.class).register(boulder);
-
-		scene.attachChild(boulder);
-	}
-
-	private void spawnBoulder(int idx) {
-		float size = random.nextFloat(minScale, maxScale);
-
-		Geometry boulder = newBoulder(idx, size);
-
-		Vector3f translation = random.nextUnitVector3f().mult(maxDistance);
-		Quaternion rotation = random.nextQuaternion();
-
-		boulder.setLocalTranslation(translation);
-		boulder.setLocalRotation(rotation);
-
-		scene.attachChild(boulder);
-
-	}
-
-	private Geometry newBoulder(int idx, float size) {
+	private Geometry createBoulder(int idx, float size) {
 		Geometry boulder = new Geometry("boulder#" + idx, mesh);
 		boulder.setMaterial(material);
 
@@ -155,66 +88,64 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtBoulderBounds(Settings.boulderBoundarySize));
 		boulder.addControl(new CtBoulderHealth(size));
 
-		boulder.addControl(new CtCollision(other -> {
-			CtPayload control = other.getControl(CtPayload.class);
-
-			if (control != null) {
-				boulder.getControl(CtBoulderHealth.class).applyDamage(control.value());
+		boulder.addControl(new CtCollision((other, collision) -> {
+			CtPayload otherPayload = other.getControl(CtPayload.class);
+			if (otherPayload != null) {
+				boulder.getControl(CtBoulderHealth.class).applyDamage(otherPayload.value());
 				if (boulder.getControl(CtBoulderHealth.class).isDead()) {
 					boulder.removeFromParent();
 					getState(StCollision.class).unregister(boulder);
 					logger.debug("destroyed boulder = {}", boulder);
 					getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
-					createFragments(size, boulder.getLocalTranslation());
-					// scene.instance();
+					spawnFragments(size, boulder.getLocalTranslation(), collision);
 				}
+			}
+
+			CtBoulderHealth otherHealth = other.getControl(CtBoulderHealth.class);
+			if (otherHealth != null) {
+				logger.debug("boulder collision = {} vs {} @{}", boulder, other, boulder.getLocalTranslation());
+
+				boulder.removeFromParent();
+				getState(StCollision.class).unregister(boulder);
+
+				getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
+
+				logger.debug("spawning fragments for {}", boulder);
+				spawnFragments(size, boulder.getLocalTranslation(), collision);
 			}
 		}));
 		getState(StCollision.class).register(boulder);
+
 		return boulder;
 	}
 
-	private void createFragments(float originalSize, Vector3f originalTranslation) {
+	private void spawnFragments(float originalSize, Vector3f originalTranslation, CollisionResult collision) {
 
-		float radius = 0.75f * originalSize;
+		// float radius = 0.75f * originalSize;
+		float radius = 0.5f * originalSize;
 
 		if (radius < Settings.boulderMinRadius)
 			return;
 
-		Vector3f offset = random.nextUnitVector3f().mult(radius * 1.1f);
+		Vector3f offset = random.nextUnitVector3f().mult(originalSize * 1.1f);
 		Vector3f translation = originalTranslation.add(offset);
 		Quaternion rotation = new Quaternion().lookAt(offset, Vector3f.UNIT_Z);
 
-		Geometry fragmenta = newBoulder(idx++, radius);
+		Geometry fragmenta = createBoulder(idx++, radius);
 		fragmenta.setLocalTranslation(translation);
 		fragmenta.setLocalRotation(rotation);
 		scene.attachChild(fragmenta);
+		logger.debug("fragmenta = {}", fragmenta);
 
-		Geometry fragmentb = newBoulder(idx++, radius);
+		Geometry fragmentb = createBoulder(idx++, radius);
 		fragmentb.setLocalTranslation(originalTranslation.add(offset.negate()));
 		fragmentb.setLocalRotation(rotation.opposite());
 		scene.attachChild(fragmentb);
+		logger.debug("fragmentb = {}", fragmentb);
 
 		scene.instance();
 
 	}
-
-	// private void createFragments(float originalRadius, Vector3f originalTranslation) {
-	// float radius = originalRadius * 0.5f;
-	//
-	// if (radius < Settings.boulderMinRadius)
-	// return;
-	//
-	// Vector3f offset = random.nextUnitVector3f().mult(radius * 1.1f);
-	// Vector3f translation = originalTranslation.add(offset);
-	//
-	// Quaternion rotation = new Quaternion().lookAt(offset, Vector3f.UNIT_Z);
-	// createBoulder(idx.incrementAndGet(), translation, rotation, radius);
-	//
-	// createBoulder(idx.incrementAndGet(), originalTranslation.add(offset.negate()), rotation.opposite(), radius);
-	//
-	// boulders.instance();
-	// }
 
 	@Override
 	protected void cleanup(Application app) {

@@ -76,8 +76,8 @@ public final class StMissiles extends BaseAppState {
 				}
 			});
 
-			missile.addControl(new CtCollision(other -> {
-				logger.debug("missile hit = {}", other);
+			missile.addControl(new CtCollision((other, collision) -> {
+				logger.debug("missile {} hit = {}", missile, other);
 				destroyMissile(missile);
 			}));
 			getState(StCollision.class).register(missile);

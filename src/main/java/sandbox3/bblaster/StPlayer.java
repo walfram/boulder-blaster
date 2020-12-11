@@ -96,6 +96,9 @@ public final class StPlayer extends BaseAppState {
 		// getState(StCollision.class).register(player);
 
 		getState(StCamera.class).enableFlightCamera(ship);
+		
+//		ship.lookAt(new Vector3f(3688.6997f, -1715.2268f, 478.2326f), Vector3f.UNIT_Y);
+		ship.lookAt(new Vector3f(-5000.0f, -2462.05f, -212.08636f), Vector3f.UNIT_Y);
 
 		logger.debug("initialized");
 	}

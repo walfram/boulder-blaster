@@ -17,7 +17,7 @@ public final class StControls extends BaseAppState {
 
 	private static final FunctionId F_FIRE_MISSILE = new FunctionId(GROUP_FLIGHT, "fire-missile");
 	private static final FunctionId F_AQUIRE_TARGET = new FunctionId(GROUP_FLIGHT, "aquire-target");
-	private static final FunctionId F_FIRE_GUNS = new FunctionId(GROUP_FLIGHT, "fire-guns");
+	private static final FunctionId F_FIRE_BLASTERS = new FunctionId(GROUP_FLIGHT, "fire-blasters");
 
 	private static final FunctionId F_MOUSE_LOOK = new FunctionId(GROUP_FLIGHT, "mouse-look");
 
@@ -50,8 +50,8 @@ public final class StControls extends BaseAppState {
 				getState(StTargetting.class).aquireTarget();
 		}, F_AQUIRE_TARGET);
 
-		inputMapper.map(F_FIRE_GUNS, Button.MOUSE_BUTTON2);
-		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireGuns(), F_FIRE_GUNS);
+		inputMapper.map(F_FIRE_BLASTERS, Button.MOUSE_BUTTON2);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireGuns(), F_FIRE_BLASTERS);
 
 		inputMapper.map(F_MOUSE_LOOK, Button.MOUSE_BUTTON1);
 		inputMapper.addAnalogListener((func, value, tpf) -> {
