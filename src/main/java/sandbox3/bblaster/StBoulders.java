@@ -122,7 +122,7 @@ public final class StBoulders extends BaseAppState {
 	private void spawnFragments(float originalSize, Vector3f originalTranslation, CollisionResult collision) {
 
 		// float radius = 0.75f * originalSize;
-		float radius = 0.5f * originalSize;
+		float radius = 0.625f * originalSize;
 
 		if (radius < Settings.boulderMinRadius)
 			return;
