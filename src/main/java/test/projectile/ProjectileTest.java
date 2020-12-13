@@ -1,4 +1,4 @@
-package test.boulder2;
+package test.projectile;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
@@ -13,13 +13,12 @@ import com.simsilica.lemur.style.BaseStyles;
 import jme3.common.debug.NdDebugGrid;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
-import test.cmn.StCamera;
 
-public class Boulder2Test extends SimpleApplication {
+public class ProjectileTest extends SimpleApplication {
 
 	public static void main(String[] args) {
-		Boulder2Test app = new Boulder2Test();
-
+		ProjectileTest app = new ProjectileTest();
+		
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
 
@@ -28,7 +27,7 @@ public class Boulder2Test extends SimpleApplication {
 
 		app.start();
 	}
-
+	
 	@Override
 	public void simpleInitApp() {
 		GuiGlobals.initialize(this);
@@ -45,8 +44,8 @@ public class Boulder2Test extends SimpleApplication {
 		rootNode.addControl(axesVisualizer);
 		axesVisualizer.setEnabled(true);
 
-		cam.setLocation(new Vector3f(114.870674f, 77.41453f, -34.310295f));
-		cam.setRotation(new Quaternion(0.23982903f, -0.5685595f, 0.1778851f, 0.766537f));
+		cam.setLocation(new Vector3f(24.020943f, 31.948973f, -66.383f));
+		cam.setRotation(new Quaternion(0.11349983f, -0.09396878f, 0.01078204f, 0.9890255f));
 
 		viewPort.setBackgroundColor(ColorRGBA.DarkGray);
 		MyCamera.setNearFar(cam, 1, 32768f);
@@ -54,11 +53,8 @@ public class Boulder2Test extends SimpleApplication {
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		// stateManager.attach(new StLights(rootNode));
 		rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
-
-		stateManager.attach(new StCamera(rootNode));
-
-		stateManager.attach(new StBoulder(rootNode));
-		stateManager.attach(new StDeformGui(guiNode));
+		
+		stateManager.attach(new StProjectiles(rootNode));
 	}
 
 }
