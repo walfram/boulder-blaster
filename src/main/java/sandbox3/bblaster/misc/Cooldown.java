@@ -28,4 +28,8 @@ public final class Cooldown {
 		return 1f - value / duration;
 	}
 
+	public float rof() {
+		return 1f / duration;
+	}
+
 }
