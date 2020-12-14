@@ -4,10 +4,10 @@ public final class Settings {
 
 	public static final float missileSpeed = 750f;
 	// public static final float missileDamage = 50f;
-	public static final float missileDamage = 1000f;
+	public static final float missileDamage = 250f;
 
-	public static final float projectileSpeed = 900f;
-	public static final float projectileDamage = 0.5f;
+	public static final float projectileSpeed = 2500f;
+	public static final float projectileDamage = 5f;
 
 	public static final float boulderMaxSpeed = 250f;
 	public static final float boulderMinSpeed = 100f;
