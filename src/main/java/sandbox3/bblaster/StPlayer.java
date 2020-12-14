@@ -18,7 +18,8 @@ import sandbox3.bblaster.controls.CtBlastersFx;
 import sandbox3.bblaster.controls.CtEmissionFx;
 import sandbox3.bblaster.controls.CtTransformCopy;
 import sandbox3.bblaster.misc.Cooldown;
-import sandbox3.bblaster.ships.CtShipBlasters;
+import sandbox3.bblaster.ships.CtShipBlasterFx;
+import sandbox3.bblaster.ships.CtShipBlasterProjectiles;
 import sandbox3.bblaster.ships.CtShipEmissions;
 import sandbox3.bblaster.ships.CtShipEngines;
 import sandbox3.bblaster.ships.CtShipMissiles;
@@ -81,9 +82,9 @@ public final class StPlayer extends BaseAppState {
 
 		blastersFx = new Node("balsters-fx");
 		List<ParticleEmitter> blasters = new ArrayList<>();
-		for (Vector3f offset : ship.getControl(CtShipBlasters.class).offsets()) {
+		for (Transform t : ship.getControl(CtShipBlasterFx.class).transforms()) {
 			ParticleEmitter blaster = new PeShipBlaster(app.getAssetManager());
-			blaster.setLocalTranslation(offset);
+			blaster.setLocalTranslation(t.getTranslation());
 			blastersFx.attachChild(blaster);
 			blasters.add(blaster);
 		}
@@ -98,7 +99,7 @@ public final class StPlayer extends BaseAppState {
 		getState(StCamera.class).enableFlightCamera(ship);
 		
 //		ship.lookAt(new Vector3f(3688.6997f, -1715.2268f, 478.2326f), Vector3f.UNIT_Y);
-		ship.lookAt(new Vector3f(-5000.0f, -2462.05f, -212.08636f), Vector3f.UNIT_Y);
+//		ship.lookAt(new Vector3f(-5000.0f, -2462.05f, -212.08636f), Vector3f.UNIT_Y);
 
 		logger.debug("initialized");
 	}
@@ -133,13 +134,13 @@ public final class StPlayer extends BaseAppState {
 		getState(StMissiles.class).spawnMissiles(transforms);
 	}
 
-	void fireGuns() {
+	void fireBlasters() {
 		if (!cooldownBlasters.isReady())
 			return;
 
 		cooldownBlasters.reset();
 
-		List<Transform> transforms = ship.getControl(CtShipBlasters.class).transforms();
+		List<Transform> transforms = ship.getControl(CtShipBlasterProjectiles.class).transforms();
 		getState(StBlasters.class).spawnProjectiles(transforms);
 		blastersFx.getControl(CtBlastersFx.class).emit();
 	}

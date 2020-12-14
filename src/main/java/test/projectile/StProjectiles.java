@@ -6,14 +6,20 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.input.KeyInput;
+import com.jme3.material.Material;
+import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
+import com.jme3.scene.shape.Box;
 import com.simsilica.lemur.GuiGlobals;
 import com.simsilica.lemur.focus.FocusNavigationState;
 import com.simsilica.lemur.input.FunctionId;
 import com.simsilica.lemur.input.InputMapper;
 
+import jme3.common.material.MtlUnshaded;
 import sandbox3.bblaster.misc.Cooldown;
+import sandbox3.bblaster.projectiles.NdProjectile;
 
 final class StProjectiles extends BaseAppState {
 
@@ -25,6 +31,9 @@ final class StProjectiles extends BaseAppState {
 
 	private final Cooldown cooldown = new Cooldown(1f / 8f);
 
+	private Mesh mesh;
+	private Material material;
+
 	public StProjectiles(Node rootNode) {
 		rootNode.attachChild(scene);
 	}
@@ -32,6 +41,9 @@ final class StProjectiles extends BaseAppState {
 	@Override
 	protected void initialize(Application app) {
 		logger.debug("cooldown rof = {}", cooldown.rof());
+
+		mesh = new Box(0.25f, 0.25f, 15f);
+		material = new MtlUnshaded(app.getAssetManager(), ColorRGBA.Yellow);
 
 		getState(FocusNavigationState.class).setEnabled(false);
 
@@ -47,16 +59,16 @@ final class StProjectiles extends BaseAppState {
 			return;
 
 		cooldown.reset();
-		
+
 		logger.debug("spawning projectile");
 
-		Node projectile = new NdProjectile(getApplication().getAssetManager());
+		Node projectile = new NdProjectile(getApplication().getAssetManager(), mesh, material);
 
 		projectile.setLocalTranslation(new Vector3f());
 		projectile.getLocalRotation().lookAt(getApplication().getCamera().getDirection(), Vector3f.UNIT_Y);
 
 		scene.attachChild(projectile);
-		
+
 		// Geometry clone = projectile.clone(true);
 		// clone.setLocalTranslation(new Vector3f());
 		// clone.getLocalRotation().lookAt(getApplication().getCamera().getDirection(), Vector3f.UNIT_Y);

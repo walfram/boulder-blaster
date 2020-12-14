@@ -51,7 +51,7 @@ public final class StControls extends BaseAppState {
 		}, F_AQUIRE_TARGET);
 
 		inputMapper.map(F_FIRE_BLASTERS, Button.MOUSE_BUTTON2);
-		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireGuns(), F_FIRE_BLASTERS);
+		inputMapper.addAnalogListener((func, value, tpf) -> getState(StPlayer.class).fireBlasters(), F_FIRE_BLASTERS);
 
 		inputMapper.map(F_MOUSE_LOOK, Button.MOUSE_BUTTON1);
 		inputMapper.addAnalogListener((func, value, tpf) -> {

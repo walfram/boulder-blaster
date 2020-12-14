@@ -1,4 +1,4 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.projectiles;
 
 import com.jme3.math.Vector3f;
 

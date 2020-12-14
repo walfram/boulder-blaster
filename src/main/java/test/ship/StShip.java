@@ -16,13 +16,13 @@ import com.jme3.scene.Spatial;
 import jme3.common.material.MtlShowNormals;
 import jme3utilities.mesh.Octahedron;
 import sandbox3.bblaster.Settings;
-import sandbox3.bblaster.controls.CtProjectileMove;
-import sandbox3.bblaster.controls.CtTimeout;
 import sandbox3.bblaster.missiles.CtMissileEngine;
 import sandbox3.bblaster.missiles.CtMissileGuidance;
 import sandbox3.bblaster.missiles.CtMissileTrail;
 import sandbox3.bblaster.missiles.NdMissile;
-import sandbox3.bblaster.ships.CtShipBlasters;
+import sandbox3.bblaster.projectiles.CtProjectileMove;
+import sandbox3.bblaster.projectiles.CtProjectileTimeout;
+import sandbox3.bblaster.ships.CtShipBlasterFx;
 import sandbox3.bblaster.ships.CtShipEmissions;
 import sandbox3.bblaster.ships.NdSpeederD;
 
@@ -73,15 +73,15 @@ final class StShip extends BaseAppState {
 
 	void fireGuns() {
 		logger.debug("fireGuns called");
-		ship.getControl(CtShipBlasters.class).toggleEnabled();
+		ship.getControl(CtShipBlasterFx.class).toggleEnabled();
 
 		Geometry projectile = new Geometry("projectile", new Octahedron(1f, true));
 		projectile.setMaterial(new MtlShowNormals(getApplication().getAssetManager()));
 
 		projectile.addControl(new CtProjectileMove(Settings.projectileSpeed));
-		projectile.addControl(new CtTimeout(5f, s -> s.removeFromParent()));
+		projectile.addControl(new CtProjectileTimeout(5f, s -> s.removeFromParent()));
 
-		Transform t = ship.getControl(CtShipBlasters.class).transforms().get(0);
+		Transform t = ship.getControl(CtShipBlasterFx.class).transforms().get(0);
 		projectile.setLocalTransform(t);
 		projectile.scale(1, 1, 10f);
 

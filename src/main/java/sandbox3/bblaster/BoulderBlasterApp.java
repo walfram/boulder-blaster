@@ -29,6 +29,8 @@ public class BoulderBlasterApp extends SimpleApplication {
 			app.setShowSettings(true);
 		}
 
+		app.setPauseOnLostFocus(false);
+
 		// settings.setGammaCorrection(true);
 
 		app.setSettings(settings);

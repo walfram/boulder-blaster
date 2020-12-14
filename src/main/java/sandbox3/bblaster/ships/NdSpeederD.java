@@ -24,13 +24,29 @@ public final class NdSpeederD extends Node {
 		attachChild(emissionRight);
 		addControl(new CtShipEmissions(emissionLeft, emissionRight));
 
-		PointVisualizer blasterLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Red, "saltire");
-		blasterLeft.setLocalTranslation(14f, 2f, -1.5f);
-		attachChild(blasterLeft);
-		PointVisualizer blasterRight = new PointVisualizer(assetManager, 10, ColorRGBA.Green, "saltire");
-		blasterRight.setLocalTranslation(-14f, 2f, -1.5f);
-		attachChild(blasterRight);
-		addControl(new CtShipBlasters(blasterLeft, blasterRight));
+		// blaster fx, left + right
+		PointVisualizer blasterFxLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Red, "saltire");
+		blasterFxLeft.setLocalTranslation(14f, 2f, -1.5f);
+		attachChild(blasterFxLeft);
+
+		PointVisualizer blasterFxRight = new PointVisualizer(assetManager, 10, ColorRGBA.Green, "saltire");
+		blasterFxRight.setLocalTranslation(-14f, 2f, -1.5f);
+		attachChild(blasterFxRight);
+
+		addControl(new CtShipBlasterFx(blasterFxLeft, blasterFxRight));
+
+		// projectile spawn point left + right
+		PointVisualizer projectileSpawnLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Yellow, "cross");
+		projectileSpawnLeft.setLocalTranslation(14f, 2f, 10f);
+		projectileSpawnLeft.getMaterial().getAdditionalRenderState().setDepthTest(true);
+		attachChild(projectileSpawnLeft);
+
+		PointVisualizer projectileSpawnRight = new PointVisualizer(assetManager, 10, ColorRGBA.White, "cross");
+		projectileSpawnRight.setLocalTranslation(-14f, 2f, 10f);
+		projectileSpawnRight.getMaterial().getAdditionalRenderState().setDepthTest(true);
+		attachChild(projectileSpawnRight);
+
+		addControl(new CtShipBlasterProjectiles(projectileSpawnLeft, projectileSpawnRight));
 
 		PointVisualizer missileLeft = new PointVisualizer(assetManager, 10, ColorRGBA.Yellow, null);
 		missileLeft.setLocalTranslation(7, 1, -2.5f);

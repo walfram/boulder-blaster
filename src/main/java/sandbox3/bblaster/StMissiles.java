@@ -14,7 +14,7 @@ import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 import sandbox3.bblaster.controls.CtCollision;
-import sandbox3.bblaster.controls.CtPayload;
+import sandbox3.bblaster.controls.CtDamagePayload;
 import sandbox3.bblaster.missiles.CtMissileEngine;
 import sandbox3.bblaster.missiles.CtMissileGuidance;
 import sandbox3.bblaster.missiles.CtMissileTrail;
@@ -56,7 +56,7 @@ public final class StMissiles extends BaseAppState {
 			missile.setLocalTransform(t);
 			missiles.attachChild(missile);
 
-			missile.addControl(new CtPayload(Settings.missileDamage));
+			missile.addControl(new CtDamagePayload(Settings.missileDamage));
 			missile.addControl(new CtMissileGuidance(getState(StTargetting.class).currentTarget()));
 			missile.addControl(new CtMissileEngine(Settings.missileSpeed));
 

@@ -26,7 +26,7 @@ import sandbox3.bblaster.boulders.CtBoulderBounds;
 import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.controls.CtCollision;
-import sandbox3.bblaster.controls.CtPayload;
+import sandbox3.bblaster.controls.CtDamagePayload;
 
 public final class StBoulders extends BaseAppState {
 
@@ -89,7 +89,7 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtBoulderHealth(size));
 
 		boulder.addControl(new CtCollision((other, collision) -> {
-			CtPayload otherPayload = other.getControl(CtPayload.class);
+			CtDamagePayload otherPayload = other.getControl(CtDamagePayload.class);
 			if (otherPayload != null) {
 				boulder.getControl(CtBoulderHealth.class).applyDamage(otherPayload.value());
 				if (boulder.getControl(CtBoulderHealth.class).isDead()) {

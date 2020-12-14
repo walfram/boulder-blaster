@@ -1,4 +1,4 @@
-package sandbox3.bblaster.controls;
+package sandbox3.bblaster.projectiles;
 
 import java.util.function.Consumer;
 
@@ -6,14 +6,14 @@ import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
 
-public final class CtTimeout extends SimpleControl {
+public final class CtProjectileTimeout extends SimpleControl {
 
 	private final float timeout;
 	private final Consumer<Spatial> callback;
 
 	private float elapsed;
 
-	public CtTimeout(float seconds, Consumer<Spatial> callback) {
+	public CtProjectileTimeout(float seconds, Consumer<Spatial> callback) {
 		this.timeout = seconds;
 		this.callback = callback;
 	}
