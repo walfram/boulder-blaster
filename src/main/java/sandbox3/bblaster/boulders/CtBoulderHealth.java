@@ -14,12 +14,13 @@ public final class CtBoulderHealth extends SimpleControl {
 
 	public void applyDamage(float damage) {
 		value -= damage;
+		value = Math.max(0, value);
 	}
 
 	public boolean isDead() {
 		return value <= 0f;
 	}
-	
+
 	public float percent() {
 		return value / health;
 	}

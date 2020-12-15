@@ -89,28 +89,29 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtBoulderHealth(size));
 
 		boulder.addControl(new CtCollision((other, collision) -> {
+			CtBoulderHealth otherHealth = other.getControl(CtBoulderHealth.class);
+			if (otherHealth != null) {
+				logger.debug(
+						"boulder collision = {} (health = {}, size = {}) vs {} (health = {}, size = {})",
+						boulder,
+						boulder.getControl(CtBoulderHealth.class).value(),
+						boulder.getControl(CtBoulderHealth.class).max(),
+						other,
+						otherHealth.value(),
+						otherHealth.max());
+				boulder.getControl(CtBoulderHealth.class).applyDamage(otherHealth.max());
+			}
+
 			CtDamagePayload otherPayload = other.getControl(CtDamagePayload.class);
 			if (otherPayload != null) {
 				boulder.getControl(CtBoulderHealth.class).applyDamage(otherPayload.value());
-				if (boulder.getControl(CtBoulderHealth.class).isDead()) {
-					boulder.removeFromParent();
-					getState(StCollision.class).unregister(boulder);
-					logger.debug("destroyed boulder = {}", boulder);
-					getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
-					spawnFragments(size, boulder.getLocalTranslation(), collision);
-				}
 			}
 
-			CtBoulderHealth otherHealth = other.getControl(CtBoulderHealth.class);
-			if (otherHealth != null) {
-				logger.debug("boulder collision = {} vs {} @{}", boulder, other, boulder.getLocalTranslation());
-
+			if (boulder.getControl(CtBoulderHealth.class).isDead()) {
 				boulder.removeFromParent();
 				getState(StCollision.class).unregister(boulder);
-
+				logger.debug("destroyed boulder = {}", boulder);
 				getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
-
-				logger.debug("spawning fragments for {}", boulder);
 				spawnFragments(size, boulder.getLocalTranslation(), collision);
 			}
 		}));
@@ -135,13 +136,11 @@ public final class StBoulders extends BaseAppState {
 		fragmenta.setLocalTranslation(translation);
 		fragmenta.setLocalRotation(rotation);
 		scene.attachChild(fragmenta);
-		logger.debug("fragmenta = {}", fragmenta);
 
 		Geometry fragmentb = createBoulder(idx++, radius);
 		fragmentb.setLocalTranslation(originalTranslation.add(offset.negate()));
 		fragmentb.setLocalRotation(rotation.opposite());
 		scene.attachChild(fragmentb);
-		logger.debug("fragmentb = {}", fragmentb);
 
 		scene.instance();
 
