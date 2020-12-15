@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.collision.CollisionResults;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Ray;
 import com.jme3.math.Vector2f;
 import com.jme3.math.Vector3f;
@@ -116,6 +117,27 @@ public final class StTargetting extends BaseAppState {
 			return currentTarget.getWorldTranslation().subtract(getState(StPlayer.class).position()).length();
 
 		return Float.NaN;
+	}
+
+	public Vector3f translation() {
+		if (currentTarget != null)
+			return currentTarget.getWorldTranslation().clone();
+
+		return Vector3f.NAN;
+	}
+
+	public Vector3f relativePosition() {
+		Vector3f v = translation().subtract(getState(StPlayer.class).position());
+
+		Quaternion q = getState(StPlayer.class).rotataion();
+
+		Vector3f left = q.mult(Vector3f.UNIT_X);
+		Vector3f up = q.mult(Vector3f.UNIT_Y);
+
+		float x = v.dot(left);
+		float y = v.dot(up);
+
+		return new Vector3f(x, y, 0);
 	}
 
 }

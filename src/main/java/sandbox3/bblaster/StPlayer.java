@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.effect.ParticleEmitter;
+import com.jme3.math.Quaternion;
 import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
@@ -99,7 +100,7 @@ public final class StPlayer extends BaseAppState {
 		getState(StCamera.class).enableFlightCamera(ship);
 		
 //		ship.lookAt(new Vector3f(3688.6997f, -1715.2268f, 478.2326f), Vector3f.UNIT_Y);
-//		ship.lookAt(new Vector3f(-5000.0f, -2462.05f, -212.08636f), Vector3f.UNIT_Y);
+		ship.lookAt(new Vector3f(-5000.0f, -2462.05f, -212.08636f), Vector3f.UNIT_Y);
 
 		logger.debug("initialized");
 	}
@@ -172,6 +173,10 @@ public final class StPlayer extends BaseAppState {
 
 	public Vector3f direction() {
 		return ship.getLocalRotation().mult(Vector3f.UNIT_Z);
+	}
+
+	public Quaternion rotataion() {
+		return ship.getLocalRotation().clone();
 	}
 
 }

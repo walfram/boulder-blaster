@@ -3,6 +3,7 @@ package sandbox3.bblaster;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 import com.jme3.ui.Picture;
 import com.simsilica.lemur.Axis;
@@ -13,8 +14,8 @@ import com.simsilica.lemur.ProgressBar;
 import com.simsilica.lemur.component.SpringGridLayout;
 import com.simsilica.lemur.style.ElementId;
 
+import jme3.common.vector.FormattedVector3f;
 import jme3utilities.SimpleControl;
-import sandbox3.bblaster.controls.CtTargetCursor;
 
 public final class StHudTarget extends BaseAppState {
 
@@ -33,7 +34,7 @@ public final class StHudTarget extends BaseAppState {
 		targetCursor.setWidth(72);
 		targetCursor.setHeight(72);
 
-		targetCursor.addControl(new CtTargetCursor(getState(StTargetting.class), getApplication().getCamera()));
+		// targetCursor.addControl(new CtTargetCursor(getState(StTargetting.class), getApplication().getCamera()));
 
 		Container target = new Container();
 		target.addChild(new Label("target", new ElementId("window.title.label"))).setMaxWidth(320f);
@@ -56,6 +57,9 @@ public final class StHudTarget extends BaseAppState {
 		content.addChild(new Label("distance"));
 		Label targetDistance = content.addChild(new Label("distance.value"), 1);
 
+		content.addChild(new Label("scr.coords"));
+		Label screenCoords = content.addChild(new Label("scr.coords.value"), 1);
+
 		content.addControl(new SimpleControl() {
 			@Override
 			protected void controlUpdate(float updateInterval) {
@@ -75,6 +79,9 @@ public final class StHudTarget extends BaseAppState {
 				targetSpeed.setText(String.format("%.03f", getState(StTargetting.class).speed()));
 
 				targetDistance.setText(String.format("%.03f", getState(StTargetting.class).distance()));
+
+				Vector3f v = getState(StTargetting.class).relativePosition();
+				screenCoords.setText(new FormattedVector3f(v).format());
 			}
 		});
 
@@ -92,9 +99,41 @@ public final class StHudTarget extends BaseAppState {
 
 		if (getState(StTargetting.class).currentTarget() == null) {
 			targetCursor.removeFromParent();
-		} else {
-			hud.attachChild(targetCursor);
+			return;
 		}
+
+		hud.attachChild(targetCursor);
+
+		Vector3f translation = getState(StTargetting.class).translation();
+		Vector3f v = getApplication().getCamera().getScreenCoordinates(translation);
+
+		int width = getApplication().getCamera().getWidth();
+		int height = getApplication().getCamera().getHeight();
+
+		v.subtractLocal(new Vector3f(72, 72, 0).mult(0.5f));
+		
+		if (v.x < 0)
+			v.x = 0f;
+		else if (v.x > (width - 72))
+			v.x = width - 72;
+
+		if (v.y < 0)
+			v.y = 0;
+		else if (v.y > (height - 72))
+			v.y = height - 72;
+
+		if (v.z >= 1) {
+			// TODO this is not quite correct, must refactor
+			float dx = Math.abs(v.x / width);
+			float dy = Math.abs(v.y / height);
+			if (dx > dy) {
+				v.x = 0f;
+			} else {
+				v.y = 0f;
+			}
+		}
+
+		targetCursor.setLocalTranslation(v);
 	}
 
 	@Override
