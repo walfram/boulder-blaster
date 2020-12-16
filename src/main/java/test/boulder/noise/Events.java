@@ -1,4 +1,4 @@
-package test.boulder;
+package test.boulder.noise;
 
 import com.simsilica.event.EventType;
 

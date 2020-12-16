@@ -1,4 +1,4 @@
-package test.boulder2;
+package test.boulder.dmesh;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;

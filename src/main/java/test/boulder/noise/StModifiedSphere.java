@@ -1,4 +1,4 @@
-package test.boulder;
+package test.boulder.noise;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;

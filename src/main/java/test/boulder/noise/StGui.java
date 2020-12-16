@@ -1,4 +1,4 @@
-package test.boulder;
+package test.boulder.noise;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
