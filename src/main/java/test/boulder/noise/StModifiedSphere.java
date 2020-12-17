@@ -26,6 +26,7 @@ import jme3.common.material.MtlLighting;
 import jme3.common.noise.FastNoiseLite;
 import jme3.common.noise.NoiseEvents;
 import jme3.common.noise.NoiseSettings;
+import jme3utilities.mesh.Icosphere;
 import jme3utilities.mesh.Octasphere;
 
 final class StModifiedSphere extends BaseAppState {
@@ -42,7 +43,8 @@ final class StModifiedSphere extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		createGeometry(new NoiseSettings(), new SphereSettings());
+		NoiseSettings settings = new NoiseSettings();
+		createGeometry(settings, new SphereSettings());
 
 		EventBus.addListener(this, NoiseEvents.noiseChange);
 
@@ -51,10 +53,12 @@ final class StModifiedSphere extends BaseAppState {
 	}
 
 	private void createGeometry(NoiseSettings settings, SphereSettings ss) {
-		Mesh mesh = new Octasphere(4, 32f);
+		FastNoiseLite noise = new FastNoiseLite();
+		settings.applyTo(noise);
 
+		Mesh mesh = new Octasphere(2, 1f);
+		// Mesh mesh = new Icosphere(2, 1f);
 		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
-
 		Set<Integer> processed = new HashSet<>(positions.length);
 
 		for (int idx = 0; idx < positions.length; idx++) {
@@ -69,20 +73,18 @@ final class StModifiedSphere extends BaseAppState {
 					indices.add(i);
 			}
 
-			FastNoiseLite noise = new FastNoiseLite();
-			settings.applyTo(noise);
 			float noiseValue = noise.GetNoise(p.x, p.y, p.z);
 
-			if (noiseValue > 0) {
-				float f = noiseValue * ss.noiseScale;
-				// float f = noiseValue;
+			// if (noiseValue > 0) {
+			float f = noiseValue * ss.noiseScale;
+			// float f = noiseValue;
 
-				Vector3f delta = positions[idx].normalize().mult(f);
+			Vector3f delta = positions[idx].normalize().mult(f);
 
-				for (int i : indices) {
-					positions[i].addLocal(delta);
-				}
+			for (int i : indices) {
+				positions[i].addLocal(delta);
 			}
+			// }
 
 			processed.addAll(indices);
 		}
@@ -93,15 +95,11 @@ final class StModifiedSphere extends BaseAppState {
 		// Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
 
 		geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray));
-		// geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray, "textures/uvtest.jpg"));
-
-		// geometry.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.Gray));
-		// geometry.getMaterial().setFloat("PointSize", 5);
 
 		geometry.getMaterial().getAdditionalRenderState().setWireframe(true);
-		// geometry.getMaterial().getAdditionalRenderState().setFaceCullMode(FaceCullMode.Off);
 
-		geometry.setLocalScale(ss.scale());
+		// geometry.setLocalScale(ss.scale());
+		geometry.setLocalScale(32f);
 
 		scene.detachAllChildren();
 		scene.attachChild(geometry);
