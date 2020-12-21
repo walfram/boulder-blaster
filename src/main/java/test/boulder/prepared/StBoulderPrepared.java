@@ -24,11 +24,8 @@ import com.jme3.util.BufferUtils;
 import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
 import jme3.common.noise.FastNoiseLite;
-import jme3.common.noise.FastNoiseLite.CellularDistanceFunction;
 import jme3.common.noise.FastNoiseLite.CellularReturnType;
-import jme3.common.noise.FastNoiseLite.FractalType;
 import jme3.common.noise.FastNoiseLite.NoiseType;
-import jme3utilities.mesh.Icosphere;
 import jme3utilities.mesh.Octasphere;
 
 final class StBoulderPrepared extends BaseAppState {
@@ -45,17 +42,17 @@ final class StBoulderPrepared extends BaseAppState {
 	protected void initialize(Application app) {
 		FastNoiseLite noise = new FastNoiseLite();
 
-		noise.SetNoiseType(NoiseType.Perlin);
-		// noise.SetCellularReturnType(CellularReturnType.CellValue);
-		// noise.SetCellularDistanceFunction(CellularDistanceFunction.Manhattan);
-		noise.SetFractalType(FractalType.Ridged);
-		// noise.SetFractalType(FractalType.PingPong);
-		noise.SetFrequency(0.679f);
+		noise.SetNoiseType(NoiseType.Cellular);
+		noise.SetCellularReturnType(CellularReturnType.CellValue);
+
+		float frequency = 0.001f;
+		noise.SetFrequency(frequency);
 
 		float[] sizes = new float[] { 512f, 384f, 256f, 192f, 128f, 96f, 64f, 48f, 32f };
 		// for each size place noised boulder in circle
 
 		for (int idx = 0; idx < sizes.length; idx++) {
+			float size = sizes[idx];
 
 			Node wrap = new Node("wrap-" + idx);
 			scene.attachChild(wrap);
@@ -63,18 +60,19 @@ final class StBoulderPrepared extends BaseAppState {
 			float theta = idx * FastMath.DEG_TO_RAD * (360f / sizes.length);
 			wrap.rotate(0, theta, 0);
 
-			Mesh mesh = new Octasphere(2, 1f);
-			// Mesh mesh = new Icosphere(1, 1f);
+			Mesh mesh = new Octasphere(4, size);
+			// int slices = 32;
+			// Mesh mesh = new MBox(size, size, size, slices, slices, slices);
 
-			applyNoise(noise, mesh, sizes[idx]);
+			frequency += 0.002f;
+			noise.SetFrequency(frequency);
+			logger.debug("size = {}, freq = {}", size, frequency);
+			applyNoise(noise, mesh, size);
 
 			Geometry geometry = new Geometry("boulder-" + idx, new FlatShaded(mesh).mesh());
-			// Geometry geometry = new Geometry("boulder-" + idx, mesh);
 			geometry.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Gray));
 
-			geometry.move(0, 0, 6f * sizes[idx]);
-
-			geometry.scale(sizes[idx]);
+			geometry.move(0, 0, 6f * size);
 
 			wrap.attachChild(geometry);
 			scene.attachChild(wrap);
@@ -85,7 +83,11 @@ final class StBoulderPrepared extends BaseAppState {
 		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
 		Set<Integer> processed = new HashSet<>(positions.length);
 
-		final float noiseScale = 1f;
+		final float noiseScale = Math.max(10f, size / 8f);
+		// final float noiseScale = 8f;
+		// final float noiseScale = size * 0.1f;
+		// final float noiseScale = 1f / ( size * 0.01f);
+		logger.debug("noise scale = {}", noiseScale);
 
 		for (int idx = 0; idx < positions.length; idx++) {
 			if (processed.contains(idx))

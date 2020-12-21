@@ -12,9 +12,15 @@ import com.jme3.scene.Node;
 public final class StCamera extends BaseAppState {
 
 	private final Node pivot = new Node("pivot");
+	private final float defaultDistance;
 
 	public StCamera(Node rootNode) {
+		this(rootNode, 100f);
+	}
+
+	public StCamera(Node rootNode, float defaultDistance) {
 		rootNode.attachChild(pivot);
+		this.defaultDistance = defaultDistance;
 	}
 
 	@Override
@@ -26,28 +32,22 @@ public final class StCamera extends BaseAppState {
 
 		camera.setToggleRotationTrigger(new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
 
-		camera.setMaxDistance(500);
-		camera.setDefaultDistance(100);
+		camera.setMaxDistance(1500);
+		camera.setDefaultDistance(defaultDistance);
 
 		camera.setMinVerticalRotation(-FastMath.HALF_PI);
 	}
 
 	@Override
 	protected void cleanup(Application app) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void onEnable() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	protected void onDisable() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

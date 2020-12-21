@@ -7,7 +7,9 @@ import com.simsilica.event.EventBus;
 import com.simsilica.lemur.Action;
 import com.simsilica.lemur.ActionButton;
 import com.simsilica.lemur.Button;
+import com.simsilica.lemur.Checkbox;
 import com.simsilica.lemur.Container;
+import com.simsilica.lemur.DefaultCheckboxModel;
 import com.simsilica.lemur.Label;
 import com.simsilica.lemur.core.VersionedReference;
 import com.simsilica.lemur.props.PropertyPanel;
@@ -32,12 +34,19 @@ final class StGui extends BaseAppState {
 		container.addChild(new Label("sphere settings", new ElementId("window.title.label"))).setMaxWidth(480f);
 
 		Container actions = new Container();
-		actions.addChild(new ActionButton(new Action("toggle wireframe") {
-			@Override
-			public void execute(Button source) {
-				EventBus.publish(Events.toggleWireframe, null);
-			}
-		}));
+
+		Checkbox checkbox = actions.addChild(new Checkbox("wireframe", new DefaultCheckboxModel(false)));
+		VersionedReference<Boolean> wireframeRef = checkbox.getModel().createReference();
+		checkbox.addClickCommands(c -> {
+			EventBus.publish(Events.toggleWireframe, wireframeRef.get());
+		});
+
+		// actions.addChild(new ActionButton(new Action("toggle wireframe") {
+		// @Override
+		// public void execute(Button source) {
+		// EventBus.publish(Events.toggleWireframe, null);
+		// }
+		// }));
 
 		container.addChild(actions);
 

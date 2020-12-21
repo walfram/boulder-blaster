@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
-import com.jme3.material.RenderState;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
@@ -23,10 +22,10 @@ import com.jme3.util.BufferUtils;
 import com.simsilica.event.EventBus;
 
 import jme3.common.material.MtlLighting;
+import jme3.common.mesh.FlatShaded;
 import jme3.common.noise.FastNoiseLite;
 import jme3.common.noise.NoiseEvents;
 import jme3.common.noise.NoiseSettings;
-import jme3utilities.mesh.Icosphere;
 import jme3utilities.mesh.Octasphere;
 
 final class StModifiedSphere extends BaseAppState {
@@ -36,6 +35,8 @@ final class StModifiedSphere extends BaseAppState {
 	private final Node scene = new Node("scene");
 
 	private NoiseSettings noiseSettings = new NoiseSettings();
+
+	private boolean wireframe = false;
 
 	public StModifiedSphere(Node rootNode) {
 		rootNode.attachChild(scene);
@@ -56,8 +57,12 @@ final class StModifiedSphere extends BaseAppState {
 		FastNoiseLite noise = new FastNoiseLite();
 		settings.applyTo(noise);
 
-		Mesh mesh = new Octasphere(2, 1f);
-		// Mesh mesh = new Icosphere(2, 1f);
+		Mesh mesh = new Octasphere(5, 512f * 0.25f);
+
+		// int slices = 32;
+		// float size = 512f;
+		// Mesh mesh = new MBox(size, size, size, slices, slices, slices);
+
 		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
 		Set<Integer> processed = new HashSet<>(positions.length);
 
@@ -91,15 +96,15 @@ final class StModifiedSphere extends BaseAppState {
 
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(positions));
 
-		Geometry geometry = new Geometry("test", mesh);
-		// Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
+		// Geometry geometry = new Geometry("test", mesh);
+		Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
 
 		geometry.setMaterial(new MtlLighting(getApplication().getAssetManager(), ColorRGBA.Gray));
 
-		geometry.getMaterial().getAdditionalRenderState().setWireframe(true);
+		geometry.getMaterial().getAdditionalRenderState().setWireframe(wireframe);
 
 		// geometry.setLocalScale(ss.scale());
-		geometry.setLocalScale(32f);
+		// geometry.setLocalScale(32f);
 
 		scene.detachAllChildren();
 		scene.attachChild(geometry);
@@ -115,15 +120,20 @@ final class StModifiedSphere extends BaseAppState {
 		createGeometry(noiseSettings, sphereSettings);
 	}
 
-	protected void toggleWireframe(Object o) {
+	protected void toggleWireframe(Boolean isWireframe) {
 		logger.debug("toggle wireframe event");
 
-		scene.depthFirstTraversal(child -> {
-			if (child instanceof Geometry) {
-				RenderState rs = ((Geometry) child).getMaterial().getAdditionalRenderState();
-				rs.setWireframe(!rs.isWireframe());
-			}
-		});
+		wireframe = isWireframe.booleanValue();
+
+		SphereSettings sphereSettings = getState(StGui.class).sphereSettings();
+		createGeometry(noiseSettings, sphereSettings);
+
+		// scene.depthFirstTraversal(child -> {
+		// if (child instanceof Geometry) {
+		// RenderState rs = ((Geometry) child).getMaterial().getAdditionalRenderState();
+		// rs.setWireframe(!rs.isWireframe());
+		// }
+		// });
 	}
 
 	@Override

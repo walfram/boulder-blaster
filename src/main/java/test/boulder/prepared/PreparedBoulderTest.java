@@ -18,7 +18,7 @@ public class PreparedBoulderTest extends SimpleApplication {
 
 	public static void main(String[] args) {
 		PreparedBoulderTest app = new PreparedBoulderTest();
-		
+
 		AppSettings settings = new AppSettings(true);
 		settings.setResolution(1600, 800);
 
@@ -27,7 +27,7 @@ public class PreparedBoulderTest extends SimpleApplication {
 
 		app.start();
 	}
-	
+
 	@Override
 	public void simpleInitApp() {
 		GuiGlobals.initialize(this);
@@ -44,17 +44,17 @@ public class PreparedBoulderTest extends SimpleApplication {
 		rootNode.addControl(axesVisualizer);
 		axesVisualizer.setEnabled(true);
 
-		cam.setLocation(new Vector3f(586.23425f, 407.38025f, -176.20073f));
-		cam.setRotation(new Quaternion(0.23982903f, -0.5685595f, 0.1778851f, 0.766537f));
+		cam.setLocation(new Vector3f(-778.3845f, 486.72064f, -1294.5544f));
+		cam.setRotation(new Quaternion(0.12650432f, 0.3143368f, -0.042311817f, 0.9398929f));
 
 		viewPort.setBackgroundColor(ColorRGBA.DarkGray);
 		MyCamera.setNearFar(cam, 1, 32768f);
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
 		stateManager.attach(new StLights(rootNode));
-		
+
 		stateManager.attach(new StBoulderReference(rootNode));
-		
+
 		stateManager.attach(new StBoulderPrepared(rootNode));
 	}
 

@@ -60,7 +60,7 @@ public class BoulderTest extends SimpleApplication {
 
 		// stateManager.attach(new StNoiseMesh(rootNode));
 
-		stateManager.attach(new StCamera(rootNode));
+		stateManager.attach(new StCamera(rootNode, 1000f));
 		stateManager.attach(new StGui(guiNode));
 		stateManager.attach(new NoiseGuiState(guiNode));
 	}
