@@ -17,8 +17,6 @@ import com.jme3.texture.image.ColorSpace;
 import com.jme3.texture.image.ImageRaster;
 import com.jme3.ui.Picture;
 
-import jme3utilities.math.noise.Generator;
-import jme3utilities.math.noise.Noise;
 import jme3utilities.math.noise.Perlin2;
 
 final class StGeneratedTexture extends BaseAppState {

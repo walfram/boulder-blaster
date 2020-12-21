@@ -53,9 +53,9 @@ final class StBoulderPrepared extends BaseAppState {
 			float theta = idx * FastMath.DEG_TO_RAD * (360f / sizes.length);
 			wrap.rotate(0, theta, 0);
 
-			Mesh mesh = new Octasphere(4, size);
+			Mesh source = new Octasphere(4, size);
 			// int slices = 32;
-			// Mesh mesh = new MBox(size, size, size, slices, slices, slices);
+			// Mesh source = new MBox(size, size, size, slices, slices, slices);
 
 			frequency += 0.002f;
 			noise.SetFrequency(frequency);
@@ -64,9 +64,9 @@ final class StBoulderPrepared extends BaseAppState {
 			logger.debug("size = {}, freq = {}, noise scale = {}", size, frequency, noiseScale);
 			// applyNoise(noise, mesh, noiseScale);
 
-			Mesh m = new NoisedMesh(mesh, noise, noiseScale).mesh();
+			Mesh mesh = new NoisedMesh(source, noise, noiseScale).mesh();
 
-			Geometry geometry = new Geometry("boulder-" + idx, new FlatShaded(m).mesh());
+			Geometry geometry = new Geometry("boulder-" + idx, new FlatShaded(mesh).mesh());
 			geometry.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Gray));
 
 			geometry.move(0, 0, 6f * size);

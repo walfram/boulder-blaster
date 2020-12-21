@@ -48,13 +48,13 @@ final class StModifiedSphere extends BaseAppState {
 		FastNoiseLite noise = new FastNoiseLite();
 		settings.applyTo(noise);
 
-		Mesh mesh = new Octasphere(5, 512f * 0.25f);
+		Mesh source = new Octasphere(5, 512f * 0.25f);
 
 		// int slices = 32;
 		// float size = 512f;
-		// Mesh mesh = new MBox(size, size, size, slices, slices, slices);
+		// Mesh source = new MBox(size, size, size, slices, slices, slices);
 
-		Mesh m = new NoisedMesh(mesh, noise, ss.noiseScale).mesh();
+		Mesh mesh = new NoisedMesh(source, noise, ss.noiseScale).mesh();
 
 		// Geometry geometry = new Geometry("test", mesh);
 		Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
