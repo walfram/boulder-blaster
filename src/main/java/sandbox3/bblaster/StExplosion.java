@@ -38,19 +38,19 @@ public final class StExplosion extends BaseAppState {
 	}
 
 	public void missileExplosion(Vector3f translation) {
-		ParticleEmitter sparks = new PeMissileSparks(getApplication().getAssetManager(), 20f);
+		ParticleEmitter sparks = new PeMissileSparks(getApplication().getAssetManager(), 30f);
 		sparks.setLocalTranslation(translation);
 		explosions.attachChild(sparks);
 		sparks.emitAllParticles();
 
-		ParticleEmitter flash = new PeMissileFlash(getApplication().getAssetManager(), 20f);
+		ParticleEmitter flash = new PeMissileFlash(getApplication().getAssetManager(), 30f);
 		flash.setLocalTranslation(translation);
 		explosions.attachChild(flash);
 		flash.emitAllParticles();
 	}
 
 	public void projectileExplosion(Vector3f translation) {
-		ParticleEmitter sparks = new PeProjectileSparks(getApplication().getAssetManager(), 5f);
+		ParticleEmitter sparks = new PeProjectileSparks(getApplication().getAssetManager(), 20f);
 		sparks.setLocalTranslation(translation);
 		explosions.attachChild(sparks);
 		sparks.emitAllParticles();

@@ -4,9 +4,13 @@ import java.util.Arrays;
 
 import com.jme3.app.SimpleApplication;
 import com.jme3.light.AmbientLight;
+import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Vector3f;
 import com.jme3.system.AppSettings;
 import com.simsilica.lemur.GuiGlobals;
+import com.simsilica.lemur.event.MouseAppState;
+import com.simsilica.lemur.event.PickState;
 import com.simsilica.lemur.style.BaseStyles;
 
 import jme3.common.debug.NdDebugGrid;
@@ -44,6 +48,10 @@ public class BoulderBlasterApp extends SimpleApplication {
 		BaseStyles.loadGlassStyle();
 		GuiGlobals.getInstance().getStyles().setDefaultStyle(BaseStyles.GLASS);
 
+		// using instanced node, sometimes instanced mesh has null bound and picking throws NPE
+		stateManager.getState(MouseAppState.class).setIncludeDefaultCollisionRoots(false);
+		stateManager.getState(MouseAppState.class).addCollisionRoot(guiViewPort, PickState.PICK_LAYER_GUI);
+
 		flyCam.setDragToRotate(true);
 		flyCam.setMoveSpeed(150f);
 		flyCam.setZoomSpeed(0f);
@@ -57,11 +65,11 @@ public class BoulderBlasterApp extends SimpleApplication {
 		rootNode.attachChild(new NdDebugGrid(assetManager, 20, 20, 500, ColorRGBA.Gray));
 
 		rootNode.addLight(new AmbientLight(ColorRGBA.White));
-		// rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
+		rootNode.addLight(new DirectionalLight(Vector3f.UNIT_XYZ.negate(), ColorRGBA.White));
 
 		MyCamera.setNearFar(cam, 1f, 32768f);
 
-		stateManager.attach(new StLights(rootNode));
+		// stateManager.attach(new StLights(rootNode));
 		stateManager.attach(new StSky(rootNode));
 
 		stateManager.attach(new StCollision());

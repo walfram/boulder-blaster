@@ -1,5 +1,9 @@
 package sandbox3.bblaster;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,10 +20,14 @@ import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
 import com.jme3.scene.instancing.InstancedNode;
 
 import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
+import jme3.common.noise.FastNoiseLite;
+import jme3.common.noise.FastNoiseLite.CellularReturnType;
+import jme3.common.noise.FastNoiseLite.NoiseType;
 import jme3utilities.math.noise.Generator;
 import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
@@ -27,6 +35,7 @@ import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
 import sandbox3.bblaster.controls.CtCollision;
 import sandbox3.bblaster.controls.CtDamagePayload;
+import sandbox3.bblaster.misc.NoisedMesh;
 
 public final class StBoulders extends BaseAppState {
 
@@ -36,7 +45,12 @@ public final class StBoulders extends BaseAppState {
 
 	private final Generator random = new Generator(1337);
 
-	private Mesh mesh;
+	// private final float[] sizes = new float[] { 512f, 384f, 256f, 192f, 128f, 96f, 64f, 48f, 32f, 24f };
+	// use less meshes, or it quickly gets fps < 20
+	private final float[] sizes = new float[] { 512f, 384f, 256f, 192f, 128f, 64f, 32f, 16f };
+
+	private final List<Mesh> meshes = new ArrayList<>(sizes.length);
+
 	private Material material;
 
 	private int idx = 0;
@@ -49,18 +63,42 @@ public final class StBoulders extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		mesh = new FlatShaded(new Octasphere(1, 1f)).mesh();
-		mesh.setBound(new BoundingSphere(1f, new Vector3f()));
+		// mesh = new FlatShaded(new Octasphere(1, 1f)).mesh();
+		// mesh.setBound(new BoundingSphere(1f, new Vector3f()));
+
+		FastNoiseLite noise = new FastNoiseLite();
+		noise.SetNoiseType(NoiseType.Cellular);
+		noise.SetCellularReturnType(CellularReturnType.CellValue);
+		float frequency = 0.001f;
+
+		for (float size : sizes) {
+			Mesh source = new Octasphere(4, size);
+
+			float noiseScale = Math.max(10f, size / 8f);
+			frequency += 0.002f;
+			noise.SetFrequency(frequency);
+
+			Mesh noised = new NoisedMesh(source, noise, noiseScale).mesh();
+
+			Mesh flatshaded = new FlatShaded(noised).mesh();
+			flatshaded.setBound(new BoundingSphere(size, new Vector3f()));
+			logger.debug("flatshaded bound = {}", flatshaded.getBound());
+
+			meshes.add(flatshaded);
+		}
 
 		material = new MtlLighting(app.getAssetManager(), ColorRGBA.Gray);
 		material.setBoolean("UseInstancing", true);
 
-		float size = 512f;
+		// float size = sizes[0];
+		int sizeIdx = 0;
+
 		for (int i = 0; i < 16; i++) {
-			Geometry boulder = createBoulder(idx++, size);
+
+			Geometry boulder = createBoulder(idx++, sizeIdx);
 
 			Vector3f translation = random.nextUnitVector3f().mult(maxDistance);
-			BoundingSphere b = new BoundingSphere(size, translation);
+			BoundingSphere b = new BoundingSphere(sizes[sizeIdx], translation);
 
 			while (scene.getChildren().stream().filter(s -> s.getWorldBound().intersects(b)).findFirst().isPresent()) {
 				translation = random.nextUnitVector3f().mult(maxDistance);
@@ -76,13 +114,18 @@ public final class StBoulders extends BaseAppState {
 		}
 
 		scene.instance();
+
+		scene.getChildren().forEach(s -> {
+			logger.debug("child = {}, bound = {}", s.getName(), s.getWorldBound());
+		});
 	}
 
-	private Geometry createBoulder(int idx, float size) {
-		Geometry boulder = new Geometry("boulder#" + idx, mesh);
+	private Geometry createBoulder(int idx, int sizeIdx) {
+		Geometry boulder = new Geometry("boulder#" + idx, meshes.get(sizeIdx));
 		boulder.setMaterial(material);
 
-		boulder.setLocalScale(size);
+		// boulder.setLocalScale(size);
+		float size = sizes[sizeIdx];
 
 		boulder.addControl(new CtBoulderMove(size));
 		boulder.addControl(new CtBoulderBounds(Settings.boulderBoundarySize));
@@ -112,7 +155,8 @@ public final class StBoulders extends BaseAppState {
 				getState(StCollision.class).unregister(boulder);
 				logger.debug("destroyed boulder = {}", boulder);
 				getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
-				spawnFragments(size, boulder.getLocalTranslation(), collision);
+				spawnFragments(sizeIdx + 1, boulder.getLocalTranslation(), collision);
+				scene.instance();
 			}
 		}));
 		getState(StCollision.class).register(boulder);
@@ -120,30 +164,37 @@ public final class StBoulders extends BaseAppState {
 		return boulder;
 	}
 
-	private void spawnFragments(float originalSize, Vector3f originalTranslation, CollisionResult collision) {
+	private void spawnFragments(int sizeIdx, Vector3f originalTranslation, CollisionResult collision) {
 
 		// float radius = 0.75f * originalSize;
-		float radius = 0.625f * originalSize;
+		// float radius = 0.625f * originalSize;
 
-		if (radius < Settings.boulderMinRadius)
+		// if (radius < Settings.boulderMinRadius)
+		// return;
+
+		if (sizeIdx > (sizes.length - 1))
 			return;
 
-		Vector3f offset = random.nextUnitVector3f().mult(originalSize * 1.1f);
+		Vector3f offset = random.nextUnitVector3f().mult(sizes[sizeIdx] * 1.5f);
+
 		Vector3f translation = originalTranslation.add(offset);
 		Quaternion rotation = new Quaternion().lookAt(offset, Vector3f.UNIT_Z);
 
-		Geometry fragmenta = createBoulder(idx++, radius);
+		Geometry fragmenta = createBoulder(idx++, sizeIdx);
 		fragmenta.setLocalTranslation(translation);
 		fragmenta.setLocalRotation(rotation);
 		scene.attachChild(fragmenta);
 
-		Geometry fragmentb = createBoulder(idx++, radius);
+		Geometry fragmentb = createBoulder(idx++, sizeIdx);
 		fragmentb.setLocalTranslation(originalTranslation.add(offset.negate()));
 		fragmentb.setLocalRotation(rotation.opposite());
 		scene.attachChild(fragmentb);
 
-		scene.instance();
+		// scene.instance();
 
+		// scene.getChildren().forEach(s -> {
+		// logger.debug("child = {}, bound = {}", s.getName(), s.getWorldBound());
+		// });
 	}
 
 	@Override
@@ -159,7 +210,11 @@ public final class StBoulders extends BaseAppState {
 	}
 
 	public void findTargets(Ray ray, CollisionResults results) {
-		scene.collideWith(ray, results);
+		// filter out instanced meshes, check only "real" boulders
+		List<Spatial> boulders = scene.getChildren().stream().filter(s -> s.getControl(CtBoulderHealth.class) != null).collect(
+				Collectors.toList());
+
+		boulders.forEach(boulder -> boulder.collideWith(ray, results));
 	}
 
 	public int boulderQuantity() {

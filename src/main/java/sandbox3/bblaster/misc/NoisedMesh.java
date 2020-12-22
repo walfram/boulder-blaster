@@ -62,6 +62,9 @@ public final class NoisedMesh {
 
 		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(positions));
 
+		mesh.updateCounts();
+		mesh.updateBound();
+		
 		return mesh;
 	}
 
