@@ -16,6 +16,6 @@ use `space` to launch missile
 
 use `T` to target boulder under cursor or under crosshair
 
-tested with java 1.8
+tested with java 1.11
 
 this is work in progress :)
