@@ -1,6 +1,8 @@
 package sandbox3.bblaster;
 
+import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,7 +23,9 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.VertexBuffer.Type;
 import com.jme3.scene.instancing.InstancedNode;
+import com.jme3.util.BufferUtils;
 
 import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
@@ -80,8 +84,12 @@ public final class StBoulders extends BaseAppState {
 
 			Mesh noised = new NoisedMesh(source, noise, noiseScale).mesh();
 
+			Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) noised.getBuffer(Type.Position).getData());
+			double radius = Arrays.stream(positions).mapToDouble(v -> v.length()).max().getAsDouble();
+
 			Mesh flatshaded = new FlatShaded(noised).mesh();
-			flatshaded.setBound(new BoundingSphere(size, new Vector3f()));
+
+			flatshaded.setBound(new BoundingSphere((float) radius, new Vector3f()));
 			logger.debug("flatshaded bound = {}", flatshaded.getBound());
 
 			meshes.add(flatshaded);

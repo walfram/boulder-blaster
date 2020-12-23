@@ -14,7 +14,6 @@ import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
-import jme3utilities.debug.BoundsVisualizer;
 import sandbox3.bblaster.controls.CtBlastersFx;
 import sandbox3.bblaster.controls.CtEmissionFx;
 import sandbox3.bblaster.controls.CtTransformCopy;
@@ -58,10 +57,10 @@ public final class StPlayer extends BaseAppState {
 		ship = new NdSpeederD(app.getAssetManager());
 		player.attachChild(ship);
 
-		BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
-		player.getParent().addControl(boundsVisualizer);
-		boundsVisualizer.setSubject(ship);
-		boundsVisualizer.setEnabled(true);
+		// BoundsVisualizer boundsVisualizer = new BoundsVisualizer(app.getAssetManager());
+		// player.getParent().addControl(boundsVisualizer);
+		// boundsVisualizer.setSubject(ship);
+		// boundsVisualizer.setEnabled(true);
 
 		ship.addControl(new CtShipYaw());
 		ship.addControl(new CtShipPitch());
@@ -98,8 +97,8 @@ public final class StPlayer extends BaseAppState {
 		// getState(StCollision.class).register(player);
 
 		getState(StCamera.class).enableFlightCamera(ship);
-		
-//		ship.lookAt(new Vector3f(3688.6997f, -1715.2268f, 478.2326f), Vector3f.UNIT_Y);
+
+		// ship.lookAt(new Vector3f(3688.6997f, -1715.2268f, 478.2326f), Vector3f.UNIT_Y);
 		ship.lookAt(new Vector3f(-5000.0f, -2462.05f, -212.08636f), Vector3f.UNIT_Y);
 
 		logger.debug("initialized");
