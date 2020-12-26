@@ -30,7 +30,7 @@ public final class PeProjectileSparks extends ParticleEmitter {
 
 		setParticlesPerSec(0);
 
-		addControl(new CtDetachParticleEmitter());
+		// addControl(new CtDetachParticleEmitter());
 	}
 
 }

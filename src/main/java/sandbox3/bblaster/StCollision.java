@@ -59,7 +59,7 @@ public final class StCollision extends BaseAppState {
 				if (!outer.getWorldBound().intersects(inner.getWorldBound()))
 					continue;
 
-				logger.debug("collision {} with {}", outer, inner);
+				// logger.debug("collision {} with {}", outer, inner);
 
 				CollisionResults results = new CollisionResults();
 				outer.collideWith(inner.getWorldBound().clone(), results);
@@ -74,7 +74,7 @@ public final class StCollision extends BaseAppState {
 		}
 
 		collidables.removeIf(s -> s.getControl(CtUnregister.class) != null);
-		
+
 		collidables.addAll(registered);
 		registered.clear();
 	}

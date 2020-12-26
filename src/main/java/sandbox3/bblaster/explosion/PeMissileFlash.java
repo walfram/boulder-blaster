@@ -33,7 +33,18 @@ public final class PeMissileFlash extends ParticleEmitter {
 
 		setMaterial(new MtlParticle(assetManager, "Effects/Explosion/flash.png"));
 
-		addControl(new CtDetachParticleEmitter());
+		// addControl(new CtDetachParticleEmitter());
+
+		addControl(new CtParticleEmitterSize() {
+
+			@Override
+			public void updateSize(float size) {
+				setStartSize(0.1f * size);
+				setEndSize(1.0f * size);
+				setShape(new EmitterSphereShape(Vector3f.ZERO, size));
+				getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Y.mult(size));
+			}
+		});
 	}
 
 }

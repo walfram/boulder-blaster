@@ -30,7 +30,15 @@ public final class PeExplosionSparks extends ParticleEmitter {
 
 		setParticlesPerSec(0);
 
-		addControl(new CtDetachParticleEmitter());
+		// addControl(new CtDetachParticleEmitter());
+		addControl(new CtParticleEmitterSize() {
+			@Override
+			public void updateSize(float size) {
+				setStartSize(size);
+				setEndSize(size);
+				getParticleInfluencer().setInitialVelocity(Vector3f.UNIT_Y.mult(5f * size));
+			}
+		});
 	}
 
 }

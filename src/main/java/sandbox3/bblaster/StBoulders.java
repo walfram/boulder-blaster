@@ -142,14 +142,14 @@ public final class StBoulders extends BaseAppState {
 		boulder.addControl(new CtCollision((other, collision) -> {
 			CtBoulderHealth otherHealth = other.getControl(CtBoulderHealth.class);
 			if (otherHealth != null) {
-				logger.debug(
-						"boulder collision = {} (health = {}, size = {}) vs {} (health = {}, size = {})",
-						boulder,
-						boulder.getControl(CtBoulderHealth.class).value(),
-						boulder.getControl(CtBoulderHealth.class).max(),
-						other,
-						otherHealth.value(),
-						otherHealth.max());
+//				logger.debug(
+//						"boulder collision = {} (health = {}, size = {}) vs {} (health = {}, size = {})",
+//						boulder,
+//						boulder.getControl(CtBoulderHealth.class).value(),
+//						boulder.getControl(CtBoulderHealth.class).max(),
+//						other,
+//						otherHealth.value(),
+//						otherHealth.max());
 				boulder.getControl(CtBoulderHealth.class).applyDamage(otherHealth.max());
 			}
 
@@ -161,7 +161,7 @@ public final class StBoulders extends BaseAppState {
 			if (boulder.getControl(CtBoulderHealth.class).isDead()) {
 				boulder.removeFromParent();
 				getState(StCollision.class).unregister(boulder);
-				logger.debug("destroyed boulder = {}", boulder);
+//				logger.debug("destroyed boulder = {}", boulder);
 				getState(StExplosion.class).boulderExplosion(boulder.getLocalTranslation(), size);
 				spawnFragments(sizeIdx + 1, boulder.getLocalTranslation(), collision);
 				scene.instance();

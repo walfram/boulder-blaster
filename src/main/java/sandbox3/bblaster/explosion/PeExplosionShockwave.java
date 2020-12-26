@@ -29,8 +29,14 @@ public final class PeExplosionShockwave extends ParticleEmitter {
 
 		// emitAllParticles();
 		setParticlesPerSec(0);
-
-		addControl(new CtDetachParticleEmitter());
+		// addControl(new CtDetachParticleEmitter());
+		
+		addControl(new CtParticleEmitterSize() {
+			@Override
+			public void updateSize(float size) {
+				setEndSize(size * 5f);				
+			}
+		});
 	}
 
 }
