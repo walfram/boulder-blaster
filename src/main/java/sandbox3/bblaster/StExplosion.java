@@ -11,13 +11,15 @@ import com.jme3.app.state.BaseAppState;
 import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
 
-import jme3utilities.SimpleControl;
 import sandbox3.bblaster.explosion.CtParticleEmitterSize;
-import sandbox3.bblaster.explosion.FxBoulderExplosion;
-import sandbox3.bblaster.explosion.FxMissileExplosion;
-import sandbox3.bblaster.explosion.FxProjectileExplosion;
+import sandbox3.bblaster.explosion.FxExplosion;
+import sandbox3.bblaster.explosion.PeExplosionFlash;
+import sandbox3.bblaster.explosion.PeExplosionShockwave;
+import sandbox3.bblaster.explosion.PeExplosionSparks;
+import sandbox3.bblaster.explosion.PeMissileFlash;
+import sandbox3.bblaster.explosion.PeMissileSparks;
+import sandbox3.bblaster.explosion.PeProjectileSparks;
 
 public final class StExplosion extends BaseAppState {
 
@@ -66,7 +68,7 @@ public final class StExplosion extends BaseAppState {
 		missileExplosion.setLocalTranslation(translation);
 		explosions.attachChild(missileExplosion);
 		missileExplosion.getChildren().forEach(s -> {
-			s.getControl(CtParticleEmitterSize.class).updateSize(30f);
+			s.getControl(CtParticleEmitterSize.class).updateSize(50f);
 			((ParticleEmitter) s).emitAllParticles();
 		});
 	}
@@ -95,104 +97,42 @@ public final class StExplosion extends BaseAppState {
 		Node boulderExplosion = boulderExplosions.pop();
 		boulderExplosion.setLocalTranslation(translation);
 		explosions.attachChild(boulderExplosion);
-		// logger.debug("created {} at {}, size = {}", boulderExplosion, translation, size);
+
 		boulderExplosion.getChildren().forEach(s -> {
 			s.getControl(CtParticleEmitterSize.class).updateSize(size);
 			((ParticleEmitter) s).emitAllParticles();
 		});
 	}
 
-	// TODO move common "removal control" code to separate class
 	private void moreBoulderExplosions() {
 		for (int idx = 0; idx < BOULDER_EXPLOSIONS; idx++) {
-			Node boulderExplosion = new FxBoulderExplosion(getApplication().getAssetManager());
-			getApplication().getRenderManager().preloadScene(boulderExplosion);
-
-			boulderExplosion.addControl(new SimpleControl() {
-				@Override
-				protected void controlUpdate(float updateInterval) {
-					super.controlUpdate(updateInterval);
-
-					// true because &= is "a & b"
-					boolean done = true;
-
-					for (Spatial s : boulderExplosion.getChildren()) {
-						if (s instanceof ParticleEmitter) {
-							done &= ((ParticleEmitter) s).getNumVisibleParticles() < 1;
-						}
-					}
-
-					if (!done)
-						return;
-
-					boulderExplosion.removeFromParent();
-					boulderExplosions.push(boulderExplosion);
-				}
-			});
-
+			Node boulderExplosion = new FxExplosion(boulderExplosions, new PeExplosionShockwave(getApplication()
+					.getAssetManager(), 1f), new PeExplosionSparks(getApplication().getAssetManager(), 1f),
+					new PeExplosionFlash(getApplication().getAssetManager(), 1f));
 			boulderExplosions.push(boulderExplosion);
 		}
+
+		getApplication().getRenderManager().preloadScene(boulderExplosions.peek());
 	}
 
 	private void moreMissileExplosions() {
 		for (int idx = 0; idx < MISSILE_EXPLOSIONS; idx++) {
-			Node missileExplosion = new FxMissileExplosion(getApplication().getAssetManager());
-			getApplication().getRenderManager().preloadScene(missileExplosion);
-
-			missileExplosion.addControl(new SimpleControl() {
-				@Override
-				protected void controlUpdate(float updateInterval) {
-					super.controlUpdate(updateInterval);
-
-					boolean done = true;
-
-					for (Spatial s : missileExplosion.getChildren()) {
-						if (s instanceof ParticleEmitter) {
-							done &= ((ParticleEmitter) s).getNumVisibleParticles() < 1;
-						}
-					}
-
-					if (!done)
-						return;
-
-					missileExplosion.removeFromParent();
-					missileExplosions.push(missileExplosion);
-				}
-			});
-
+			Node missileExplosion = new FxExplosion(missileExplosions, new PeMissileFlash(getApplication().getAssetManager(),
+					50f), new PeMissileSparks(getApplication().getAssetManager(), 50f));
 			missileExplosions.push(missileExplosion);
 		}
+
+		getApplication().getRenderManager().preloadScene(missileExplosions.peek());
 	}
 
 	private void moreProjectileExplosions() {
 		for (int idx = 0; idx <= PROJECTILE_EXPLOSIONS; idx++) {
-			Node projectileExplosion = new FxProjectileExplosion(getApplication().getAssetManager());
-			getApplication().getRenderManager().preloadScene(projectileExplosion);
-
-			projectileExplosion.addControl(new SimpleControl() {
-				@Override
-				protected void controlUpdate(float updateInterval) {
-					super.controlUpdate(updateInterval);
-
-					boolean done = true;
-
-					for (Spatial s : projectileExplosion.getChildren()) {
-						if (s instanceof ParticleEmitter) {
-							done &= ((ParticleEmitter) s).getNumVisibleParticles() < 1;
-						}
-					}
-
-					if (!done)
-						return;
-
-					projectileExplosion.removeFromParent();
-					projectileExplosions.push(projectileExplosion);
-				}
-			});
-
+			Node projectileExplosion = new FxExplosion(projectileExplosions, new PeProjectileSparks(getApplication()
+					.getAssetManager(), 30f));
 			projectileExplosions.push(projectileExplosion);
 		}
 
+		getApplication().getRenderManager().preloadScene(projectileExplosions.peek());
 	}
 
 }
