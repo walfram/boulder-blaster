@@ -13,8 +13,8 @@ import com.jme3.scene.Node;
 import com.jme3.scene.shape.Box;
 
 import jme3.common.material.MtlUnshaded;
-import sandbox3.bblaster.controls.CtCollision;
-import sandbox3.bblaster.projectiles.NdProjectile;
+import sandbox3.bblaster.misc.CtCollision;
+import sandbox3.bblaster.weapons.NdProjectile;
 
 public final class StBlasters extends BaseAppState {
 

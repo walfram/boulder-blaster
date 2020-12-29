@@ -37,9 +37,9 @@ import jme3utilities.mesh.Octasphere;
 import sandbox3.bblaster.boulders.CtBoulderBounds;
 import sandbox3.bblaster.boulders.CtBoulderHealth;
 import sandbox3.bblaster.boulders.CtBoulderMove;
-import sandbox3.bblaster.controls.CtCollision;
-import sandbox3.bblaster.controls.CtDamagePayload;
+import sandbox3.bblaster.misc.CtCollision;
 import sandbox3.bblaster.misc.NoisedMesh;
+import sandbox3.bblaster.weapons.CtDamagePayload;
 
 public final class StBoulders extends BaseAppState {
 

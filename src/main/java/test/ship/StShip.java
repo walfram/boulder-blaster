@@ -16,15 +16,15 @@ import com.jme3.scene.Spatial;
 import jme3.common.material.MtlShowNormals;
 import jme3utilities.mesh.Octahedron;
 import sandbox3.bblaster.Settings;
-import sandbox3.bblaster.missiles.CtMissileEngine;
-import sandbox3.bblaster.missiles.CtMissileGuidance;
-import sandbox3.bblaster.missiles.CtMissileTrail;
-import sandbox3.bblaster.missiles.NdMissile;
-import sandbox3.bblaster.projectiles.CtProjectileMove;
-import sandbox3.bblaster.projectiles.CtProjectileTimeout;
-import sandbox3.bblaster.ships.CtShipBlasterFx;
-import sandbox3.bblaster.ships.CtShipEmissions;
-import sandbox3.bblaster.ships.NdSpeederD;
+import sandbox3.bblaster.player.CtShipBlasterFx;
+import sandbox3.bblaster.player.CtShipEmissions;
+import sandbox3.bblaster.player.NdSpeederD;
+import sandbox3.bblaster.weapons.CtMissileEngine;
+import sandbox3.bblaster.weapons.CtMissileGuidance;
+import sandbox3.bblaster.weapons.CtMissileTrail;
+import sandbox3.bblaster.weapons.CtProjectileMove;
+import sandbox3.bblaster.weapons.CtProjectileTimeout;
+import sandbox3.bblaster.weapons.NdMissile;
 
 final class StShip extends BaseAppState {
 

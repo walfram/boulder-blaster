@@ -14,21 +14,21 @@ import com.jme3.math.Transform;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
-import sandbox3.bblaster.controls.CtBlastersFx;
-import sandbox3.bblaster.controls.CtEmissionFx;
-import sandbox3.bblaster.controls.CtTransformCopy;
 import sandbox3.bblaster.misc.Cooldown;
-import sandbox3.bblaster.ships.CtShipBlasterFx;
-import sandbox3.bblaster.ships.CtShipBlasterProjectiles;
-import sandbox3.bblaster.ships.CtShipEmissions;
-import sandbox3.bblaster.ships.CtShipEngines;
-import sandbox3.bblaster.ships.CtShipMissiles;
-import sandbox3.bblaster.ships.CtShipPitch;
-import sandbox3.bblaster.ships.CtShipRoll;
-import sandbox3.bblaster.ships.CtShipYaw;
-import sandbox3.bblaster.ships.NdSpeederD;
-import sandbox3.bblaster.ships.PeShipBlaster;
-import sandbox3.bblaster.ships.PeShipEmission;
+import sandbox3.bblaster.player.CtBlastersFx;
+import sandbox3.bblaster.player.CtEmissionFx;
+import sandbox3.bblaster.player.CtShipBlasterFx;
+import sandbox3.bblaster.player.CtShipBlasterProjectiles;
+import sandbox3.bblaster.player.CtShipEmissions;
+import sandbox3.bblaster.player.CtShipEngines;
+import sandbox3.bblaster.player.CtShipMissiles;
+import sandbox3.bblaster.player.CtShipPitch;
+import sandbox3.bblaster.player.CtShipRoll;
+import sandbox3.bblaster.player.CtShipYaw;
+import sandbox3.bblaster.player.CtTransformCopy;
+import sandbox3.bblaster.player.NdSpeederD;
+import sandbox3.bblaster.player.PeShipBlaster;
+import sandbox3.bblaster.player.PeShipEmission;
 
 public final class StPlayer extends BaseAppState {
 

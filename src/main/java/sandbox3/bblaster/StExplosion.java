@@ -12,14 +12,14 @@ import com.jme3.effect.ParticleEmitter;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Node;
 
-import sandbox3.bblaster.explosion.CtParticleEmitterSize;
-import sandbox3.bblaster.explosion.FxExplosion;
-import sandbox3.bblaster.explosion.PeExplosionFlash;
-import sandbox3.bblaster.explosion.PeExplosionShockwave;
-import sandbox3.bblaster.explosion.PeExplosionSparks;
-import sandbox3.bblaster.explosion.PeMissileFlash;
-import sandbox3.bblaster.explosion.PeMissileSparks;
-import sandbox3.bblaster.explosion.PeProjectileSparks;
+import sandbox3.bblaster.explosions.CtParticleEmitterSize;
+import sandbox3.bblaster.explosions.FxExplosion;
+import sandbox3.bblaster.explosions.PeExplosionFlash;
+import sandbox3.bblaster.explosions.PeExplosionShockwave;
+import sandbox3.bblaster.explosions.PeExplosionSparks;
+import sandbox3.bblaster.explosions.PeMissileFlash;
+import sandbox3.bblaster.explosions.PeMissileSparks;
+import sandbox3.bblaster.explosions.PeProjectileSparks;
 
 public final class StExplosion extends BaseAppState {
 

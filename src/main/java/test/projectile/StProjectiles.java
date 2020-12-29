@@ -19,7 +19,7 @@ import com.simsilica.lemur.input.InputMapper;
 
 import jme3.common.material.MtlUnshaded;
 import sandbox3.bblaster.misc.Cooldown;
-import sandbox3.bblaster.projectiles.NdProjectile;
+import sandbox3.bblaster.weapons.NdProjectile;
 
 final class StProjectiles extends BaseAppState {
 

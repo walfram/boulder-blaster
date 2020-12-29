@@ -13,7 +13,7 @@ import com.jme3.collision.CollisionResults;
 import com.jme3.scene.Spatial;
 
 import jme3utilities.SimpleControl;
-import sandbox3.bblaster.controls.CtCollision;
+import sandbox3.bblaster.misc.CtCollision;
 
 public final class StCollision extends BaseAppState {
 
