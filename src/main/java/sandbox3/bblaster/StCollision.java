@@ -2,6 +2,7 @@ package sandbox3.bblaster;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,8 +74,14 @@ public final class StCollision extends BaseAppState {
 			}
 		}
 
-		collidables.removeIf(s -> s.getControl(CtUnregister.class) != null);
+		List<Spatial> toUnregister = collidables.stream().filter(s -> s.getControl(CtUnregister.class) != null).collect(
+				Collectors.toList());
 
+		toUnregister.forEach(s -> s.removeControl(CtUnregister.class));
+		collidables.removeAll(toUnregister);
+
+		// collidables.removeIf(s -> s.getControl(CtUnregister.class) != null);
+		
 		collidables.addAll(registered);
 		registered.clear();
 	}
