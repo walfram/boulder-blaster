@@ -38,7 +38,7 @@ final class StHud extends BaseAppState {
 				super.controlUpdate(updateInterval);
 
 				labelPosition.setText(MyVector3f.describe(app.getCamera().getLocation()));
-				labelObjects.setText(String.format("%s", getState(StObjects.class).objectsNear(app.getCamera().getLocation())));
+				labelObjects.setText(String.format("%s", getState(StObjects.class).objectsNearCount(app.getCamera().getLocation())));
 			}
 		});
 

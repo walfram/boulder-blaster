@@ -66,11 +66,13 @@ final class StObjects extends BaseAppState {
 	protected void onDisable() {
 	}
 
-	public int objectsNear(Vector3f location) {
-		List<Spatial> neighbours = scene.getChildren().stream().filter(s -> s.getLocalTranslation().distance(location) < 512)
-				.collect(Collectors.toList());
+	public int objectsNearCount(Vector3f location) {
+		return objectsNear(location).size();
+	}
 
-		return neighbours.size();
+	public List<Spatial> objectsNear(Vector3f location) {
+		return scene.getChildren().stream().filter(s -> s.getLocalTranslation().distance(location) < 512).collect(
+				Collectors.toList());
 	}
 
 }
