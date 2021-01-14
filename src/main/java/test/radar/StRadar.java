@@ -12,11 +12,14 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
+import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
+import com.jme3.scene.shape.Line;
 import com.jme3.util.PlaceholderAssets;
 
 import jme3.common.debug.NdDebugGrid;
+import jme3.common.material.MtlUnshaded;
 import jme3utilities.debug.PointVisualizer;
 import jme3utilities.math.MyVector3f;
 
@@ -32,10 +35,10 @@ final class StRadar extends BaseAppState {
 	@Override
 	protected void initialize(Application app) {
 		Camera camera = new Camera(1600, 800);
-		camera.setViewPort(0.3f, 0.7f, 0f, 0.5f);
+		camera.setViewPort(0.25f, 0.75f, 0f, 0.4f);
 
 		camera.setParallelProjection(false);
-		camera.setFrustumPerspective(45, 1600f / 800f, 0.1f, 500f);
+		camera.setFrustumPerspective(45, 1600f / 800f, 0.1f, 1000f);
 
 		logger.debug("camera = {}", camera);
 
@@ -107,8 +110,13 @@ final class StRadar extends BaseAppState {
 			}
 
 			o.setLocalTranslation(v);
-
 			objectsWrap.attachChild(o);
+
+			Vector3f end = new Vector3f(v.x, 0, v.z);
+			Geometry line = new Geometry("line", new Line(v, end));
+			ColorRGBA color = v.y > 0 ? ColorRGBA.Red : ColorRGBA.Yellow;
+			line.setMaterial(new MtlUnshaded(getApplication().getAssetManager(), color));
+			objectsWrap.attachChild(line);
 		}
 
 		scene.updateLogicalState(tpf);
