@@ -17,6 +17,8 @@ import com.jme3.scene.Spatial;
 import com.jme3.util.PlaceholderAssets;
 
 import jme3.common.debug.NdDebugGrid;
+import jme3utilities.debug.PointVisualizer;
+import jme3utilities.math.MyVector3f;
 
 final class StRadar extends BaseAppState {
 
@@ -30,14 +32,14 @@ final class StRadar extends BaseAppState {
 	@Override
 	protected void initialize(Application app) {
 		Camera camera = new Camera(1600, 800);
-		camera.setViewPort(0.3f, 0.7f, 0f, 0.4f);
+		camera.setViewPort(0.3f, 0.7f, 0f, 0.5f);
 
 		camera.setParallelProjection(false);
 		camera.setFrustumPerspective(45, 1600f / 800f, 0.1f, 500f);
 
 		logger.debug("camera = {}", camera);
 
-		ViewPort viewport = app.getRenderManager().createPostView("radar view", camera);
+		ViewPort viewport = app.getRenderManager().createPostView("radar-view", camera);
 
 		// viewport.setClearFlags(false, false, true);
 		viewport.setClearFlags(true, true, true);
@@ -52,9 +54,9 @@ final class StRadar extends BaseAppState {
 		// base.getMaterial().setTexture("ColorMap", app.getAssetManager().loadTexture("textures/proto/texture_01.png"));
 		// base.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		// base.setQueueBucket(Bucket.Transparent);
-		// aaaaaaaaaaadw scene.attachChild(base);
+		// scene.attachChild(base);
 
-		NdDebugGrid grid = new NdDebugGrid(app.getAssetManager(), 16, 16, 16, ColorRGBA.Gray);
+		NdDebugGrid grid = new NdDebugGrid(app.getAssetManager(), 8, 8, 40, ColorRGBA.Gray);
 		gridWrap.attachChild(grid);
 
 		logger.debug("grid bound = {}", grid.getWorldBound().clone());
@@ -86,16 +88,29 @@ final class StRadar extends BaseAppState {
 
 		float ratio = 120f / 512f;
 
+		Node player = new Node("player");
+		player.setLocalTranslation(location);
+		player.setLocalRotation(rotation);
+
 		for (Spatial s : objectsNear) {
-			Vector3f offset = s.getLocalTranslation().subtract(location);
-			offset.multLocal(ratio);
-			
-			Spatial o = PlaceholderAssets.getPlaceholderModel(getApplication().getAssetManager());
-			o.setLocalTranslation(offset);
+			// https://hub.jmonkeyengine.org/t/radar-math-i-suck-at-this/29618/7
+			// again, thanks to pspeed
+			Vector3f localPos = s.getLocalTranslation().subtract(location);
+			Vector3f v = rotation.inverse().mult(localPos);
+
+			v.multLocal(ratio);
+
+			PointVisualizer o = new PointVisualizer(getApplication().getAssetManager(), 5, ColorRGBA.Yellow, null);
+
+			if (v.y > 0) {
+				o.setColor(ColorRGBA.Red);
+			}
+
+			o.setLocalTranslation(v);
 
 			objectsWrap.attachChild(o);
 		}
-		
+
 		scene.updateLogicalState(tpf);
 		scene.updateGeometricState();
 	}
@@ -110,6 +125,9 @@ final class StRadar extends BaseAppState {
 
 	@Override
 	protected void onDisable() {
+		// IMPORTANT otherwise app freezes
+		// scene.detachAllChildren();
+		getApplication().getRenderManager().removePostView("radar-view");
 	}
 
 }
