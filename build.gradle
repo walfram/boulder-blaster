@@ -60,6 +60,8 @@ dependencies {
     // via jitpack.io
     implementation 'com.github.walfram:jme3-addons:-SNAPSHOT'
     
+    implementation 'com.github.jMonkeyEngine-archive:jme-minimap-jayfella-github:master-SNAPSHOT'
+    
     testImplementation(platform('org.junit:junit-bom:5.7.0'))
 	testImplementation('org.junit.jupiter:junit-jupiter')
 }

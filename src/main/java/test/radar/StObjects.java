@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.collision.CollisionResults;
 import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
+import com.jme3.math.Ray;
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
@@ -73,6 +75,10 @@ final class StObjects extends BaseAppState {
 	public List<Spatial> objectsNear(Vector3f location) {
 		return scene.getChildren().stream().filter(s -> s.getLocalTranslation().distance(location) < 512).collect(
 				Collectors.toList());
+	}
+
+	public void collideWith(Ray ray, CollisionResults results) {
+		scene.collideWith(ray, results);
 	}
 
 }

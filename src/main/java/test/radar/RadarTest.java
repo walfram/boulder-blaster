@@ -57,6 +57,8 @@ public class RadarTest extends SimpleApplication {
 		stateManager.attach(new StHud(guiNode));
 		
 		stateManager.attach(new StRadar());
+		
+		stateManager.attach(new StPick());
 	}
 
 }

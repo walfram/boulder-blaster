@@ -42,7 +42,8 @@ final class StRadar extends BaseAppState {
 
 		logger.debug("camera = {}", camera);
 
-		ViewPort viewport = app.getRenderManager().createPostView("radar-view", camera);
+		// ViewPort viewport = app.getRenderManager().createPostView("radar-view", camera);
+		ViewPort viewport = app.getRenderManager().createMainView("radar-view", camera);
 
 		// viewport.setClearFlags(false, false, true);
 		viewport.setClearFlags(true, true, true);
@@ -52,28 +53,25 @@ final class StRadar extends BaseAppState {
 		scene.attachChild(gridWrap);
 		scene.attachChild(objectsWrap);
 
-		// Geometry base = new Geometry("base", new MBox(128, 0, 128, 9, 0, 9));
-		// base.setMaterial(new MtlUnshaded(app.getAssetManager(), ColorRGBA.White));
-		// base.getMaterial().setTexture("ColorMap", app.getAssetManager().loadTexture("textures/proto/texture_01.png"));
-		// base.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-		// base.setQueueBucket(Bucket.Transparent);
-		// scene.attachChild(base);
-
 		NdDebugGrid grid = new NdDebugGrid(app.getAssetManager(), 8, 8, 40, ColorRGBA.Gray);
 		gridWrap.attachChild(grid);
 
 		logger.debug("grid bound = {}", grid.getWorldBound().clone());
 
+		PointVisualizer center = new PointVisualizer(app.getAssetManager(), 4, ColorRGBA.Green, null);
+		center.setLocalTranslation(new Vector3f());
+		gridWrap.attachChild(center);
+		
 		camera.setLocation(new Vector3f(0, 96, -256));
 		camera.lookAt(new Vector3f(), Vector3f.UNIT_Y);
 
-		Spatial top = PlaceholderAssets.getPlaceholderModel(app.getAssetManager());
-		top.move(0, 5, 0);
-		gridWrap.attachChild(top);
+		// Spatial top = PlaceholderAssets.getPlaceholderModel(app.getAssetManager());
+		// top.move(0, 5, 0);
+		// gridWrap.attachChild(top);
 
-		Spatial bottom = PlaceholderAssets.getPlaceholderModel(app.getAssetManager());
-		bottom.move(0, -5, 0);
-		gridWrap.attachChild(bottom);
+		// Spatial bottom = PlaceholderAssets.getPlaceholderModel(app.getAssetManager());
+		// bottom.move(0, -5, 0);
+		// gridWrap.attachChild(bottom);
 	}
 
 	@Override
@@ -81,15 +79,13 @@ final class StRadar extends BaseAppState {
 		super.update(tpf);
 
 		Vector3f location = getApplication().getCamera().getLocation().clone();
-
-		Vector3f direction = getApplication().getCamera().getDirection().clone();
 		Quaternion rotation = getApplication().getCamera().getRotation().clone();
 
 		objectsWrap.detachAllChildren();
 
 		List<Spatial> objectsNear = getState(StObjects.class).objectsNear(location);
 
-		float ratio = 120f / 512f;
+		float ratio = 140f / 512f;
 
 		Node player = new Node("player");
 		player.setLocalTranslation(location);
@@ -103,18 +99,14 @@ final class StRadar extends BaseAppState {
 
 			v.multLocal(ratio);
 
-			PointVisualizer o = new PointVisualizer(getApplication().getAssetManager(), 5, ColorRGBA.Yellow, null);
+			ColorRGBA color = v.y > 0 ? ColorRGBA.Red : ColorRGBA.Yellow;
 
-			if (v.y > 0) {
-				o.setColor(ColorRGBA.Red);
-			}
-
+			PointVisualizer o = new PointVisualizer(getApplication().getAssetManager(), 5, color, null);
 			o.setLocalTranslation(v);
 			objectsWrap.attachChild(o);
 
 			Vector3f end = new Vector3f(v.x, 0, v.z);
 			Geometry line = new Geometry("line", new Line(v, end));
-			ColorRGBA color = v.y > 0 ? ColorRGBA.Red : ColorRGBA.Yellow;
 			line.setMaterial(new MtlUnshaded(getApplication().getAssetManager(), color));
 			objectsWrap.attachChild(line);
 		}
@@ -135,7 +127,8 @@ final class StRadar extends BaseAppState {
 	protected void onDisable() {
 		// IMPORTANT otherwise app freezes
 		// scene.detachAllChildren();
-		getApplication().getRenderManager().removePostView("radar-view");
+		// getApplication().getRenderManager().removePostView("radar-view");
+		getApplication().getRenderManager().removeMainView("radar-view");
 	}
 
 }
