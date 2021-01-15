@@ -6,8 +6,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
+import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingBox;
+import com.jme3.material.Material;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -17,6 +19,11 @@ import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.shape.Line;
+import com.jme3.scene.shape.Quad;
+import com.jme3.texture.FrameBuffer;
+import com.jme3.texture.Image;
+import com.jme3.texture.Texture;
+import com.jme3.texture.Texture2D;
 
 import jme3.common.debug.NdDebugGrid;
 import jme3.common.material.MtlUnshaded;
@@ -36,24 +43,47 @@ public final class StHudRadar extends BaseAppState {
 
 	private float distanceScale;
 
+	private final int radarWidth = 400;
+	private final int radarHeight = 300;
+
+	private ViewPort viewport;
+
 	@Override
 	protected void initialize(Application app) {
-		Camera camera = new Camera(app.getCamera().getWidth(), app.getCamera().getHeight());
-		camera.setViewPort(0.25f, 0.75f, 0f, 0.4f);
-
+		Camera camera = new Camera(radarWidth, radarHeight);
+		// camera.setViewPort(0.25f, 0.75f, 0f, 0.4f);
 		camera.setParallelProjection(false);
-		float ratio = MyCamera.displayAspectRatio(app.getCamera());
-		camera.setFrustumPerspective(45, ratio, 0.1f, 1000f);
+		// float ratio = MyCamera.displayAspectRatio(app.getCamera());
+		camera.setFrustumPerspective(45, 1, 0.1f, 1000f);
+		camera.setLocation(new Vector3f(0, 96, -256));
+		camera.lookAt(new Vector3f(), Vector3f.UNIT_Y);
 
 		logger.debug("camera = {}", camera);
 
-		// ViewPort viewport = app.getRenderManager().createPostView("radar-view", camera);
-		ViewPort viewport = app.getRenderManager().createMainView("radar-view", camera);
-
-		// viewport.setClearFlags(false, false, true);
-		viewport.setClearFlags(false, true, true);
-
+		viewport = app.getRenderManager().createMainView("radar-view", camera);
+		viewport.setClearFlags(true, true, true);
 		viewport.attachScene(scene);
+
+		Texture2D offTex = new Texture2D(radarWidth, radarHeight, Image.Format.RGBA8);
+		offTex.setMinFilter(Texture.MinFilter.Trilinear);
+		offTex.setMagFilter(Texture.MagFilter.Bilinear);
+
+		FrameBuffer buffer = new FrameBuffer(radarWidth, radarHeight, 1);
+		buffer.setDepthBuffer(Image.Format.Depth);
+		buffer.setColorTexture(offTex);
+		viewport.setOutputFrameBuffer(buffer);
+
+		Geometry minimap = new Geometry("MiniMap", new Quad(radarWidth, radarHeight));
+
+		minimap.setMaterial(new Material(app.getAssetManager(), "MatDefs/MiniMap/MiniMap.j3md"));
+		minimap.getMaterial().setTexture("ColorMap", offTex);
+		minimap.getMaterial().setTexture("Mask", app.getAssetManager().loadTexture("Textures/MiniMap/circle-mask.png"));
+		minimap.getMaterial().setTexture("Overlay", app.getAssetManager().loadTexture("Textures/MiniMap/circle-overlay.png"));
+
+		minimap.setLocalTranslation(app.getCamera().getWidth() - radarWidth - 20, 20, 1);
+
+		Node guiNode = ((SimpleApplication) app).getGuiNode();
+		guiNode.attachChild(minimap);
 
 		scene.attachChild(gridWrap);
 		scene.attachChild(objectsWrap);
@@ -67,9 +97,6 @@ public final class StHudRadar extends BaseAppState {
 		PointVisualizer center = new PointVisualizer(app.getAssetManager(), 4, ColorRGBA.Green, null);
 		center.setLocalTranslation(new Vector3f());
 		gridWrap.attachChild(center);
-
-		camera.setLocation(new Vector3f(0, 96, -256));
-		camera.lookAt(new Vector3f(), Vector3f.UNIT_Y);
 	}
 
 	@Override
@@ -116,9 +143,7 @@ public final class StHudRadar extends BaseAppState {
 	@Override
 	protected void cleanup(Application app) {
 		// IMPORTANT otherwise app freezes
-		// scene.detachAllChildren();
-		// getApplication().getRenderManager().removePostView("radar-view");
-		getApplication().getRenderManager().removeMainView("radar-view");
+		getApplication().getRenderManager().removeMainView(viewport);
 	}
 
 	@Override
