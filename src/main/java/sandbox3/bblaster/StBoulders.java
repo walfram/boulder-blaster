@@ -102,7 +102,6 @@ public final class StBoulders extends BaseAppState {
 		int sizeIdx = 0;
 
 		for (int i = 0; i < 16; i++) {
-
 			Geometry boulder = createBoulder(idx++, sizeIdx);
 
 			Vector3f translation = random.nextUnitVector3f().mult(maxDistance);
