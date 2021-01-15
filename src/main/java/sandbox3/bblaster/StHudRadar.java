@@ -10,11 +10,13 @@ import com.jme3.app.SimpleApplication;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.bounding.BoundingBox;
 import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
+import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -43,7 +45,7 @@ public final class StHudRadar extends BaseAppState {
 
 	private float distanceScale;
 
-	private final int radarWidth = 400;
+	private final int radarWidth = 600;
 	private final int radarHeight = 300;
 
 	private ViewPort viewport;
@@ -79,6 +81,9 @@ public final class StHudRadar extends BaseAppState {
 		minimap.getMaterial().setTexture("ColorMap", offTex);
 		minimap.getMaterial().setTexture("Mask", app.getAssetManager().loadTexture("Textures/MiniMap/circle-mask.png"));
 		minimap.getMaterial().setTexture("Overlay", app.getAssetManager().loadTexture("Textures/MiniMap/circle-overlay.png"));
+
+		// minimap.setQueueBucket(Bucket.Transparent);
+		minimap.getMaterial().getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 
 		minimap.setLocalTranslation(app.getCamera().getWidth() - radarWidth - 20, 20, 1);
 
