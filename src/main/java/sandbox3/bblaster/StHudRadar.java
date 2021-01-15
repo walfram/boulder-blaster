@@ -1,4 +1,4 @@
-package test.radar;
+package sandbox3.bblaster;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.bounding.BoundingBox;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
@@ -19,24 +20,30 @@ import com.jme3.scene.shape.Line;
 
 import jme3.common.debug.NdDebugGrid;
 import jme3.common.material.MtlUnshaded;
+import jme3utilities.MyCamera;
 import jme3utilities.debug.PointVisualizer;
 
-final class StRadar extends BaseAppState {
+public final class StHudRadar extends BaseAppState {
 
-	private static final Logger logger = LoggerFactory.getLogger(StRadar.class);
+	private static final Logger logger = LoggerFactory.getLogger(StHudRadar.class);
+
+	private static final float RADAR_RANGE = 2048f;
 
 	private final Node scene = new Node("radar-scene");
 
 	private final Node gridWrap = new Node("grid-wrap");
 	private final Node objectsWrap = new Node("objects-wrap");
 
+	private float distanceScale;
+
 	@Override
 	protected void initialize(Application app) {
-		Camera camera = new Camera(1600, 800);
+		Camera camera = new Camera(app.getCamera().getWidth(), app.getCamera().getHeight());
 		camera.setViewPort(0.25f, 0.75f, 0f, 0.4f);
 
 		camera.setParallelProjection(false);
-		camera.setFrustumPerspective(45, 1600f / 800f, 0.1f, 1000f);
+		float ratio = MyCamera.displayAspectRatio(app.getCamera());
+		camera.setFrustumPerspective(45, ratio, 0.1f, 1000f);
 
 		logger.debug("camera = {}", camera);
 
@@ -44,7 +51,7 @@ final class StRadar extends BaseAppState {
 		ViewPort viewport = app.getRenderManager().createMainView("radar-view", camera);
 
 		// viewport.setClearFlags(false, false, true);
-		viewport.setClearFlags(true, true, true);
+		viewport.setClearFlags(false, true, true);
 
 		viewport.attachScene(scene);
 
@@ -53,23 +60,16 @@ final class StRadar extends BaseAppState {
 
 		NdDebugGrid grid = new NdDebugGrid(app.getAssetManager(), 8, 8, 40, ColorRGBA.Gray);
 		gridWrap.attachChild(grid);
-
 		logger.debug("grid bound = {}", grid.getWorldBound().clone());
+
+		distanceScale = ((BoundingBox) grid.getWorldBound()).getXExtent() / RADAR_RANGE;
 
 		PointVisualizer center = new PointVisualizer(app.getAssetManager(), 4, ColorRGBA.Green, null);
 		center.setLocalTranslation(new Vector3f());
 		gridWrap.attachChild(center);
-		
+
 		camera.setLocation(new Vector3f(0, 96, -256));
 		camera.lookAt(new Vector3f(), Vector3f.UNIT_Y);
-
-		// Spatial top = PlaceholderAssets.getPlaceholderModel(app.getAssetManager());
-		// top.move(0, 5, 0);
-		// gridWrap.attachChild(top);
-
-		// Spatial bottom = PlaceholderAssets.getPlaceholderModel(app.getAssetManager());
-		// bottom.move(0, -5, 0);
-		// gridWrap.attachChild(bottom);
 	}
 
 	@Override
@@ -81,9 +81,9 @@ final class StRadar extends BaseAppState {
 
 		objectsWrap.detachAllChildren();
 
-		List<Spatial> objectsNear = getState(StObjects.class).objectsNear(location);
+		List<Spatial> objectsNear = getState(StBoulders.class).objectsNear(location, RADAR_RANGE);
 
-		float ratio = 140f / 512f;
+		// float ratio = 140f / RADAR_RANGE;
 
 		Node player = new Node("player");
 		player.setLocalTranslation(location);
@@ -95,7 +95,7 @@ final class StRadar extends BaseAppState {
 			Vector3f localPos = s.getLocalTranslation().subtract(location);
 			Vector3f v = rotation.inverse().mult(localPos);
 
-			v.multLocal(ratio);
+			v.multLocal(distanceScale);
 
 			ColorRGBA color = v.y > 0 ? ColorRGBA.Red : ColorRGBA.Yellow;
 
@@ -116,9 +116,9 @@ final class StRadar extends BaseAppState {
 	@Override
 	protected void cleanup(Application app) {
 		// IMPORTANT otherwise app freezes
-				// scene.detachAllChildren();
-				// getApplication().getRenderManager().removePostView("radar-view");
-				getApplication().getRenderManager().removeMainView("radar-view");
+		// scene.detachAllChildren();
+		// getApplication().getRenderManager().removePostView("radar-view");
+		getApplication().getRenderManager().removeMainView("radar-view");
 	}
 
 	@Override

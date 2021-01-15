@@ -84,7 +84,8 @@ public class BoulderBlasterApp extends SimpleApplication {
 		stateManager.attach(new StHud(guiNode));
 		stateManager.attach(new StHudCrosshair(guiNode));
 		stateManager.attach(new StHudTarget(guiNode));
-
+		stateManager.attach(new StHudRadar());
+		
 		stateManager.attach(new StCamera());
 		stateManager.attach(new StControls());
 

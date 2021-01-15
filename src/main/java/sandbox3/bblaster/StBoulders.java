@@ -230,4 +230,9 @@ public final class StBoulders extends BaseAppState {
 		return scene.getQuantity() - 1;
 	}
 
+	public List<Spatial> objectsNear(Vector3f location, float range) {
+		return scene.getChildren().stream().filter(spatial -> spatial.getControl(CtBoulderHealth.class) != null).filter(
+				spatial -> spatial.getLocalTranslation().distance(location) <= range).collect(Collectors.toList());
+	}
+
 }
