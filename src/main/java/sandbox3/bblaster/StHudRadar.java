@@ -16,7 +16,6 @@ import com.jme3.math.Quaternion;
 import com.jme3.math.Vector3f;
 import com.jme3.renderer.Camera;
 import com.jme3.renderer.ViewPort;
-import com.jme3.renderer.queue.RenderQueue.Bucket;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
@@ -29,7 +28,6 @@ import com.jme3.texture.Texture2D;
 
 import jme3.common.debug.NdDebugGrid;
 import jme3.common.material.MtlUnshaded;
-import jme3utilities.MyCamera;
 import jme3utilities.debug.PointVisualizer;
 
 public final class StHudRadar extends BaseAppState {

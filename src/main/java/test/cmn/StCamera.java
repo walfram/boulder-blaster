@@ -13,6 +13,7 @@ public final class StCamera extends BaseAppState {
 
 	private final Node pivot = new Node("pivot");
 	private final float defaultDistance;
+	private ChaseCamera camera;
 
 	public StCamera(Node rootNode) {
 		this(rootNode, 100f);
@@ -25,17 +26,20 @@ public final class StCamera extends BaseAppState {
 
 	@Override
 	protected void initialize(Application app) {
-		ChaseCamera camera = new ChaseCamera(app.getCamera(), pivot, app.getInputManager());
+		camera = new ChaseCamera(app.getCamera(), pivot, app.getInputManager());
 		camera.setUpVector(Vector3f.UNIT_Y);
 
 		camera.setInvertVerticalAxis(true);
 
 		camera.setToggleRotationTrigger(new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
+		// camera.setToggleRotationTrigger(new KeyTrigger(KeyInput.KEY_LMENU));
 
 		camera.setMaxDistance(1500);
 		camera.setDefaultDistance(defaultDistance);
 
 		camera.setMinVerticalRotation(-FastMath.HALF_PI);
+		
+		camera.setZoomSensitivity(10f);
 	}
 
 	@Override
