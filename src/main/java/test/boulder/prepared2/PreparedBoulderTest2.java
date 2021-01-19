@@ -13,7 +13,6 @@ import jme3.common.debug.NdDebugGrid;
 import jme3utilities.MyCamera;
 import jme3utilities.debug.AxesVisualizer;
 import sandbox3.bblaster.StLights;
-import test.cmn.StCamera;
 
 public class PreparedBoulderTest2 extends SimpleApplication {
 
@@ -58,7 +57,8 @@ public class PreparedBoulderTest2 extends SimpleApplication {
 
 		// stateManager.attach(new StReference(rootNode));
 		// stateManager.attach(new StPreparedTest(rootNode));
-		stateManager.attach(new StBoulers(rootNode));
+		// stateManager.attach(new StBoulders(rootNode));
+		stateManager.attach(new StPunchedBoulder(rootNode));
 
 		// stateManager.attach(new StCamera(rootNode, 300f));
 	}

@@ -3,6 +3,7 @@ package test.boulder.prepared2;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,21 +28,22 @@ import com.jme3.util.BufferUtils;
 
 import jme3.common.material.MtlLighting;
 import jme3.common.mesh.FlatShaded;
+import jme3utilities.debug.PointVisualizer;
 import jme3utilities.mesh.Octasphere;
 
-final class StBoulers extends BaseAppState {
+final class StBoulders extends BaseAppState {
 
-	private static final Logger logger = LoggerFactory.getLogger(StBoulers.class);
+	private static final Logger logger = LoggerFactory.getLogger(StBoulders.class);
 
 	private final Node scene = new Node("scene");
 
-	public StBoulers(Node rootNode) {
+	public StBoulders(Node rootNode) {
 		rootNode.attachChild(scene);
 	}
 
 	@Override
 	protected void initialize(Application app) {
-		Mesh mesh = new Octasphere(2, 100f);
+		Mesh mesh = new Octasphere(0, 100f);
 		// Mesh mesh = new MBox(100, 100, 100, 3, 3, 3);
 
 		Geometry geometry = new Geometry("test", new FlatShaded(mesh).mesh());
@@ -62,13 +64,26 @@ final class StBoulers extends BaseAppState {
 		logger.debug("vector3Array size = {}", positions.length);
 		logger.debug("unique vertices = {}", Stream.of(positions).collect(Collectors.toSet()).size());
 
+		List<Vector3f> asList = Stream.of(positions).collect(Collectors.toList());
+		Set<Vector3f> unique = Stream.of(positions).collect(Collectors.toSet());
+		logger.debug("aslist = {}, unique = {}", asList.size(), unique.size());
+
+		asList.removeAll(unique);
+		logger.debug("shared = {}", asList);
+		
+		unique.forEach(v -> {
+			PointVisualizer p = new PointVisualizer(app.getAssetManager(), 5, ColorRGBA.Yellow, null);
+			p.setLocalTranslation(v);
+			scene.attachChild(p);
+		});
+
 		IndexBuffer indexBuffer = mesh.getIndicesAsList();
 		logger.debug("index buffer class = {}", indexBuffer.getClass());
 		int[] indexArray = new int[indexBuffer.size()];
 		for (int idx = 0; idx < indexBuffer.size(); idx++) {
 			indexArray[idx] = indexBuffer.get(idx);
 		}
-		logger.debug("indices = {}", indexArray);
+		// logger.debug("indices = {}", indexArray);
 
 		List<Vector3f> vertices = new ArrayList<>(indexArray.length);
 		List<Vector3f> normals = new ArrayList<>(indexArray.length);

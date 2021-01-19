@@ -1,11 +1,6 @@
 package sandbox3.bblaster.misc;
 
-import java.nio.FloatBuffer;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.stream.Stream;
 
 import com.jme3.math.Vector3f;
 import com.jme3.scene.Mesh;
@@ -29,42 +24,49 @@ public final class NoisedMesh {
 	public Mesh mesh() {
 		Mesh mesh = source.clone();
 
-		Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
-		Set<Integer> processed = new HashSet<>(positions.length);
+		Vector3f[] vertices = BufferUtils.getVector3Array(mesh.getFloatBuffer(Type.Position));
+		Stream.of(vertices).map(Vector3f::new).forEach(u -> {
+			float e = noise.GetNoise(u.x, u.y, u.z);
+			e *= noiseScale;
+			Vector3f delta = u.normalize().mult(e);
 
-		for (int idx = 0; idx < positions.length; idx++) {
-			if (processed.contains(idx))
-				continue;
-
-			Vector3f p = positions[idx];
-
-			List<Integer> indices = new ArrayList<>();
-			for (int i = idx; i < positions.length; i++) {
-				if (Objects.equals(p, positions[i]))
-					indices.add(i);
+			for (Vector3f v : vertices) {
+				if (v.equals(u))
+					v.addLocal(delta);
 			}
+		});
 
-			float noiseValue = noise.GetNoise(p.x, p.y, p.z);
+		// Vector3f[] positions = BufferUtils.getVector3Array((FloatBuffer) mesh.getBuffer(Type.Position).getData());
+		// Set<Integer> processed = new HashSet<>(positions.length);
+		//
+		// for (int idx = 0; idx < positions.length; idx++) {
+		// if (processed.contains(idx))
+		// continue;
+		//
+		// Vector3f p = positions[idx];
+		//
+		// List<Integer> indices = new ArrayList<>();
+		// for (int i = idx; i < positions.length; i++) {
+		// if (Objects.equals(p, positions[i]))
+		// indices.add(i);
+		// }
+		//
+		// float noiseValue = noise.GetNoise(p.x, p.y, p.z);
+		// float f = noiseValue * noiseScale;
+		// Vector3f delta = positions[idx].normalize().mult(f);
+		//
+		// for (int i : indices) {
+		// positions[i].addLocal(delta);
+		// }
+		//
+		// processed.addAll(indices);
+		// }
 
-			// if (noiseValue > 0) {
-			float f = noiseValue * noiseScale;
-			// float f = noiseValue;
-
-			Vector3f delta = positions[idx].normalize().mult(f);
-
-			for (int i : indices) {
-				positions[i].addLocal(delta);
-			}
-			// }
-
-			processed.addAll(indices);
-		}
-
-		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(positions));
+		mesh.setBuffer(Type.Position, 3, BufferUtils.createFloatBuffer(vertices));
 
 		mesh.updateCounts();
 		mesh.updateBound();
-		
+
 		return mesh;
 	}
 
