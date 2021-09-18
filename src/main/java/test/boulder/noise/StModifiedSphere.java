@@ -46,7 +46,7 @@ final class StModifiedSphere extends BaseAppState {
 
 	private void createGeometry(NoiseSettings settings, SphereSettings ss) {
 		FastNoiseLite noise = new FastNoiseLite();
-		settings.applyTo(noise);
+		settings.setup(noise);
 
 		Mesh source = new Octasphere(5, 512f * 0.25f);
 

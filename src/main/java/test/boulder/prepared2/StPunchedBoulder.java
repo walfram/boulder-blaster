@@ -48,34 +48,35 @@ final class StPunchedBoulder extends BaseAppState {
 		// float radius = 100f;
 		float x = 0f;
 		for (float radius : radiuses) {
-			Mesh mesh = new Octasphere(4, radius);
+			Mesh mesh = new Octasphere(2, radius);
 
-			List<Face> faces = new PunchedMeshFaces(mesh, noise, random, radius * 0.5f).faces();
+//			List<Face> faces = new PunchedMeshFaces(mesh, noise, random, radius * 0.5f).faces();
+			List<Face> faces = new PunchedMeshFaces(mesh, noise, random, 0f).faces();
 
 			Geometry g = new Geometry("g", new FaceMesh(faces).mesh());
 			g.setMaterial(new MtlLighting(app.getAssetManager(), ColorRGBA.Gray));
 			scene.attachChild(g);
-			
+
 			Vector3f[] vertices = BufferUtils.getVector3Array(g.getMesh().getFloatBuffer(Type.Position));
 			float avg = 0f;
 			for (Vector3f v : vertices)
 				avg += v.length();
 			avg /= vertices.length;
 			logger.debug("radius = {}, avg = {}", radius, avg);
-			
+
 			g.setModelBound(new BoundingSphere(avg, new Vector3f()));
-			
+
 			Vector3f translation = new Vector3f(x, 0, 0);
 			g.setLocalTranslation(translation);
-			
-//			BoundingBox bound = (BoundingBox) g.getWorldBound().clone();
-//			x += bound.getXExtent() * 3f;
+
+			// BoundingBox bound = (BoundingBox) g.getWorldBound().clone();
+			// x += bound.getXExtent() * 3f;
 			x += radius * 3f;
-			
-//			BoundsVisualizer ctrl = new BoundsVisualizer(app.getAssetManager());
-//			ctrl.setSubject(g);
-//			scene.addControl(ctrl);
-//			ctrl.setEnabled(true);
+
+			// BoundsVisualizer ctrl = new BoundsVisualizer(app.getAssetManager());
+			// ctrl.setSubject(g);
+			// scene.addControl(ctrl);
+			// ctrl.setEnabled(true);
 		}
 	}
 

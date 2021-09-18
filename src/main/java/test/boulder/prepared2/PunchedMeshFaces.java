@@ -67,7 +67,7 @@ final class PunchedMeshFaces {
 			faces.add(face);
 		}
 
-		int punches = 4;
+		int punches = 8;
 		for (int punch = 0; punch < punches; punch++) {
 			int randomIdx = random.nextInt(vertices.length);
 			Vector3f vertex = vertices[randomIdx];
