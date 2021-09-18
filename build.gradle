@@ -15,22 +15,21 @@ plugins {
 }
 
 repositories {
-    // Use jcenter for resolving dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    
-    maven {
-        url  "https://dl.bintray.com/jmonkeyengine/org.jmonkeyengine" 
-    }
-    
+    mavenCentral()
+    // google()
     maven { url 'https://jitpack.io' }
-    
-    // mavenLocal()
+    flatDir {
+    	dirs 'lib'
+    }
+}
+
+ext {
+	jmev = '3.4.0-stable'
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 
 dependencies {
@@ -38,27 +37,27 @@ dependencies {
     implementation 'com.google.guava:guava:28.2-jre'
 	implementation 'ch.qos.logback:logback-classic:1.2.3'
 
-    implementation 'com.github.stephengold:Heart:6.0.0'
+    implementation 'com.github.stephengold:Heart:7.1.0'
     
-    implementation 'com.simsilica:sio2:1.5.0'
+    implementation 'com.simsilica:sio2:1.6.0'
+    
     implementation 'org.codehaus.groovy:groovy-all:3.0.3'
-    implementation 'com.simsilica:lemur:1.14.0'
-    implementation 'com.simsilica:lemur-proto:1.11.0'
+    implementation 'com.simsilica:lemur:1.15.0'
+    implementation 'com.simsilica:lemur-proto:1.12.0'
     implementation 'com.simsilica:lemur-props:1.1.1'
     
-    implementation 'org.jmonkeyengine:jme3-core:3.3.2-stable'
-    implementation 'org.jmonkeyengine:jme3-desktop:3.3.2-stable'
-    implementation 'org.jmonkeyengine:jme3-lwjgl3:3.3.2-stable'
-    implementation 'org.jmonkeyengine:jme3-effects:3.3.2-stable'
-    implementation 'org.jmonkeyengine:jme3-terrain:3.3.2-stable'
-    implementation 'org.jmonkeyengine:jme3-plugins:3.3.2-stable'
+    implementation "org.jmonkeyengine:jme3-core:$jmev"
+    implementation "org.jmonkeyengine:jme3-desktop:$jmev"
+    implementation "org.jmonkeyengine:jme3-lwjgl3:$jmev"
+    implementation "org.jmonkeyengine:jme3-effects:$jmev"
+    implementation "org.jmonkeyengine:jme3-terrain:$jmev"
+    implementation "org.jmonkeyengine:jme3-plugins:$jmev"
     
-    implementation 'org.jmonkeyengine:jme3-testdata:3.3.2-stable'
+    implementation "org.jmonkeyengine:jme3-testdata:$jmev"
     
     //implementation 'com.github.Jeddic:particlemonkey:1.0.2'
     
-    // via jitpack.io
-    implementation 'com.github.walfram:jme3-addons:-SNAPSHOT'
+    implementation 'com.github.walfram:jme3-addons:+'
     
     implementation 'com.github.jMonkeyEngine-archive:jme-minimap-jayfella-github:master-SNAPSHOT'
     
